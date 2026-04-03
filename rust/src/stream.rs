@@ -1,6 +1,6 @@
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
 pub(crate) use s2_sdk::{
-    S2Stream as IStream, append_session::AppendSessionConfig, producer::ProducerConfig,
+    S2Stream as _Stream, append_session::AppendSessionConfig, producer::ProducerConfig,
 };
 use tokio_stream::StreamExt;
 
@@ -14,11 +14,11 @@ pub(crate) use crate::{
 
 #[frb(opaque)]
 pub struct S2Stream {
-    stream: RustAutoOpaqueNom<IStream>,
+    stream: RustAutoOpaqueNom<_Stream>,
 }
 
 impl S2Stream {
-    pub fn new(stream: IStream) -> S2Stream {
+    pub(crate) fn new(stream: _Stream) -> S2Stream {
         S2Stream {
             stream: RustAutoOpaqueNom::new(stream),
         }
@@ -98,8 +98,8 @@ impl S2Stream {
     }
 }
 
-impl From<IStream> for S2Stream {
-    fn from(stream: IStream) -> Self {
+impl From<_Stream> for S2Stream {
+    fn from(stream: _Stream) -> Self {
         S2Stream::new(stream)
     }
 }

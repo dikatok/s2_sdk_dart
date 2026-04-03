@@ -1,17 +1,17 @@
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
-pub(crate) use s2_sdk::S2 as IClient;
+pub(crate) use s2_sdk::S2 as _Client;
 
 use crate::types::ClientConfig;
 
 #[frb(opaque)]
 pub struct S2Client {
-    client: RustAutoOpaqueNom<IClient>,
+    client: RustAutoOpaqueNom<_Client>,
 }
 
 impl S2Client {
     pub fn new(config: ClientConfig) -> S2Client {
         S2Client {
-            client: RustAutoOpaqueNom::new(IClient::new(config.into()).unwrap()),
+            client: RustAutoOpaqueNom::new(_Client::new(config.into()).unwrap()),
         }
     }
 

@@ -7,8 +7,7 @@ import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'stream.dart';
 
-// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<IBasin>>
-abstract class IBasin implements RustOpaqueInterface {}
+// These functions are ignored because they are not marked as `pub`: `new`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Basin>>
 abstract class S2Basin implements RustOpaqueInterface {
@@ -23,10 +22,6 @@ abstract class S2Basin implements RustOpaqueInterface {
   Future<void> listAllStreams();
 
   Future<void> listStreams();
-
-  // HINT: Make it `#[frb(sync)]` to let it become the default constructor of Dart class.
-  static Future<S2Basin> newInstance({required IBasin basin}) =>
-      RustLib.instance.api.crateBasinS2BasinNew(basin: basin);
 
   Future<void> reconfigureStream();
 

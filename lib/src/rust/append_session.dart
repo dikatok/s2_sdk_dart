@@ -9,24 +9,15 @@ import 'lib.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'types.dart';
 
+// These functions are ignored because they are not marked as `pub`: `new`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2AppendSession>>
 abstract class S2AppendSession implements RustOpaqueInterface {
   Future<void> close();
 
-  // HINT: Make it `#[frb(sync)]` to let it become the default constructor of Dart class.
-  static Future<S2AppendSession> newInstance({
-    required AppendSession session,
-  }) => RustLib.instance.api.crateAppendSessionS2AppendSessionNew(
-    session: session,
-  );
-
   Future<BatchSubmitTicket> submit({required AppendInput record});
 }
-
-// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<_AppendSession>>
-abstract class AppendSession implements RustOpaqueInterface {}
 
 class BatchSubmitTicket {
   final OptionBatchSubmitTicket ticket;

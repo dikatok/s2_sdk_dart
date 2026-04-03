@@ -18,7 +18,7 @@ pub struct S2AppendSession {
 }
 
 impl S2AppendSession {
-    pub fn new(session: _AppendSession) -> S2AppendSession {
+    pub(crate) fn new(session: _AppendSession) -> S2AppendSession {
         S2AppendSession {
             session: RustAutoOpaqueNom::new(Some(session)),
         }

@@ -10,10 +10,8 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'producer.dart';
 import 'types.dart';
 
+// These functions are ignored because they are not marked as `pub`: `new`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`
-
-// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<IStream>>
-abstract class IStream implements RustOpaqueInterface {}
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Stream>>
 abstract class S2Stream implements RustOpaqueInterface {
@@ -22,10 +20,6 @@ abstract class S2Stream implements RustOpaqueInterface {
   Future<S2AppendSession> appendSession();
 
   Future<StreamPosition> checkTail();
-
-  // HINT: Make it `#[frb(sync)]` to let it become the default constructor of Dart class.
-  static Future<S2Stream> newInstance({required IStream stream}) =>
-      RustLib.instance.api.crateStreamS2StreamNew(stream: stream);
 
   Future<S2Producer> producer();
 

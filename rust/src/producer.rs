@@ -3,7 +3,7 @@ use std::str::FromStr;
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
 
 pub use s2_sdk::producer::{
-    IndexedAppendAck as _IndexedAppendAck, Producer as IProducer,
+    IndexedAppendAck as _IndexedAppendAck, Producer as _Producer,
     RecordSubmitTicket as _RecordSubmitTicket,
 };
 
@@ -14,11 +14,11 @@ use crate::{
 
 #[frb(opaque)]
 pub struct S2Producer {
-    producer: RustAutoOpaqueNom<Option<IProducer>>,
+    producer: RustAutoOpaqueNom<Option<_Producer>>,
 }
 
 impl S2Producer {
-    pub fn new(producer: IProducer) -> S2Producer {
+    pub(crate) fn new(producer: _Producer) -> S2Producer {
         S2Producer {
             producer: RustAutoOpaqueNom::new(Some(producer)),
         }

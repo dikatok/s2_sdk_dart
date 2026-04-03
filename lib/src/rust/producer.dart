@@ -9,18 +9,12 @@ import 'lib.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'types.dart';
 
+// These functions are ignored because they are not marked as `pub`: `new`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`
-
-// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<IProducer>>
-abstract class IProducer implements RustOpaqueInterface {}
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Producer>>
 abstract class S2Producer implements RustOpaqueInterface {
   Future<void> close();
-
-  // HINT: Make it `#[frb(sync)]` to let it become the default constructor of Dart class.
-  static Future<S2Producer> newInstance({required IProducer producer}) =>
-      RustLib.instance.api.crateProducerS2ProducerNew(producer: producer);
 
   Future<RecordSubmitTicket> submit({required AppendRecord record});
 }
