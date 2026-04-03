@@ -67,6 +67,7 @@ impl S2Stream {
         Ok(S2Producer::new(producer))
     }
 
+    #[frb(stream_dart_await)]
     pub async fn read_session(
         &self,
         sink: StreamSink<SequencedRecord>,
