@@ -1,13 +1,11 @@
 use std::str::FromStr;
 
-pub(crate) use s2_sdk::types::S2Error as IError;
-
 pub struct S2Error {
     pub message: String,
 }
 
-impl From<IError> for S2Error {
-    fn from(error: IError) -> Self {
+impl From<s2_sdk::types::S2Error> for S2Error {
+    fn from(error: s2_sdk::types::S2Error) -> Self {
         S2Error {
             message: error.to_string(),
         }

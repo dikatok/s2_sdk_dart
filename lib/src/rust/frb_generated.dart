@@ -12,7 +12,6 @@ import 'error.dart';
 import 'frb_generated.dart';
 import 'frb_generated.io.dart'
     if (dart.library.js_interop) 'frb_generated.web.dart';
-import 'lib.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'producer.dart';
 import 'stream.dart';
@@ -73,7 +72,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.12.0';
 
   @override
-  int get rustContentHash => 782013518;
+  int get rustContentHash => 2136174094;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -85,6 +84,14 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
+  Future<AppendAck> crateAppendSessionBatchSubmitTicketAck({
+    required BatchSubmitTicket that,
+  });
+
+  Future<IndexedAppendAck> crateProducerRecordSubmitTicketAck({
+    required RecordSubmitTicket that,
+  });
+
   Future<void> crateAppendSessionS2AppendSessionClose({
     required S2AppendSession that,
   });
@@ -106,14 +113,7 @@ abstract class RustLibApi extends BaseApi {
 
   Future<void> crateBasinS2BasinListAllStreams({required S2Basin that});
 
-  Future<void> crateBasinS2BasinListStreams({required S2Basin that});
-
   Future<void> crateBasinS2BasinReconfigureStream({required S2Basin that});
-
-  Future<S2Stream> crateBasinS2BasinStream({
-    required S2Basin that,
-    required String name,
-  });
 
   Future<void> crateClientS2ClientBasin({required S2Client that});
 
@@ -169,33 +169,25 @@ abstract class RustLibApi extends BaseApi {
     required ReadInput input,
   });
 
-  Future<AppendAck> crateAppendSessionBatchSubmitTicketAck({
-    required BatchSubmitTicket that,
-  });
-
   Future<void> crateInitApp();
 
-  Future<IndexedAppendAck> crateProducerRecordSubmitTicketAck({
-    required RecordSubmitTicket that,
-  });
-
   RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_OptionBatchSubmitTicket;
+  get rust_arc_increment_strong_count_BatchSubmitTicket;
 
   RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_OptionBatchSubmitTicket;
+  get rust_arc_decrement_strong_count_BatchSubmitTicket;
 
   CrossPlatformFinalizerArg
-  get rust_arc_decrement_strong_count_OptionBatchSubmitTicketPtr;
+  get rust_arc_decrement_strong_count_BatchSubmitTicketPtr;
 
   RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_OptionRecordSubmitTicket;
+  get rust_arc_increment_strong_count_RecordSubmitTicket;
 
   RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_OptionRecordSubmitTicket;
+  get rust_arc_decrement_strong_count_RecordSubmitTicket;
 
   CrossPlatformFinalizerArg
-  get rust_arc_decrement_strong_count_OptionRecordSubmitTicketPtr;
+  get rust_arc_decrement_strong_count_RecordSubmitTicketPtr;
 
   RustArcIncrementStrongCountFnType
   get rust_arc_increment_strong_count_S2AppendSession;
@@ -246,6 +238,78 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
+  Future<AppendAck> crateAppendSessionBatchSubmitTicketAck({
+    required BatchSubmitTicket that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 1,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_append_ack,
+          decodeErrorData: sse_decode_s_2_error,
+        ),
+        constMeta: kCrateAppendSessionBatchSubmitTicketAckConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateAppendSessionBatchSubmitTicketAckConstMeta =>
+      const TaskConstMeta(
+        debugName: "BatchSubmitTicket_ack",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<IndexedAppendAck> crateProducerRecordSubmitTicketAck({
+    required RecordSubmitTicket that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 2,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_indexed_append_ack,
+          decodeErrorData: sse_decode_s_2_error,
+        ),
+        constMeta: kCrateProducerRecordSubmitTicketAckConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateProducerRecordSubmitTicketAckConstMeta =>
+      const TaskConstMeta(
+        debugName: "RecordSubmitTicket_ack",
+        argNames: ["that"],
+      );
+
+  @override
   Future<void> crateAppendSessionS2AppendSessionClose({
     required S2AppendSession that,
   }) {
@@ -260,7 +324,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 1,
+            funcId: 3,
             port: port_,
           );
         },
@@ -298,12 +362,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 2,
+            funcId: 4,
             port: port_,
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_batch_submit_ticket,
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket,
           decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateAppendSessionS2AppendSessionSubmitConstMeta,
@@ -334,7 +399,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 3,
+            funcId: 5,
             port: port_,
           );
         },
@@ -368,7 +433,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 4,
+            funcId: 6,
             port: port_,
           );
         },
@@ -402,7 +467,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 5,
+            funcId: 7,
             port: port_,
           );
         },
@@ -436,7 +501,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 6,
+            funcId: 8,
             port: port_,
           );
         },
@@ -470,7 +535,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 7,
+            funcId: 9,
             port: port_,
           );
         },
@@ -492,40 +557,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<void> crateBasinS2BasinListStreams({required S2Basin that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Basin(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 8,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateBasinS2BasinListStreamsConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateBasinS2BasinListStreamsConstMeta =>
-      const TaskConstMeta(
-        debugName: "S2Basin_list_streams",
-        argNames: ["that"],
-      );
-
-  @override
   Future<void> crateBasinS2BasinReconfigureStream({required S2Basin that}) {
     return handler.executeNormal(
       NormalTask(
@@ -538,7 +569,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 9,
+            funcId: 10,
             port: port_,
           );
         },
@@ -558,44 +589,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         debugName: "S2Basin_reconfigure_stream",
         argNames: ["that"],
       );
-
-  @override
-  Future<S2Stream> crateBasinS2BasinStream({
-    required S2Basin that,
-    required String name,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Basin(
-            that,
-            serializer,
-          );
-          sse_encode_String(name, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 10,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData:
-              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Stream,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateBasinS2BasinStreamConstMeta,
-        argValues: [that, name],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateBasinS2BasinStreamConstMeta => const TaskConstMeta(
-    debugName: "S2Basin_stream",
-    argNames: ["that", "name"],
-  );
 
   @override
   Future<void> crateClientS2ClientBasin({required S2Client that}) {
@@ -1052,7 +1045,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_record_submit_ticket,
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket,
           decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateProducerS2ProducerSubmitConstMeta,
@@ -1286,39 +1280,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<AppendAck> crateAppendSessionBatchSubmitTicketAck({
-    required BatchSubmitTicket that,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_box_autoadd_batch_submit_ticket(that, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 31,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_append_ack,
-          decodeErrorData: sse_decode_s_2_error,
-        ),
-        constMeta: kCrateAppendSessionBatchSubmitTicketAckConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateAppendSessionBatchSubmitTicketAckConstMeta =>
-      const TaskConstMeta(
-        debugName: "batch_submit_ticket_ack",
-        argNames: ["that"],
-      );
-
-  @override
   Future<void> crateInitApp() {
     return handler.executeNormal(
       NormalTask(
@@ -1327,7 +1288,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 32,
+            funcId: 31,
             port: port_,
           );
         },
@@ -1345,54 +1306,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateInitAppConstMeta =>
       const TaskConstMeta(debugName: "init_app", argNames: []);
 
-  @override
-  Future<IndexedAppendAck> crateProducerRecordSubmitTicketAck({
-    required RecordSubmitTicket that,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_box_autoadd_record_submit_ticket(that, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 33,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_indexed_append_ack,
-          decodeErrorData: sse_decode_s_2_error,
-        ),
-        constMeta: kCrateProducerRecordSubmitTicketAckConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateProducerRecordSubmitTicketAckConstMeta =>
-      const TaskConstMeta(
-        debugName: "record_submit_ticket_ack",
-        argNames: ["that"],
-      );
-
   RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_OptionBatchSubmitTicket => wire
-      .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket;
+  get rust_arc_increment_strong_count_BatchSubmitTicket => wire
+      .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket;
 
   RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_OptionBatchSubmitTicket => wire
-      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket;
+  get rust_arc_decrement_strong_count_BatchSubmitTicket => wire
+      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket;
 
   RustArcIncrementStrongCountFnType
-  get rust_arc_increment_strong_count_OptionRecordSubmitTicket => wire
-      .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket;
+  get rust_arc_increment_strong_count_RecordSubmitTicket => wire
+      .rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket;
 
   RustArcDecrementStrongCountFnType
-  get rust_arc_decrement_strong_count_OptionRecordSubmitTicket => wire
-      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket;
+  get rust_arc_decrement_strong_count_RecordSubmitTicket => wire
+      .rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket;
 
   RustArcIncrementStrongCountFnType
   get rust_arc_increment_strong_count_S2AppendSession => wire
@@ -1441,25 +1369,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  OptionBatchSubmitTicket
-  dco_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-      raw,
-    );
+    return BatchSubmitTicketImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
-  OptionRecordSubmitTicket
-  dco_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-      raw,
-    );
+    return RecordSubmitTicketImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
@@ -1553,25 +1477,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  OptionBatchSubmitTicket
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return OptionBatchSubmitTicketImpl.frbInternalDcoDecode(
-      raw as List<dynamic>,
-    );
+    return BatchSubmitTicketImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
-  OptionRecordSubmitTicket
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return OptionRecordSubmitTicketImpl.frbInternalDcoDecode(
-      raw as List<dynamic>,
-    );
+    return RecordSubmitTicketImpl.frbInternalDcoDecode(raw as List<dynamic>);
   }
 
   @protected
@@ -1690,20 +1610,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  BatchSubmitTicket dco_decode_batch_submit_ticket(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 1)
-      throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
-    return BatchSubmitTicket(
-      ticket:
-          dco_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-            arr[0],
-          ),
-    );
-  }
-
-  @protected
   bool dco_decode_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as bool;
@@ -1728,12 +1634,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  BatchSubmitTicket dco_decode_box_autoadd_batch_submit_ticket(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_batch_submit_ticket(raw);
-  }
-
-  @protected
   ClientConfig dco_decode_box_autoadd_client_config(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_client_config(raw);
@@ -1749,12 +1649,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ReadInput dco_decode_box_autoadd_read_input(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_read_input(raw);
-  }
-
-  @protected
-  RecordSubmitTicket dco_decode_box_autoadd_record_submit_ticket(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_record_submit_ticket(raw);
   }
 
   @protected
@@ -1997,20 +1891,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  RecordSubmitTicket dco_decode_record_submit_ticket(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 1)
-      throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
-    return RecordSubmitTicket(
-      ticket:
-          dco_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-            arr[0],
-          ),
-    );
-  }
-
-  @protected
   RetryConfig dco_decode_retry_config(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
@@ -2099,29 +1979,27 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  OptionBatchSubmitTicket
-  sse_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner =
-        sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-          deserializer,
-        );
-    return inner;
+    return BatchSubmitTicketImpl.frbInternalSseDecode(
+      sse_decode_usize(deserializer),
+      sse_decode_i_32(deserializer),
+    );
   }
 
   @protected
-  OptionRecordSubmitTicket
-  sse_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner =
-        sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-          deserializer,
-        );
-    return inner;
+    return RecordSubmitTicketImpl.frbInternalSseDecode(
+      sse_decode_usize(deserializer),
+      sse_decode_i_32(deserializer),
+    );
   }
 
   @protected
@@ -2245,24 +2123,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  OptionBatchSubmitTicket
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return OptionBatchSubmitTicketImpl.frbInternalSseDecode(
+    return BatchSubmitTicketImpl.frbInternalSseDecode(
       sse_decode_usize(deserializer),
       sse_decode_i_32(deserializer),
     );
   }
 
   @protected
-  OptionRecordSubmitTicket
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return OptionRecordSubmitTicketImpl.frbInternalSseDecode(
+    return RecordSubmitTicketImpl.frbInternalSseDecode(
       sse_decode_usize(deserializer),
       sse_decode_i_32(deserializer),
     );
@@ -2400,18 +2278,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  BatchSubmitTicket sse_decode_batch_submit_ticket(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_ticket =
-        sse_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-          deserializer,
-        );
-    return BatchSubmitTicket(ticket: var_ticket);
-  }
-
-  @protected
   bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8() != 0;
@@ -2442,14 +2308,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  BatchSubmitTicket sse_decode_box_autoadd_batch_submit_ticket(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_batch_submit_ticket(deserializer));
-  }
-
-  @protected
   ClientConfig sse_decode_box_autoadd_client_config(
     SseDeserializer deserializer,
   ) {
@@ -2467,14 +2325,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ReadInput sse_decode_box_autoadd_read_input(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_read_input(deserializer));
-  }
-
-  @protected
-  RecordSubmitTicket sse_decode_box_autoadd_record_submit_ticket(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_record_submit_ticket(deserializer));
   }
 
   @protected
@@ -2782,18 +2632,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  RecordSubmitTicket sse_decode_record_submit_ticket(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_ticket =
-        sse_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-          deserializer,
-        );
-    return RecordSubmitTicket(ticket: var_ticket);
-  }
-
-  @protected
   RetryConfig sse_decode_retry_config(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var var_maxAttempts = sse_decode_opt_box_autoadd_u_32(deserializer);
@@ -2883,26 +2721,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void
-  sse_encode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-    OptionBatchSubmitTicket self,
+  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
+    BatchSubmitTicket self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-      self,
+    sse_encode_usize(
+      (self as BatchSubmitTicketImpl).frbInternalSseEncode(move: true),
       serializer,
     );
   }
 
   @protected
   void
-  sse_encode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-    OptionRecordSubmitTicket self,
+  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
+    RecordSubmitTicket self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-      self,
+    sse_encode_usize(
+      (self as RecordSubmitTicketImpl).frbInternalSseEncode(move: true),
       serializer,
     );
   }
@@ -3039,26 +2877,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   @protected
   void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-    OptionBatchSubmitTicket self,
+  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
+    BatchSubmitTicket self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(
-      (self as OptionBatchSubmitTicketImpl).frbInternalSseEncode(move: null),
+      (self as BatchSubmitTicketImpl).frbInternalSseEncode(move: null),
       serializer,
     );
   }
 
   @protected
   void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-    OptionRecordSubmitTicket self,
+  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
+    RecordSubmitTicket self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_usize(
-      (self as OptionRecordSubmitTicketImpl).frbInternalSseEncode(move: null),
+      (self as RecordSubmitTicketImpl).frbInternalSseEncode(move: null),
       serializer,
     );
   }
@@ -3197,18 +3035,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_batch_submit_ticket(
-    BatchSubmitTicket self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-      self.ticket,
-      serializer,
-    );
-  }
-
-  @protected
   void sse_encode_bool(bool self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self ? 1 : 0);
@@ -3242,15 +3068,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_box_autoadd_batch_submit_ticket(
-    BatchSubmitTicket self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_batch_submit_ticket(self, serializer);
-  }
-
-  @protected
   void sse_encode_box_autoadd_client_config(
     ClientConfig self,
     SseSerializer serializer,
@@ -3275,15 +3092,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_read_input(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_record_submit_ticket(
-    RecordSubmitTicket self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_record_submit_ticket(self, serializer);
   }
 
   @protected
@@ -3562,18 +3370,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_record_submit_ticket(
-    RecordSubmitTicket self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-      self.ticket,
-      serializer,
-    );
-  }
-
-  @protected
   void sse_encode_retry_config(RetryConfig self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_opt_box_autoadd_u_32(self.maxAttempts, serializer);
@@ -3647,61 +3443,57 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 }
 
 @sealed
-class OptionBatchSubmitTicketImpl extends RustOpaque
-    implements OptionBatchSubmitTicket {
+class BatchSubmitTicketImpl extends RustOpaque implements BatchSubmitTicket {
   // Not to be used by end users
-  OptionBatchSubmitTicketImpl.frbInternalDcoDecode(List<dynamic> wire)
+  BatchSubmitTicketImpl.frbInternalDcoDecode(List<dynamic> wire)
     : super.frbInternalDcoDecode(wire, _kStaticData);
 
   // Not to be used by end users
-  OptionBatchSubmitTicketImpl.frbInternalSseDecode(
+  BatchSubmitTicketImpl.frbInternalSseDecode(
     BigInt ptr,
     int externalSizeOnNative,
   ) : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
 
   static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount: RustLib
-        .instance
-        .api
-        .rust_arc_increment_strong_count_OptionBatchSubmitTicket,
-    rustArcDecrementStrongCount: RustLib
-        .instance
-        .api
-        .rust_arc_decrement_strong_count_OptionBatchSubmitTicket,
+    rustArcIncrementStrongCount:
+        RustLib.instance.api.rust_arc_increment_strong_count_BatchSubmitTicket,
+    rustArcDecrementStrongCount:
+        RustLib.instance.api.rust_arc_decrement_strong_count_BatchSubmitTicket,
     rustArcDecrementStrongCountPtr: RustLib
         .instance
         .api
-        .rust_arc_decrement_strong_count_OptionBatchSubmitTicketPtr,
+        .rust_arc_decrement_strong_count_BatchSubmitTicketPtr,
   );
+
+  Future<AppendAck> ack() =>
+      RustLib.instance.api.crateAppendSessionBatchSubmitTicketAck(that: this);
 }
 
 @sealed
-class OptionRecordSubmitTicketImpl extends RustOpaque
-    implements OptionRecordSubmitTicket {
+class RecordSubmitTicketImpl extends RustOpaque implements RecordSubmitTicket {
   // Not to be used by end users
-  OptionRecordSubmitTicketImpl.frbInternalDcoDecode(List<dynamic> wire)
+  RecordSubmitTicketImpl.frbInternalDcoDecode(List<dynamic> wire)
     : super.frbInternalDcoDecode(wire, _kStaticData);
 
   // Not to be used by end users
-  OptionRecordSubmitTicketImpl.frbInternalSseDecode(
+  RecordSubmitTicketImpl.frbInternalSseDecode(
     BigInt ptr,
     int externalSizeOnNative,
   ) : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
 
   static final _kStaticData = RustArcStaticData(
-    rustArcIncrementStrongCount: RustLib
-        .instance
-        .api
-        .rust_arc_increment_strong_count_OptionRecordSubmitTicket,
-    rustArcDecrementStrongCount: RustLib
-        .instance
-        .api
-        .rust_arc_decrement_strong_count_OptionRecordSubmitTicket,
+    rustArcIncrementStrongCount:
+        RustLib.instance.api.rust_arc_increment_strong_count_RecordSubmitTicket,
+    rustArcDecrementStrongCount:
+        RustLib.instance.api.rust_arc_decrement_strong_count_RecordSubmitTicket,
     rustArcDecrementStrongCountPtr: RustLib
         .instance
         .api
-        .rust_arc_decrement_strong_count_OptionRecordSubmitTicketPtr,
+        .rust_arc_decrement_strong_count_RecordSubmitTicketPtr,
   );
+
+  Future<IndexedAppendAck> ack() =>
+      RustLib.instance.api.crateProducerRecordSubmitTicketAck(that: this);
 }
 
 @sealed
@@ -3766,14 +3558,8 @@ class S2BasinImpl extends RustOpaque implements S2Basin {
   Future<void> listAllStreams() =>
       RustLib.instance.api.crateBasinS2BasinListAllStreams(that: this);
 
-  Future<void> listStreams() =>
-      RustLib.instance.api.crateBasinS2BasinListStreams(that: this);
-
   Future<void> reconfigureStream() =>
       RustLib.instance.api.crateBasinS2BasinReconfigureStream(that: this);
-
-  Future<S2Stream> stream({required String name}) =>
-      RustLib.instance.api.crateBasinS2BasinStream(that: this, name: name);
 }
 
 @sealed

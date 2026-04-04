@@ -2,11 +2,6 @@ use std::str::FromStr;
 
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
 
-pub use s2_sdk::producer::{
-    IndexedAppendAck as _IndexedAppendAck, Producer as _Producer,
-    RecordSubmitTicket as _RecordSubmitTicket,
-};
-
 use crate::{
     error::S2Error,
     types::{AppendAck, AppendRecord},
@@ -14,11 +9,11 @@ use crate::{
 
 #[frb(opaque)]
 pub struct S2Producer {
-    producer: RustAutoOpaqueNom<Option<_Producer>>,
+    producer: RustAutoOpaqueNom<Option<s2_sdk::producer::Producer>>,
 }
 
 impl S2Producer {
-    pub(crate) fn new(producer: _Producer) -> S2Producer {
+    pub(crate) fn new(producer: s2_sdk::producer::Producer) -> S2Producer {
         S2Producer {
             producer: RustAutoOpaqueNom::new(Some(producer)),
         }
@@ -51,12 +46,13 @@ impl S2Producer {
     }
 }
 
+#[frb(opaque)]
 pub struct RecordSubmitTicket {
-    pub ticket: RustAutoOpaqueNom<Option<_RecordSubmitTicket>>,
+    pub(crate) ticket: RustAutoOpaqueNom<Option<s2_sdk::producer::RecordSubmitTicket>>,
 }
 
-impl From<_RecordSubmitTicket> for RecordSubmitTicket {
-    fn from(ticket: _RecordSubmitTicket) -> Self {
+impl From<s2_sdk::producer::RecordSubmitTicket> for RecordSubmitTicket {
+    fn from(ticket: s2_sdk::producer::RecordSubmitTicket) -> Self {
         RecordSubmitTicket {
             ticket: RustAutoOpaqueNom::new(Some(ticket)),
         }
@@ -77,8 +73,8 @@ pub struct IndexedAppendAck {
     pub batch: AppendAck,
 }
 
-impl From<_IndexedAppendAck> for IndexedAppendAck {
-    fn from(ack: _IndexedAppendAck) -> Self {
+impl From<s2_sdk::producer::IndexedAppendAck> for IndexedAppendAck {
+    fn from(ack: s2_sdk::producer::IndexedAppendAck) -> Self {
         IndexedAppendAck {
             seq_num: ack.seq_num,
             batch: ack.batch.into(),

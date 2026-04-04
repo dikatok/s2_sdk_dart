@@ -5,12 +5,16 @@
 
 import 'error.dart';
 import 'frb_generated.dart';
-import 'lib.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'types.dart';
 
 // These functions are ignored because they are not marked as `pub`: `new`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`
+
+// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<RecordSubmitTicket>>
+abstract class RecordSubmitTicket implements RustOpaqueInterface {
+  Future<IndexedAppendAck> ack();
+}
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Producer>>
 abstract class S2Producer implements RustOpaqueInterface {
@@ -35,23 +39,4 @@ class IndexedAppendAck {
           runtimeType == other.runtimeType &&
           seqNum == other.seqNum &&
           batch == other.batch;
-}
-
-class RecordSubmitTicket {
-  final OptionRecordSubmitTicket ticket;
-
-  const RecordSubmitTicket({required this.ticket});
-
-  Future<IndexedAppendAck> ack() =>
-      RustLib.instance.api.crateProducerRecordSubmitTicketAck(that: this);
-
-  @override
-  int get hashCode => ticket.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RecordSubmitTicket &&
-          runtimeType == other.runtimeType &&
-          ticket == other.ticket;
 }

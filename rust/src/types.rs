@@ -1,22 +1,12 @@
 use std::{num::NonZeroU32, str::FromStr, time::Duration};
 
-pub use s2_sdk::types::{
-    AccountEndpoint, AppendAck as _AppendAck, AppendInput as _AppendInput,
-    AppendRecord as _AppendRecord, AppendRecordBatch as _AppendRecordBatch,
-    AppendRetryPolicy as _AppendRetryPolicy, BasinEndpoint, Compression as _Compression,
-    FencingToken, Header, ReadBatch as _ReadBatch, ReadFrom as _ReadFrom, ReadInput as _ReadInput,
-    ReadLimits as _ReadLimits, ReadStart as _ReadStart, ReadStop as _ReadStop,
-    RetryConfig as _RetryConfig, S2Config as _S2Config, S2Endpoints,
-    SequencedRecord as _SequencedRecord, StreamPosition as _StreamPosition,
-};
-
 pub struct StreamPosition {
     pub seq_num: u64,
     pub timestamp: u64,
 }
 
-impl From<_StreamPosition> for StreamPosition {
-    fn from(value: _StreamPosition) -> Self {
+impl From<s2_sdk::types::StreamPosition> for StreamPosition {
+    fn from(value: s2_sdk::types::StreamPosition) -> Self {
         Self {
             seq_num: value.seq_num,
             timestamp: value.timestamp,
@@ -33,28 +23,28 @@ pub struct ClientConfig {
     pub retry_config: Option<RetryConfig>,
 }
 
-impl Into<_S2Config> for ClientConfig {
-    fn into(self) -> _S2Config {
-        let mut config = _S2Config::new(self.access_token);
-        if let Some(endpoint) = self.endpoint {
+impl From<ClientConfig> for s2_sdk::types::S2Config {
+    fn from(val: ClientConfig) -> Self {
+        let mut config = s2_sdk::types::S2Config::new(val.access_token);
+        if let Some(endpoint) = val.endpoint {
             config = config.with_endpoints(
-                S2Endpoints::new(
-                    AccountEndpoint::from_str(&endpoint).unwrap(),
-                    BasinEndpoint::from_str(&endpoint).unwrap(),
+                s2_sdk::types::S2Endpoints::new(
+                    s2_sdk::types::AccountEndpoint::from_str(&endpoint).unwrap(),
+                    s2_sdk::types::BasinEndpoint::from_str(&endpoint).unwrap(),
                 )
                 .unwrap(),
             );
         }
-        if let Some(timeout) = self.connection_timeout_millis {
+        if let Some(timeout) = val.connection_timeout_millis {
             config = config.with_connection_timeout(Duration::from_millis(timeout));
         }
-        if let Some(timeout) = self.request_timeout_millis {
+        if let Some(timeout) = val.request_timeout_millis {
             config = config.with_request_timeout(Duration::from_millis(timeout));
         }
-        if let Some(compression) = self.compression {
+        if let Some(compression) = val.compression {
             config = config.with_compression(compression.into());
         }
-        if let Some(retry_config) = self.retry_config {
+        if let Some(retry_config) = val.retry_config {
             config = config.with_retry(retry_config.into());
         }
         config
@@ -67,12 +57,12 @@ pub enum Compression {
     Zstd,
 }
 
-impl Into<_Compression> for Compression {
-    fn into(self) -> _Compression {
-        match self {
-            Compression::None => _Compression::None,
-            Compression::Gzip => _Compression::Gzip,
-            Compression::Zstd => _Compression::Zstd,
+impl From<Compression> for s2_sdk::types::Compression {
+    fn from(val: Compression) -> Self {
+        match val {
+            Compression::None => s2_sdk::types::Compression::None,
+            Compression::Gzip => s2_sdk::types::Compression::Gzip,
+            Compression::Zstd => s2_sdk::types::Compression::Zstd,
         }
     }
 }
@@ -84,19 +74,19 @@ pub struct RetryConfig {
     pub append_retry_policy: Option<AppendRetryPolicy>,
 }
 
-impl Into<_RetryConfig> for RetryConfig {
-    fn into(self) -> _RetryConfig {
-        let mut config = _RetryConfig::default();
-        if let Some(attempts) = self.max_attempts {
+impl From<RetryConfig> for s2_sdk::types::RetryConfig {
+    fn from(val: RetryConfig) -> Self {
+        let mut config = s2_sdk::types::RetryConfig::default();
+        if let Some(attempts) = val.max_attempts {
             config = config.with_max_attempts(NonZeroU32::new(attempts).unwrap());
         }
-        if let Some(min_delay) = self.min_base_delay_millis {
+        if let Some(min_delay) = val.min_base_delay_millis {
             config = config.with_min_base_delay(Duration::from_millis(min_delay));
         }
-        if let Some(max_delay) = self.max_base_delay_millis {
+        if let Some(max_delay) = val.max_base_delay_millis {
             config = config.with_max_base_delay(Duration::from_millis(max_delay));
         }
-        if let Some(retry_policy) = self.append_retry_policy {
+        if let Some(retry_policy) = val.append_retry_policy {
             config = config.with_append_retry_policy(retry_policy.into());
         }
         config
@@ -108,11 +98,11 @@ pub enum AppendRetryPolicy {
     NoSideEffects,
 }
 
-impl Into<_AppendRetryPolicy> for AppendRetryPolicy {
-    fn into(self) -> _AppendRetryPolicy {
-        match self {
-            AppendRetryPolicy::All => _AppendRetryPolicy::All,
-            AppendRetryPolicy::NoSideEffects => _AppendRetryPolicy::NoSideEffects,
+impl From<AppendRetryPolicy> for s2_sdk::types::AppendRetryPolicy {
+    fn from(val: AppendRetryPolicy) -> Self {
+        match val {
+            AppendRetryPolicy::All => s2_sdk::types::AppendRetryPolicy::All,
+            AppendRetryPolicy::NoSideEffects => s2_sdk::types::AppendRetryPolicy::NoSideEffects,
         }
     }
 }
@@ -122,11 +112,11 @@ pub struct ReadInput {
     pub stop: ReadStop,
 }
 
-impl Into<_ReadInput> for ReadInput {
-    fn into(self) -> _ReadInput {
-        _ReadInput::new()
-            .with_start(self.start.into())
-            .with_stop(self.stop.into())
+impl From<ReadInput> for s2_sdk::types::ReadInput {
+    fn from(val: ReadInput) -> Self {
+        s2_sdk::types::ReadInput::new()
+            .with_start(val.start.into())
+            .with_stop(val.stop.into())
     }
 }
 
@@ -135,11 +125,11 @@ pub struct ReadStart {
     pub clamp_to_tail: bool,
 }
 
-impl Into<_ReadStart> for ReadStart {
-    fn into(self) -> _ReadStart {
-        let mut start = _ReadStart::new();
-        start = start.with_from(self.from.into());
-        start = start.with_clamp_to_tail(self.clamp_to_tail);
+impl From<ReadStart> for s2_sdk::types::ReadStart {
+    fn from(val: ReadStart) -> Self {
+        let mut start = s2_sdk::types::ReadStart::new();
+        start = start.with_from(val.from.into());
+        start = start.with_clamp_to_tail(val.clamp_to_tail);
         start
     }
 }
@@ -150,12 +140,12 @@ pub enum ReadFrom {
     TailOffset(u64),
 }
 
-impl Into<_ReadFrom> for ReadFrom {
-    fn into(self) -> _ReadFrom {
-        match self {
-            ReadFrom::SeqNum(seq_num) => _ReadFrom::SeqNum(seq_num),
-            ReadFrom::Timestamp(timestamp) => _ReadFrom::Timestamp(timestamp),
-            ReadFrom::TailOffset(offset) => _ReadFrom::TailOffset(offset),
+impl From<ReadFrom> for s2_sdk::types::ReadFrom {
+    fn from(val: ReadFrom) -> Self {
+        match val {
+            ReadFrom::SeqNum(seq_num) => s2_sdk::types::ReadFrom::SeqNum(seq_num),
+            ReadFrom::Timestamp(timestamp) => s2_sdk::types::ReadFrom::Timestamp(timestamp),
+            ReadFrom::TailOffset(offset) => s2_sdk::types::ReadFrom::TailOffset(offset),
         }
     }
 }
@@ -166,13 +156,13 @@ pub struct ReadStop {
     pub wait_secs: Option<u32>,
 }
 
-impl Into<_ReadStop> for ReadStop {
-    fn into(self) -> _ReadStop {
-        let mut stop = _ReadStop::new().with_limits(self.limits.into());
-        if let Some(until) = self.until_timestamp {
+impl From<ReadStop> for s2_sdk::types::ReadStop {
+    fn from(val: ReadStop) -> Self {
+        let mut stop = s2_sdk::types::ReadStop::new().with_limits(val.limits.into());
+        if let Some(until) = val.until_timestamp {
             stop = stop.with_until(std::ops::RangeTo { end: until });
         }
-        if let Some(wait) = self.wait_secs {
+        if let Some(wait) = val.wait_secs {
             stop = stop.with_wait(wait);
         }
         stop
@@ -184,13 +174,13 @@ pub struct ReadLimits {
     pub bytes: Option<usize>,
 }
 
-impl Into<_ReadLimits> for ReadLimits {
-    fn into(self) -> _ReadLimits {
-        let mut limits = _ReadLimits::new();
-        if let Some(count) = self.count {
+impl From<ReadLimits> for s2_sdk::types::ReadLimits {
+    fn from(val: ReadLimits) -> Self {
+        let mut limits = s2_sdk::types::ReadLimits::new();
+        if let Some(count) = val.count {
             limits = limits.with_count(count);
         }
-        if let Some(bytes) = self.bytes {
+        if let Some(bytes) = val.bytes {
             limits = limits.with_bytes(bytes);
         }
         limits
@@ -202,8 +192,8 @@ pub struct ReadBatch {
     pub tail: Option<StreamPosition>,
 }
 
-impl From<_ReadBatch> for ReadBatch {
-    fn from(value: _ReadBatch) -> Self {
+impl From<s2_sdk::types::ReadBatch> for ReadBatch {
+    fn from(value: s2_sdk::types::ReadBatch) -> Self {
         Self {
             records: value.records.into_iter().map(Into::into).collect(),
             tail: value.tail.map(Into::into),
@@ -218,8 +208,8 @@ pub struct SequencedRecord {
     pub timestamp: u64,
 }
 
-impl From<_SequencedRecord> for SequencedRecord {
-    fn from(value: _SequencedRecord) -> Self {
+impl From<s2_sdk::types::SequencedRecord> for SequencedRecord {
+    fn from(value: s2_sdk::types::SequencedRecord) -> Self {
         Self {
             seq_num: value.seq_num,
             body: value.body.into(),
@@ -239,14 +229,15 @@ pub struct AppendInput {
     pub fencing_token: Option<String>,
 }
 
-impl Into<_AppendInput> for AppendInput {
-    fn into(self) -> _AppendInput {
-        let mut input = _AppendInput::new(self.records.into());
-        if let Some(seq_num) = self.match_seq_num {
+impl From<AppendInput> for s2_sdk::types::AppendInput {
+    fn from(val: AppendInput) -> Self {
+        let mut input = s2_sdk::types::AppendInput::new(val.records.into());
+        if let Some(seq_num) = val.match_seq_num {
             input = input.with_match_seq_num(seq_num);
         }
-        if let Some(token) = self.fencing_token {
-            input = input.with_fencing_token(FencingToken::from_str(&token).unwrap());
+        if let Some(token) = val.fencing_token {
+            input =
+                input.with_fencing_token(s2_sdk::types::FencingToken::from_str(&token).unwrap());
         }
         input
     }
@@ -256,9 +247,10 @@ pub struct AppendRecordBatch {
     pub records: Vec<AppendRecord>,
 }
 
-impl Into<_AppendRecordBatch> for AppendRecordBatch {
-    fn into(self) -> _AppendRecordBatch {
-        _AppendRecordBatch::try_from_iter(self.records.into_iter().map(|r| r.into())).unwrap()
+impl From<AppendRecordBatch> for s2_sdk::types::AppendRecordBatch {
+    fn from(val: AppendRecordBatch) -> Self {
+        s2_sdk::types::AppendRecordBatch::try_from_iter(val.records.into_iter().map(|r| r.into()))
+            .unwrap()
     }
 }
 
@@ -268,13 +260,17 @@ pub struct AppendRecord {
     pub timestamp: Option<u64>,
 }
 
-impl Into<_AppendRecord> for AppendRecord {
-    fn into(self) -> _AppendRecord {
-        let mut record = _AppendRecord::new(self.body)
+impl From<AppendRecord> for s2_sdk::types::AppendRecord {
+    fn from(val: AppendRecord) -> Self {
+        let mut record = s2_sdk::types::AppendRecord::new(val.body)
             .unwrap()
-            .with_headers(self.headers.into_iter().map(|(k, v)| Header::new(k, v)))
+            .with_headers(
+                val.headers
+                    .into_iter()
+                    .map(|(k, v)| s2_sdk::types::Header::new(k, v)),
+            )
             .unwrap();
-        if let Some(timestamp) = self.timestamp {
+        if let Some(timestamp) = val.timestamp {
             record = record.with_timestamp(timestamp)
         }
         record
@@ -287,8 +283,8 @@ pub struct AppendAck {
     pub tail: StreamPosition,
 }
 
-impl From<_AppendAck> for AppendAck {
-    fn from(value: _AppendAck) -> Self {
+impl From<s2_sdk::types::AppendAck> for AppendAck {
+    fn from(value: s2_sdk::types::AppendAck) -> Self {
         Self {
             start: value.start.into(),
             end: value.end.into(),

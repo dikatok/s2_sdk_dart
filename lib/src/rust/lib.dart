@@ -6,8 +6,5 @@
 import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// Rust type: RustOpaqueNom<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<Option < _BatchSubmitTicket >>>
-abstract class OptionBatchSubmitTicket implements RustOpaqueInterface {}
-
-// Rust type: RustOpaqueNom<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<Option < _RecordSubmitTicket >>>
+// Rust type: RustOpaqueNom<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<Option < RecordSubmitTicket >>>
 abstract class OptionRecordSubmitTicket implements RustOpaqueInterface {}

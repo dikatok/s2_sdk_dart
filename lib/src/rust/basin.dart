@@ -5,7 +5,6 @@
 
 import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
-import 'stream.dart';
 
 // These functions are ignored because they are not marked as `pub`: `new`
 
@@ -21,9 +20,5 @@ abstract class S2Basin implements RustOpaqueInterface {
 
   Future<void> listAllStreams();
 
-  Future<void> listStreams();
-
   Future<void> reconfigureStream();
-
-  Future<S2Stream> stream({required String name});
 }

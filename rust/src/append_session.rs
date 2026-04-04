@@ -2,11 +2,6 @@ use std::str::FromStr;
 
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
 
-pub(crate) use s2_sdk::append_session::{
-    AppendSession as _AppendSession, AppendSessionConfig as _AppendSessionConfig,
-    BatchSubmitTicket as _BatchSubmitTicket,
-};
-
 use crate::{
     error::S2Error,
     types::{AppendAck, AppendInput},
@@ -14,11 +9,11 @@ use crate::{
 
 #[frb(opaque)]
 pub struct S2AppendSession {
-    session: RustAutoOpaqueNom<Option<_AppendSession>>,
+    session: RustAutoOpaqueNom<Option<s2_sdk::append_session::AppendSession>>,
 }
 
 impl S2AppendSession {
-    pub(crate) fn new(session: _AppendSession) -> S2AppendSession {
+    pub(crate) fn new(session: s2_sdk::append_session::AppendSession) -> S2AppendSession {
         S2AppendSession {
             session: RustAutoOpaqueNom::new(Some(session)),
         }
@@ -51,20 +46,21 @@ impl S2AppendSession {
     }
 }
 
-impl From<_AppendSession> for S2AppendSession {
-    fn from(session: _AppendSession) -> Self {
+impl From<s2_sdk::append_session::AppendSession> for S2AppendSession {
+    fn from(session: s2_sdk::append_session::AppendSession) -> Self {
         S2AppendSession {
             session: RustAutoOpaqueNom::new(Some(session)),
         }
     }
 }
 
+#[frb(opaque)]
 pub struct BatchSubmitTicket {
-    pub ticket: RustAutoOpaqueNom<Option<_BatchSubmitTicket>>,
+    pub(crate) ticket: RustAutoOpaqueNom<Option<s2_sdk::append_session::BatchSubmitTicket>>,
 }
 
-impl From<_BatchSubmitTicket> for BatchSubmitTicket {
-    fn from(ticket: _BatchSubmitTicket) -> Self {
+impl From<s2_sdk::append_session::BatchSubmitTicket> for BatchSubmitTicket {
+    fn from(ticket: s2_sdk::append_session::BatchSubmitTicket) -> Self {
         BatchSubmitTicket {
             ticket: RustAutoOpaqueNom::new(Some(ticket)),
         }

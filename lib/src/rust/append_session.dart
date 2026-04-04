@@ -5,35 +5,20 @@
 
 import 'error.dart';
 import 'frb_generated.dart';
-import 'lib.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'types.dart';
 
 // These functions are ignored because they are not marked as `pub`: `new`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`
 
+// Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<BatchSubmitTicket>>
+abstract class BatchSubmitTicket implements RustOpaqueInterface {
+  Future<AppendAck> ack();
+}
+
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2AppendSession>>
 abstract class S2AppendSession implements RustOpaqueInterface {
   Future<void> close();
 
   Future<BatchSubmitTicket> submit({required AppendInput record});
-}
-
-class BatchSubmitTicket {
-  final OptionBatchSubmitTicket ticket;
-
-  const BatchSubmitTicket({required this.ticket});
-
-  Future<AppendAck> ack() =>
-      RustLib.instance.api.crateAppendSessionBatchSubmitTicketAck(that: this);
-
-  @override
-  int get hashCode => ticket.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BatchSubmitTicket &&
-          runtimeType == other.runtimeType &&
-          ticket == other.ticket;
 }

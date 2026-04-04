@@ -11,7 +11,6 @@ import 'dart:convert';
 import 'dart:ffi' as ffi;
 import 'error.dart';
 import 'frb_generated.dart';
-import 'lib.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated_io.dart';
 import 'producer.dart';
 import 'stream.dart';
@@ -26,12 +25,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   });
 
   CrossPlatformFinalizerArg
-  get rust_arc_decrement_strong_count_OptionBatchSubmitTicketPtr => wire
-      ._rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicketPtr;
+  get rust_arc_decrement_strong_count_BatchSubmitTicketPtr => wire
+      ._rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicketPtr;
 
   CrossPlatformFinalizerArg
-  get rust_arc_decrement_strong_count_OptionRecordSubmitTicketPtr => wire
-      ._rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicketPtr;
+  get rust_arc_decrement_strong_count_RecordSubmitTicketPtr => wire
+      ._rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicketPtr;
 
   CrossPlatformFinalizerArg
   get rust_arc_decrement_strong_count_S2AppendSessionPtr => wire
@@ -57,14 +56,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AnyhowException dco_decode_AnyhowException(dynamic raw);
 
   @protected
-  OptionBatchSubmitTicket
-  dco_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     dynamic raw,
   );
 
   @protected
-  OptionRecordSubmitTicket
-  dco_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     dynamic raw,
   );
 
@@ -129,14 +128,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  OptionBatchSubmitTicket
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     dynamic raw,
   );
 
   @protected
-  OptionRecordSubmitTicket
-  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     dynamic raw,
   );
 
@@ -194,9 +193,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AppendRetryPolicy dco_decode_append_retry_policy(dynamic raw);
 
   @protected
-  BatchSubmitTicket dco_decode_batch_submit_ticket(dynamic raw);
-
-  @protected
   bool dco_decode_bool(dynamic raw);
 
   @protected
@@ -209,9 +205,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AppendRetryPolicy dco_decode_box_autoadd_append_retry_policy(dynamic raw);
 
   @protected
-  BatchSubmitTicket dco_decode_box_autoadd_batch_submit_ticket(dynamic raw);
-
-  @protected
   ClientConfig dco_decode_box_autoadd_client_config(dynamic raw);
 
   @protected
@@ -219,9 +212,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   ReadInput dco_decode_box_autoadd_read_input(dynamic raw);
-
-  @protected
-  RecordSubmitTicket dco_decode_box_autoadd_record_submit_ticket(dynamic raw);
 
   @protected
   RetryConfig dco_decode_box_autoadd_retry_config(dynamic raw);
@@ -312,9 +302,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   dco_decode_record_list_prim_u_8_strict_list_prim_u_8_strict(dynamic raw);
 
   @protected
-  RecordSubmitTicket dco_decode_record_submit_ticket(dynamic raw);
-
-  @protected
   RetryConfig dco_decode_retry_config(dynamic raw);
 
   @protected
@@ -345,14 +332,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
 
   @protected
-  OptionBatchSubmitTicket
-  sse_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     SseDeserializer deserializer,
   );
 
   @protected
-  OptionRecordSubmitTicket
-  sse_decode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     SseDeserializer deserializer,
   );
 
@@ -417,14 +404,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  OptionBatchSubmitTicket
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  BatchSubmitTicket
+  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     SseDeserializer deserializer,
   );
 
   @protected
-  OptionRecordSubmitTicket
-  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  RecordSubmitTicket
+  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     SseDeserializer deserializer,
   );
 
@@ -486,11 +473,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  BatchSubmitTicket sse_decode_batch_submit_ticket(
-    SseDeserializer deserializer,
-  );
-
-  @protected
   bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
@@ -507,11 +489,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  BatchSubmitTicket sse_decode_box_autoadd_batch_submit_ticket(
-    SseDeserializer deserializer,
-  );
-
-  @protected
   ClientConfig sse_decode_box_autoadd_client_config(
     SseDeserializer deserializer,
   );
@@ -521,11 +498,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   ReadInput sse_decode_box_autoadd_read_input(SseDeserializer deserializer);
-
-  @protected
-  RecordSubmitTicket sse_decode_box_autoadd_record_submit_ticket(
-    SseDeserializer deserializer,
-  );
 
   @protected
   RetryConfig sse_decode_box_autoadd_retry_config(SseDeserializer deserializer);
@@ -632,11 +604,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  RecordSubmitTicket sse_decode_record_submit_ticket(
-    SseDeserializer deserializer,
-  );
-
-  @protected
   RetryConfig sse_decode_retry_config(SseDeserializer deserializer);
 
   @protected
@@ -671,15 +638,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void
-  sse_encode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-    OptionBatchSubmitTicket self,
+  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
+    BatchSubmitTicket self,
     SseSerializer serializer,
   );
 
   @protected
   void
-  sse_encode_AutoExplicit_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-    OptionRecordSubmitTicket self,
+  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
+    RecordSubmitTicket self,
     SseSerializer serializer,
   );
 
@@ -755,15 +722,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
-    OptionBatchSubmitTicket self,
+  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
+    BatchSubmitTicket self,
     SseSerializer serializer,
   );
 
   @protected
   void
-  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
-    OptionRecordSubmitTicket self,
+  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
+    RecordSubmitTicket self,
     SseSerializer serializer,
   );
 
@@ -833,12 +800,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  void sse_encode_batch_submit_ticket(
-    BatchSubmitTicket self,
-    SseSerializer serializer,
-  );
-
-  @protected
   void sse_encode_bool(bool self, SseSerializer serializer);
 
   @protected
@@ -860,12 +821,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  void sse_encode_box_autoadd_batch_submit_ticket(
-    BatchSubmitTicket self,
-    SseSerializer serializer,
-  );
-
-  @protected
   void sse_encode_box_autoadd_client_config(
     ClientConfig self,
     SseSerializer serializer,
@@ -880,12 +835,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_box_autoadd_read_input(
     ReadInput self,
-    SseSerializer serializer,
-  );
-
-  @protected
-  void sse_encode_box_autoadd_record_submit_ticket(
-    RecordSubmitTicket self,
     SseSerializer serializer,
   );
 
@@ -1010,12 +959,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  void sse_encode_record_submit_ticket(
-    RecordSubmitTicket self,
-    SseSerializer serializer,
-  );
-
-  @protected
   void sse_encode_retry_config(RetryConfig self, SseSerializer serializer);
 
   @protected
@@ -1064,71 +1007,71 @@ class RustLibWire implements BaseWire {
     : _lookup = dynamicLibrary.lookup;
 
   void
-  rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+    return _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
       ptr,
     );
   }
 
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicketPtr =
+  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicketPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-        'frbgen_s2_sdk_dart_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket',
+        'frbgen_s2_sdk_dart_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket',
       );
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket =
-      _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicketPtr
+  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket =
+      _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicketPtr
           .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
   void
-  rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+  rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket(
+    return _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket(
       ptr,
     );
   }
 
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicketPtr =
+  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicketPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-        'frbgen_s2_sdk_dart_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket',
+        'frbgen_s2_sdk_dart_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket',
       );
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicket =
-      _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_BatchSubmitTicketPtr
+  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicket =
+      _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerBatchSubmitTicketPtr
           .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
   void
-  rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+    return _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
       ptr,
     );
   }
 
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicketPtr =
+  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicketPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-        'frbgen_s2_sdk_dart_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket',
+        'frbgen_s2_sdk_dart_rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket',
       );
-  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket =
-      _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicketPtr
+  late final _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket =
+      _rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicketPtr
           .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
   void
-  rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+  rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
     ffi.Pointer<ffi.Void> ptr,
   ) {
-    return _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket(
+    return _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket(
       ptr,
     );
   }
 
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicketPtr =
+  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicketPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-        'frbgen_s2_sdk_dart_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket',
+        'frbgen_s2_sdk_dart_rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket',
       );
-  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicket =
-      _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerOption_RecordSubmitTicketPtr
+  late final _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicket =
+      _rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerRecordSubmitTicketPtr
           .asFunction<void Function(ffi.Pointer<ffi.Void>)>();
 
   void

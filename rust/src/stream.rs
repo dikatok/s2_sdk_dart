@@ -1,10 +1,7 @@
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
-pub(crate) use s2_sdk::{
-    S2Stream as _Stream, append_session::AppendSessionConfig, producer::ProducerConfig,
-};
 use tokio_stream::StreamExt;
 
-pub(crate) use crate::{
+use crate::{
     append_session::S2AppendSession,
     error::S2Error,
     frb_generated::StreamSink,
@@ -14,11 +11,11 @@ pub(crate) use crate::{
 
 #[frb(opaque)]
 pub struct S2Stream {
-    stream: RustAutoOpaqueNom<_Stream>,
+    stream: RustAutoOpaqueNom<s2_sdk::S2Stream>,
 }
 
 impl S2Stream {
-    pub(crate) fn new(stream: _Stream) -> S2Stream {
+    pub(crate) fn new(stream: s2_sdk::S2Stream) -> S2Stream {
         S2Stream {
             stream: RustAutoOpaqueNom::new(stream),
         }
@@ -54,7 +51,7 @@ impl S2Stream {
             .stream
             .try_read()
             .unwrap()
-            .append_session(AppendSessionConfig::default());
+            .append_session(s2_sdk::append_session::AppendSessionConfig::default());
         Ok(session.into())
     }
 
@@ -63,7 +60,7 @@ impl S2Stream {
             .stream
             .try_read()
             .unwrap()
-            .producer(ProducerConfig::default());
+            .producer(s2_sdk::producer::ProducerConfig::default());
         Ok(S2Producer::new(producer))
     }
 
@@ -99,8 +96,8 @@ impl S2Stream {
     }
 }
 
-impl From<_Stream> for S2Stream {
-    fn from(stream: _Stream) -> Self {
+impl From<s2_sdk::S2Stream> for S2Stream {
+    fn from(stream: s2_sdk::S2Stream) -> Self {
         S2Stream::new(stream)
     }
 }
