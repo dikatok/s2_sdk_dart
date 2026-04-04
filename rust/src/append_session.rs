@@ -13,12 +13,6 @@ pub struct S2AppendSession {
 }
 
 impl S2AppendSession {
-    pub(crate) fn new(session: s2_sdk::append_session::AppendSession) -> S2AppendSession {
-        S2AppendSession {
-            session: RustAutoOpaqueNom::new(Some(session)),
-        }
-    }
-
     pub async fn submit(&self, record: AppendInput) -> Result<BatchSubmitTicket, S2Error> {
         match self
             .session
@@ -36,13 +30,13 @@ impl S2AppendSession {
 
     pub async fn close(self) -> Result<(), S2Error> {
         let guard = self.session.try_write().unwrap().take();
-        if let Some(producer) = guard {
-            match producer.close().await {
+        if let Some(session) = guard {
+            match session.close().await {
                 Ok(()) => return Ok(()),
                 Err(e) => return Err(e.into()),
             }
         }
-        Err(S2Error::from_str("Producer is already closed").unwrap())
+        Err(S2Error::from_str("Session is already closed").unwrap())
     }
 }
 
@@ -75,28 +69,3 @@ impl BatchSubmitTicket {
         }
     }
 }
-
-// struct AppendSessionConfig {
-//     max_unacked_bytes: Option<u32>,
-//     max_unacked_batches: Option<u32>,
-// }
-
-// impl AppendSessionConfig {
-//     pub fn try_into_config(self) -> Result<_AppendSessionConfig, S2Error> {
-//         let mut config = _AppendSessionConfig::default();
-//         if let Some(bytes) = self.max_unacked_bytes {
-//             config = match config.with_max_unacked_bytes(bytes) {
-//                 Ok(config) => config,
-//                 Err(e) => {
-//                     return Err(S2Error::from_str(e.to_string().as_str()).unwrap());
-//                 }
-//             }
-//         }
-//         if let Some(batches) = self.max_unacked_batches
-//             && batches > 0
-//         {
-//             config = config.with_max_unacked_batches(NonZeroU32::new(batches).unwrap());
-//         }
-//         Ok(config)
-//     }
-// }

@@ -193,6 +193,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AppendRetryPolicy dco_decode_append_retry_policy(dynamic raw);
 
   @protected
+  AppendSessionConfig dco_decode_append_session_config(dynamic raw);
+
+  @protected
   bool dco_decode_bool(dynamic raw);
 
   @protected
@@ -203,6 +206,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AppendRetryPolicy dco_decode_box_autoadd_append_retry_policy(dynamic raw);
+
+  @protected
+  AppendSessionConfig dco_decode_box_autoadd_append_session_config(dynamic raw);
 
   @protected
   ClientConfig dco_decode_box_autoadd_client_config(dynamic raw);
@@ -473,6 +479,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  AppendSessionConfig sse_decode_append_session_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
@@ -485,6 +496,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AppendRetryPolicy sse_decode_box_autoadd_append_retry_policy(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  AppendSessionConfig sse_decode_box_autoadd_append_session_config(
     SseDeserializer deserializer,
   );
 
@@ -800,6 +816,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_append_session_config(
+    AppendSessionConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_bool(bool self, SseSerializer serializer);
 
   @protected
@@ -817,6 +839,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_box_autoadd_append_retry_policy(
     AppendRetryPolicy self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_append_session_config(
+    AppendSessionConfig self,
     SseSerializer serializer,
   );
 

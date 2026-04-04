@@ -1,3 +1,5 @@
+use std::{num::NonZeroU32, str::FromStr};
+
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
 use tokio_stream::StreamExt;
 
@@ -42,16 +44,18 @@ impl S2Stream {
         }
     }
 
-    pub async fn append_session(&self) -> Result<S2AppendSession, S2Error> {
-        // let config = match config.try_into_config() {
-        //     Ok(config) => config,
-        //     Err(e) => return Err(e.into()),
-        // };
-        let session = self
-            .stream
-            .try_read()
-            .unwrap()
-            .append_session(s2_sdk::append_session::AppendSessionConfig::default());
+    pub async fn append_session(
+        &self,
+        config: AppendSessionConfig,
+    ) -> Result<S2AppendSession, S2Error> {
+        let session =
+            self.stream
+                .try_read()
+                .unwrap()
+                .append_session(match config.try_into_config() {
+                    Ok(config) => config,
+                    Err(e) => return Err(e.into()),
+                });
         Ok(session.into())
     }
 
@@ -99,5 +103,32 @@ impl S2Stream {
 impl From<s2_sdk::S2Stream> for S2Stream {
     fn from(stream: s2_sdk::S2Stream) -> Self {
         S2Stream::new(stream)
+    }
+}
+
+pub struct AppendSessionConfig {
+    pub max_unacked_bytes: Option<u32>,
+    pub max_unacked_batches: Option<u32>,
+}
+
+impl AppendSessionConfig {
+    pub(crate) fn try_into_config(
+        self,
+    ) -> Result<s2_sdk::append_session::AppendSessionConfig, S2Error> {
+        let mut config = s2_sdk::append_session::AppendSessionConfig::default();
+        if let Some(bytes) = self.max_unacked_bytes {
+            config = match config.with_max_unacked_bytes(bytes) {
+                Ok(config) => config,
+                Err(e) => {
+                    return Err(S2Error::from_str(e.to_string().as_str()).unwrap());
+                }
+            }
+        }
+        if let Some(batches) = self.max_unacked_batches
+            && batches > 0
+        {
+            config = config.with_max_unacked_batches(NonZeroU32::new(batches).unwrap());
+        }
+        Ok(config)
     }
 }

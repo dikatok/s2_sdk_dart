@@ -153,6 +153,7 @@ abstract class RustLibApi extends BaseApi {
 
   Future<S2AppendSession> crateStreamS2StreamAppendSession({
     required S2Stream that,
+    required AppendSessionConfig config,
   });
 
   Future<StreamPosition> crateStreamS2StreamCheckTail({required S2Stream that});
@@ -1102,6 +1103,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   @override
   Future<S2AppendSession> crateStreamS2StreamAppendSession({
     required S2Stream that,
+    required AppendSessionConfig config,
   }) {
     return handler.executeNormal(
       NormalTask(
@@ -1111,6 +1113,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             that,
             serializer,
           );
+          sse_encode_box_autoadd_append_session_config(config, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -1124,7 +1127,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateStreamS2StreamAppendSessionConstMeta,
-        argValues: [that],
+        argValues: [that, config],
         apiImpl: this,
       ),
     );
@@ -1133,7 +1136,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateStreamS2StreamAppendSessionConstMeta =>
       const TaskConstMeta(
         debugName: "S2Stream_append_session",
-        argNames: ["that"],
+        argNames: ["that", "config"],
       );
 
   @override
@@ -1610,6 +1613,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  AppendSessionConfig dco_decode_append_session_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return AppendSessionConfig(
+      maxUnackedBytes: dco_decode_opt_box_autoadd_u_32(arr[0]),
+      maxUnackedBatches: dco_decode_opt_box_autoadd_u_32(arr[1]),
+    );
+  }
+
+  @protected
   bool dco_decode_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as bool;
@@ -1631,6 +1646,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   AppendRetryPolicy dco_decode_box_autoadd_append_retry_policy(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_append_retry_policy(raw);
+  }
+
+  @protected
+  AppendSessionConfig dco_decode_box_autoadd_append_session_config(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_append_session_config(raw);
   }
 
   @protected
@@ -2278,6 +2301,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  AppendSessionConfig sse_decode_append_session_config(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_maxUnackedBytes = sse_decode_opt_box_autoadd_u_32(deserializer);
+    var var_maxUnackedBatches = sse_decode_opt_box_autoadd_u_32(deserializer);
+    return AppendSessionConfig(
+      maxUnackedBytes: var_maxUnackedBytes,
+      maxUnackedBatches: var_maxUnackedBatches,
+    );
+  }
+
+  @protected
   bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8() != 0;
@@ -2305,6 +2341,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_append_retry_policy(deserializer));
+  }
+
+  @protected
+  AppendSessionConfig sse_decode_box_autoadd_append_session_config(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_append_session_config(deserializer));
   }
 
   @protected
@@ -3035,6 +3079,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_append_session_config(
+    AppendSessionConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_opt_box_autoadd_u_32(self.maxUnackedBytes, serializer);
+    sse_encode_opt_box_autoadd_u_32(self.maxUnackedBatches, serializer);
+  }
+
+  @protected
   void sse_encode_bool(bool self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self ? 1 : 0);
@@ -3065,6 +3119,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_append_retry_policy(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_append_session_config(
+    AppendSessionConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_append_session_config(self, serializer);
   }
 
   @protected
@@ -3665,8 +3728,12 @@ class S2StreamImpl extends RustOpaque implements S2Stream {
   Future<AppendAck> append({required AppendInput input}) =>
       RustLib.instance.api.crateStreamS2StreamAppend(that: this, input: input);
 
-  Future<S2AppendSession> appendSession() =>
-      RustLib.instance.api.crateStreamS2StreamAppendSession(that: this);
+  Future<S2AppendSession> appendSession({
+    required AppendSessionConfig config,
+  }) => RustLib.instance.api.crateStreamS2StreamAppendSession(
+    that: this,
+    config: config,
+  );
 
   Future<StreamPosition> checkTail() =>
       RustLib.instance.api.crateStreamS2StreamCheckTail(that: this);

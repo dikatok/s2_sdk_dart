@@ -10,14 +10,14 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'producer.dart';
 import 'types.dart';
 
-// These functions are ignored because they are not marked as `pub`: `new`
+// These functions are ignored because they are not marked as `pub`: `new`, `try_into_config`
 // These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Stream>>
 abstract class S2Stream implements RustOpaqueInterface {
   Future<AppendAck> append({required AppendInput input});
 
-  Future<S2AppendSession> appendSession();
+  Future<S2AppendSession> appendSession({required AppendSessionConfig config});
 
   Future<StreamPosition> checkTail();
 
@@ -26,4 +26,22 @@ abstract class S2Stream implements RustOpaqueInterface {
   Future<ReadBatch> read({required ReadInput input});
 
   Future<Stream<SequencedRecord>> readSession({required ReadInput input});
+}
+
+class AppendSessionConfig {
+  final int? maxUnackedBytes;
+  final int? maxUnackedBatches;
+
+  const AppendSessionConfig({this.maxUnackedBytes, this.maxUnackedBatches});
+
+  @override
+  int get hashCode => maxUnackedBytes.hashCode ^ maxUnackedBatches.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AppendSessionConfig &&
+          runtimeType == other.runtimeType &&
+          maxUnackedBytes == other.maxUnackedBytes &&
+          maxUnackedBatches == other.maxUnackedBatches;
 }

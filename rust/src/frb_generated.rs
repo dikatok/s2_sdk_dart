@@ -1400,6 +1400,7 @@ fn wire__crate__stream__S2Stream_append_session_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Stream>,
             >>::sse_decode(&mut deserializer);
+            let api_config = <crate::stream::AppendSessionConfig>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
                 transform_result_sse::<_, crate::error::S2Error>(
@@ -1422,7 +1423,8 @@ fn wire__crate__stream__S2Stream_append_session_impl(
                         }
                         let api_that_guard = api_that_guard.unwrap();
                         let output_ok =
-                            crate::stream::S2Stream::append_session(&*api_that_guard).await?;
+                            crate::stream::S2Stream::append_session(&*api_that_guard, api_config)
+                                .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -1952,6 +1954,18 @@ impl SseDecode for crate::types::AppendRetryPolicy {
             0 => crate::types::AppendRetryPolicy::All,
             1 => crate::types::AppendRetryPolicy::NoSideEffects,
             _ => unreachable!("Invalid variant for AppendRetryPolicy: {}", inner),
+        };
+    }
+}
+
+impl SseDecode for crate::stream::AppendSessionConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_maxUnackedBytes = <Option<u32>>::sse_decode(deserializer);
+        let mut var_maxUnackedBatches = <Option<u32>>::sse_decode(deserializer);
+        return crate::stream::AppendSessionConfig {
+            max_unacked_bytes: var_maxUnackedBytes,
+            max_unacked_batches: var_maxUnackedBatches,
         };
     }
 }
@@ -2630,6 +2644,27 @@ impl flutter_rust_bridge::IntoIntoDart<crate::types::AppendRetryPolicy>
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::stream::AppendSessionConfig {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.max_unacked_bytes.into_into_dart().into_dart(),
+            self.max_unacked_batches.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::stream::AppendSessionConfig
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::stream::AppendSessionConfig>
+    for crate::stream::AppendSessionConfig
+{
+    fn into_into_dart(self) -> crate::stream::AppendSessionConfig {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::types::ClientConfig {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -3056,6 +3091,14 @@ impl SseEncode for crate::types::AppendRetryPolicy {
             },
             serializer,
         );
+    }
+}
+
+impl SseEncode for crate::stream::AppendSessionConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Option<u32>>::sse_encode(self.max_unacked_bytes, serializer);
+        <Option<u32>>::sse_encode(self.max_unacked_batches, serializer);
     }
 }
 
