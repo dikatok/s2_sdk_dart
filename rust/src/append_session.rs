@@ -13,6 +13,12 @@ pub struct S2AppendSession {
 }
 
 impl S2AppendSession {
+    pub(crate) fn new(session: s2_sdk::append_session::AppendSession) -> S2AppendSession {
+        S2AppendSession {
+            session: RustAutoOpaqueNom::new(Some(session)),
+        }
+    }
+
     pub async fn submit(&self, record: AppendInput) -> Result<BatchSubmitTicket, S2Error> {
         match self
             .session
@@ -42,9 +48,7 @@ impl S2AppendSession {
 
 impl From<s2_sdk::append_session::AppendSession> for S2AppendSession {
     fn from(session: s2_sdk::append_session::AppendSession) -> Self {
-        S2AppendSession {
-            session: RustAutoOpaqueNom::new(Some(session)),
-        }
+        S2AppendSession::new(session)
     }
 }
 

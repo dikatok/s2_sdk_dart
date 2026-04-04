@@ -16,13 +16,13 @@ impl S2Basin {
         }
     }
 
-    // pub async fn stream(&self, name: String) -> S2Stream {
-    //     self.basin
-    //         .try_read()
-    //         .unwrap()
-    //         .stream(StreamName::from_str(name.as_str()).unwrap())
-    //         .into()
-    // }
+    pub async fn stream(&self, name: String) -> S2Stream {
+        self.basin
+            .try_read()
+            .unwrap()
+            .stream(s2_sdk::types::StreamName::from_str(name.as_str()).unwrap())
+            .into()
+    }
 
     // #[frb(stream_dart_await)]
     // pub async fn list_streams(
