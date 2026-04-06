@@ -3,22 +3,231 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
+import 'error.dart';
 import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
+import 'package:freezed_annotation/freezed_annotation.dart' hide protected;
+import 'stream.dart';
+part 'basin.freezed.dart';
 
 // These functions are ignored because they are not marked as `pub`: `new`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Basin>>
 abstract class S2Basin implements RustOpaqueInterface {
-  Future<void> createOrReconfigureStream();
+  Future<StreamInfo> createStream({required CreateStreamInput input});
 
-  Future<void> createStream();
+  Future<void> deleteStream({required DeleteStreamInput input});
 
-  Future<void> deleteStream();
+  Future<StreamConfig> getStreamConfig({required String name});
 
-  Future<void> getStreamConfig();
+  Future<Stream<StreamInfo>> listAllStreams({
+    required ListAllStreamsInput input,
+  });
 
-  Future<void> listAllStreams();
+  Future<PageOfStreamInfo> listStreams({required ListStreamsInput input});
 
   Future<void> reconfigureStream();
+
+  Future<S2Stream> stream({required String name});
 }
+
+class CreateStreamInput {
+  final String name;
+  final StreamConfig? config;
+
+  const CreateStreamInput({required this.name, this.config});
+
+  @override
+  int get hashCode => name.hashCode ^ config.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CreateStreamInput &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          config == other.config;
+}
+
+class DeleteOnEmptyConfig {
+  final BigInt minAgeSecs;
+
+  const DeleteOnEmptyConfig({required this.minAgeSecs});
+
+  @override
+  int get hashCode => minAgeSecs.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DeleteOnEmptyConfig &&
+          runtimeType == other.runtimeType &&
+          minAgeSecs == other.minAgeSecs;
+}
+
+class DeleteStreamInput {
+  final String name;
+  final bool ignoreNotFound;
+
+  const DeleteStreamInput({required this.name, required this.ignoreNotFound});
+
+  @override
+  int get hashCode => name.hashCode ^ ignoreNotFound.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DeleteStreamInput &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          ignoreNotFound == other.ignoreNotFound;
+}
+
+class ListAllStreamsInput {
+  final String? prefix;
+  final String? startAfter;
+  final bool includeDeleted;
+
+  const ListAllStreamsInput({
+    this.prefix,
+    this.startAfter,
+    required this.includeDeleted,
+  });
+
+  @override
+  int get hashCode =>
+      prefix.hashCode ^ startAfter.hashCode ^ includeDeleted.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ListAllStreamsInput &&
+          runtimeType == other.runtimeType &&
+          prefix == other.prefix &&
+          startAfter == other.startAfter &&
+          includeDeleted == other.includeDeleted;
+}
+
+class ListStreamsInput {
+  final String? prefix;
+  final String? startAfter;
+  final BigInt? limit;
+
+  const ListStreamsInput({this.prefix, this.startAfter, this.limit});
+
+  @override
+  int get hashCode => prefix.hashCode ^ startAfter.hashCode ^ limit.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ListStreamsInput &&
+          runtimeType == other.runtimeType &&
+          prefix == other.prefix &&
+          startAfter == other.startAfter &&
+          limit == other.limit;
+}
+
+class PageOfStreamInfo {
+  final List<StreamInfo> values;
+  final bool hasMore;
+
+  const PageOfStreamInfo({required this.values, required this.hasMore});
+
+  @override
+  int get hashCode => values.hashCode ^ hasMore.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PageOfStreamInfo &&
+          runtimeType == other.runtimeType &&
+          values == other.values &&
+          hasMore == other.hasMore;
+}
+
+@freezed
+sealed class RetentionPolicy with _$RetentionPolicy {
+  const RetentionPolicy._();
+
+  const factory RetentionPolicy.infinite() = RetentionPolicy_Infinite;
+  const factory RetentionPolicy.age(BigInt field0) = RetentionPolicy_Age;
+}
+
+enum StorageClass { standard, express }
+
+class StreamConfig {
+  final StorageClass? storageClass;
+  final RetentionPolicy? retentionPolicy;
+  final TimestampingConfig? timestamping;
+  final DeleteOnEmptyConfig? deleteOnEmpty;
+
+  const StreamConfig({
+    this.storageClass,
+    this.retentionPolicy,
+    this.timestamping,
+    this.deleteOnEmpty,
+  });
+
+  @override
+  int get hashCode =>
+      storageClass.hashCode ^
+      retentionPolicy.hashCode ^
+      timestamping.hashCode ^
+      deleteOnEmpty.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is StreamConfig &&
+          runtimeType == other.runtimeType &&
+          storageClass == other.storageClass &&
+          retentionPolicy == other.retentionPolicy &&
+          timestamping == other.timestamping &&
+          deleteOnEmpty == other.deleteOnEmpty;
+}
+
+class StreamInfo {
+  final String name;
+  final BigInt createdAt;
+  final BigInt? deletedAt;
+
+  const StreamInfo({
+    required this.name,
+    required this.createdAt,
+    this.deletedAt,
+  });
+
+  @override
+  int get hashCode => name.hashCode ^ createdAt.hashCode ^ deletedAt.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is StreamInfo &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          createdAt == other.createdAt &&
+          deletedAt == other.deletedAt;
+}
+
+class TimestampingConfig {
+  final TimestampingMode? mode;
+  final bool uncapped;
+
+  const TimestampingConfig({this.mode, required this.uncapped});
+
+  @override
+  int get hashCode => mode.hashCode ^ uncapped.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TimestampingConfig &&
+          runtimeType == other.runtimeType &&
+          mode == other.mode &&
+          uncapped == other.uncapped;
+}
+
+enum TimestampingMode { clientPrefer, clientRequire, arrival }

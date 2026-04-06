@@ -175,6 +175,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  RustStreamSink<StreamInfo> dco_decode_StreamSink_stream_info_Sse(dynamic raw);
+
+  @protected
   String dco_decode_String(dynamic raw);
 
   @protected
@@ -217,13 +220,47 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression dco_decode_box_autoadd_compression(dynamic raw);
 
   @protected
+  CreateStreamInput dco_decode_box_autoadd_create_stream_input(dynamic raw);
+
+  @protected
+  DeleteOnEmptyConfig dco_decode_box_autoadd_delete_on_empty_config(
+    dynamic raw,
+  );
+
+  @protected
+  DeleteStreamInput dco_decode_box_autoadd_delete_stream_input(dynamic raw);
+
+  @protected
+  ListAllStreamsInput dco_decode_box_autoadd_list_all_streams_input(
+    dynamic raw,
+  );
+
+  @protected
+  ListStreamsInput dco_decode_box_autoadd_list_streams_input(dynamic raw);
+
+  @protected
   ReadInput dco_decode_box_autoadd_read_input(dynamic raw);
+
+  @protected
+  RetentionPolicy dco_decode_box_autoadd_retention_policy(dynamic raw);
 
   @protected
   RetryConfig dco_decode_box_autoadd_retry_config(dynamic raw);
 
   @protected
+  StorageClass dco_decode_box_autoadd_storage_class(dynamic raw);
+
+  @protected
+  StreamConfig dco_decode_box_autoadd_stream_config(dynamic raw);
+
+  @protected
   StreamPosition dco_decode_box_autoadd_stream_position(dynamic raw);
+
+  @protected
+  TimestampingConfig dco_decode_box_autoadd_timestamping_config(dynamic raw);
+
+  @protected
+  TimestampingMode dco_decode_box_autoadd_timestamping_mode(dynamic raw);
 
   @protected
   int dco_decode_box_autoadd_u_32(dynamic raw);
@@ -241,10 +278,22 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression dco_decode_compression(dynamic raw);
 
   @protected
+  CreateStreamInput dco_decode_create_stream_input(dynamic raw);
+
+  @protected
+  DeleteOnEmptyConfig dco_decode_delete_on_empty_config(dynamic raw);
+
+  @protected
+  DeleteStreamInput dco_decode_delete_stream_input(dynamic raw);
+
+  @protected
   int dco_decode_i_32(dynamic raw);
 
   @protected
   IndexedAppendAck dco_decode_indexed_append_ack(dynamic raw);
+
+  @protected
+  ListAllStreamsInput dco_decode_list_all_streams_input(dynamic raw);
 
   @protected
   List<AppendRecord> dco_decode_list_append_record(dynamic raw);
@@ -260,6 +309,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<SequencedRecord> dco_decode_list_sequenced_record(dynamic raw);
 
   @protected
+  List<StreamInfo> dco_decode_list_stream_info(dynamic raw);
+
+  @protected
+  ListStreamsInput dco_decode_list_streams_input(dynamic raw);
+
+  @protected
   String? dco_decode_opt_String(dynamic raw);
 
   @protected
@@ -271,10 +326,32 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression? dco_decode_opt_box_autoadd_compression(dynamic raw);
 
   @protected
+  DeleteOnEmptyConfig? dco_decode_opt_box_autoadd_delete_on_empty_config(
+    dynamic raw,
+  );
+
+  @protected
+  RetentionPolicy? dco_decode_opt_box_autoadd_retention_policy(dynamic raw);
+
+  @protected
   RetryConfig? dco_decode_opt_box_autoadd_retry_config(dynamic raw);
 
   @protected
+  StorageClass? dco_decode_opt_box_autoadd_storage_class(dynamic raw);
+
+  @protected
+  StreamConfig? dco_decode_opt_box_autoadd_stream_config(dynamic raw);
+
+  @protected
   StreamPosition? dco_decode_opt_box_autoadd_stream_position(dynamic raw);
+
+  @protected
+  TimestampingConfig? dco_decode_opt_box_autoadd_timestamping_config(
+    dynamic raw,
+  );
+
+  @protected
+  TimestampingMode? dco_decode_opt_box_autoadd_timestamping_mode(dynamic raw);
 
   @protected
   int? dco_decode_opt_box_autoadd_u_32(dynamic raw);
@@ -284,6 +361,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   BigInt? dco_decode_opt_box_autoadd_usize(dynamic raw);
+
+  @protected
+  PageOfStreamInfo dco_decode_page_of_stream_info(dynamic raw);
 
   @protected
   ReadBatch dco_decode_read_batch(dynamic raw);
@@ -308,6 +388,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   dco_decode_record_list_prim_u_8_strict_list_prim_u_8_strict(dynamic raw);
 
   @protected
+  RetentionPolicy dco_decode_retention_policy(dynamic raw);
+
+  @protected
   RetryConfig dco_decode_retry_config(dynamic raw);
 
   @protected
@@ -317,7 +400,22 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   SequencedRecord dco_decode_sequenced_record(dynamic raw);
 
   @protected
+  StorageClass dco_decode_storage_class(dynamic raw);
+
+  @protected
+  StreamConfig dco_decode_stream_config(dynamic raw);
+
+  @protected
+  StreamInfo dco_decode_stream_info(dynamic raw);
+
+  @protected
   StreamPosition dco_decode_stream_position(dynamic raw);
+
+  @protected
+  TimestampingConfig dco_decode_timestamping_config(dynamic raw);
+
+  @protected
+  TimestampingMode dco_decode_timestamping_mode(dynamic raw);
 
   @protected
   int dco_decode_u_32(dynamic raw);
@@ -457,6 +555,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  RustStreamSink<StreamInfo> sse_decode_StreamSink_stream_info_Sse(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer);
 
   @protected
@@ -513,13 +616,63 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression sse_decode_box_autoadd_compression(SseDeserializer deserializer);
 
   @protected
+  CreateStreamInput sse_decode_box_autoadd_create_stream_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  DeleteOnEmptyConfig sse_decode_box_autoadd_delete_on_empty_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  DeleteStreamInput sse_decode_box_autoadd_delete_stream_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListAllStreamsInput sse_decode_box_autoadd_list_all_streams_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListStreamsInput sse_decode_box_autoadd_list_streams_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   ReadInput sse_decode_box_autoadd_read_input(SseDeserializer deserializer);
+
+  @protected
+  RetentionPolicy sse_decode_box_autoadd_retention_policy(
+    SseDeserializer deserializer,
+  );
 
   @protected
   RetryConfig sse_decode_box_autoadd_retry_config(SseDeserializer deserializer);
 
   @protected
+  StorageClass sse_decode_box_autoadd_storage_class(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  StreamConfig sse_decode_box_autoadd_stream_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   StreamPosition sse_decode_box_autoadd_stream_position(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  TimestampingConfig sse_decode_box_autoadd_timestamping_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  TimestampingMode sse_decode_box_autoadd_timestamping_mode(
     SseDeserializer deserializer,
   );
 
@@ -539,10 +692,30 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression sse_decode_compression(SseDeserializer deserializer);
 
   @protected
+  CreateStreamInput sse_decode_create_stream_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  DeleteOnEmptyConfig sse_decode_delete_on_empty_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  DeleteStreamInput sse_decode_delete_stream_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   int sse_decode_i_32(SseDeserializer deserializer);
 
   @protected
   IndexedAppendAck sse_decode_indexed_append_ack(SseDeserializer deserializer);
+
+  @protected
+  ListAllStreamsInput sse_decode_list_all_streams_input(
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<AppendRecord> sse_decode_list_append_record(
@@ -564,6 +737,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  List<StreamInfo> sse_decode_list_stream_info(SseDeserializer deserializer);
+
+  @protected
+  ListStreamsInput sse_decode_list_streams_input(SseDeserializer deserializer);
+
+  @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
 
   @protected
@@ -577,12 +756,42 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  DeleteOnEmptyConfig? sse_decode_opt_box_autoadd_delete_on_empty_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  RetentionPolicy? sse_decode_opt_box_autoadd_retention_policy(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   RetryConfig? sse_decode_opt_box_autoadd_retry_config(
     SseDeserializer deserializer,
   );
 
   @protected
+  StorageClass? sse_decode_opt_box_autoadd_storage_class(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  StreamConfig? sse_decode_opt_box_autoadd_stream_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   StreamPosition? sse_decode_opt_box_autoadd_stream_position(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  TimestampingConfig? sse_decode_opt_box_autoadd_timestamping_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  TimestampingMode? sse_decode_opt_box_autoadd_timestamping_mode(
     SseDeserializer deserializer,
   );
 
@@ -594,6 +803,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   BigInt? sse_decode_opt_box_autoadd_usize(SseDeserializer deserializer);
+
+  @protected
+  PageOfStreamInfo sse_decode_page_of_stream_info(SseDeserializer deserializer);
 
   @protected
   ReadBatch sse_decode_read_batch(SseDeserializer deserializer);
@@ -620,6 +832,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  RetentionPolicy sse_decode_retention_policy(SseDeserializer deserializer);
+
+  @protected
   RetryConfig sse_decode_retry_config(SseDeserializer deserializer);
 
   @protected
@@ -629,7 +844,24 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   SequencedRecord sse_decode_sequenced_record(SseDeserializer deserializer);
 
   @protected
+  StorageClass sse_decode_storage_class(SseDeserializer deserializer);
+
+  @protected
+  StreamConfig sse_decode_stream_config(SseDeserializer deserializer);
+
+  @protected
+  StreamInfo sse_decode_stream_info(SseDeserializer deserializer);
+
+  @protected
   StreamPosition sse_decode_stream_position(SseDeserializer deserializer);
+
+  @protected
+  TimestampingConfig sse_decode_timestamping_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  TimestampingMode sse_decode_timestamping_mode(SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_32(SseDeserializer deserializer);
@@ -792,6 +1024,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_StreamSink_stream_info_Sse(
+    RustStreamSink<StreamInfo> self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_String(String self, SseSerializer serializer);
 
   @protected
@@ -861,8 +1099,44 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_box_autoadd_create_stream_input(
+    CreateStreamInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_delete_on_empty_config(
+    DeleteOnEmptyConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_delete_stream_input(
+    DeleteStreamInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_list_all_streams_input(
+    ListAllStreamsInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_list_streams_input(
+    ListStreamsInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_box_autoadd_read_input(
     ReadInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_retention_policy(
+    RetentionPolicy self,
     SseSerializer serializer,
   );
 
@@ -873,8 +1147,32 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_box_autoadd_storage_class(
+    StorageClass self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_stream_config(
+    StreamConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_box_autoadd_stream_position(
     StreamPosition self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_timestamping_config(
+    TimestampingConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_timestamping_mode(
+    TimestampingMode self,
     SseSerializer serializer,
   );
 
@@ -894,11 +1192,35 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_compression(Compression self, SseSerializer serializer);
 
   @protected
+  void sse_encode_create_stream_input(
+    CreateStreamInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_delete_on_empty_config(
+    DeleteOnEmptyConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_delete_stream_input(
+    DeleteStreamInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_i_32(int self, SseSerializer serializer);
 
   @protected
   void sse_encode_indexed_append_ack(
     IndexedAppendAck self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_all_streams_input(
+    ListAllStreamsInput self,
     SseSerializer serializer,
   );
 
@@ -927,6 +1249,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_list_stream_info(
+    List<StreamInfo> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_streams_input(
+    ListStreamsInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
 
   @protected
@@ -942,14 +1276,50 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_opt_box_autoadd_delete_on_empty_config(
+    DeleteOnEmptyConfig? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_retention_policy(
+    RetentionPolicy? self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_opt_box_autoadd_retry_config(
     RetryConfig? self,
     SseSerializer serializer,
   );
 
   @protected
+  void sse_encode_opt_box_autoadd_storage_class(
+    StorageClass? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_stream_config(
+    StreamConfig? self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_opt_box_autoadd_stream_position(
     StreamPosition? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_timestamping_config(
+    TimestampingConfig? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_timestamping_mode(
+    TimestampingMode? self,
     SseSerializer serializer,
   );
 
@@ -961,6 +1331,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_opt_box_autoadd_usize(BigInt? self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_page_of_stream_info(
+    PageOfStreamInfo self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_read_batch(ReadBatch self, SseSerializer serializer);
@@ -987,6 +1363,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_retention_policy(
+    RetentionPolicy self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_retry_config(RetryConfig self, SseSerializer serializer);
 
   @protected
@@ -999,8 +1381,29 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_storage_class(StorageClass self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_stream_config(StreamConfig self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_stream_info(StreamInfo self, SseSerializer serializer);
+
+  @protected
   void sse_encode_stream_position(
     StreamPosition self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_timestamping_config(
+    TimestampingConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_timestamping_mode(
+    TimestampingMode self,
     SseSerializer serializer,
   );
 
