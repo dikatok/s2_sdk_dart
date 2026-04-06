@@ -181,7 +181,7 @@ abstract class RustLibApi extends BaseApi {
     required ListBasinsInput input,
   });
 
-  S2Client crateClientS2ClientNew({required ClientConfig config});
+  Future<S2Client> crateClientS2ClientNew({required ClientConfig config});
 
   Future<BasinConfig> crateClientS2ClientReconfigureBasin({
     required S2Client that,
@@ -1054,13 +1054,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  S2Client crateClientS2ClientNew({required ClientConfig config}) {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
+  Future<S2Client> crateClientS2ClientNew({required ClientConfig config}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_box_autoadd_client_config(config, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 21)!;
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 21,
+            port: port_,
+          );
         },
         codec: SseCodec(
           decodeSuccessData:

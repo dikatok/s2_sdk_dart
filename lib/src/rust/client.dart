@@ -35,7 +35,8 @@ abstract class S2Client implements RustOpaqueInterface {
 
   Future<PageOfBasinInfo> listBasins({required ListBasinsInput input});
 
-  factory S2Client({required ClientConfig config}) =>
+  // HINT: Make it `#[frb(sync)]` to let it become the default constructor of Dart class.
+  static Future<S2Client> newInstance({required ClientConfig config}) =>
       RustLib.instance.api.crateClientS2ClientNew(config: config);
 
   Future<BasinConfig> reconfigureBasin({required ReconfigureBasinInput input});

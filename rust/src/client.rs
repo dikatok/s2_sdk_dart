@@ -17,10 +17,16 @@ pub struct S2Client {
 }
 
 impl S2Client {
-    #[frb(sync)]
-    pub fn new(config: ClientConfig) -> S2Client {
+    pub async fn new(config: ClientConfig) -> S2Client {
+        let connector = hyper_rustls::HttpsConnectorBuilder::new()
+            .with_webpki_roots()
+            .https_or_http()
+            .enable_http1()
+            .build();
         S2Client {
-            client: RustAutoOpaqueNom::new(s2_sdk::S2::new(config.into()).unwrap()),
+            client: RustAutoOpaqueNom::new(
+                s2_sdk::S2::new_with_connector(config.into(), connector).unwrap(),
+            ),
         }
     }
 

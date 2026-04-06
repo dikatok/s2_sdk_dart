@@ -1158,15 +1158,16 @@ fn wire__crate__client__S2Client_list_basins_impl(
     )
 }
 fn wire__crate__client__S2Client_new_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
     rust_vec_len_: i32,
     data_len_: i32,
-) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_async::<flutter_rust_bridge::for_generated::SseCodec, _, _, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
             debug_name: "S2Client_new",
-            port: None,
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
         },
         move || {
             let message = unsafe {
@@ -1180,10 +1181,16 @@ fn wire__crate__client__S2Client_new_impl(
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
             let api_config = <crate::types::ClientConfig>::sse_decode(&mut deserializer);
             deserializer.end();
-            transform_result_sse::<_, ()>((move || {
-                let output_ok = Result::<_, ()>::Ok(crate::client::S2Client::new(api_config))?;
-                Ok(output_ok)
-            })())
+            move |context| async move {
+                transform_result_sse::<_, ()>(
+                    (move || async move {
+                        let output_ok =
+                            Result::<_, ()>::Ok(crate::client::S2Client::new(api_config).await)?;
+                        Ok(output_ok)
+                    })()
+                    .await,
+                )
+            }
         },
     )
 }
@@ -3173,6 +3180,7 @@ fn pde_ffi_dispatcher_primary_impl(
         ),
         19 => wire__crate__client__S2Client_list_all_basins_impl(port, ptr, rust_vec_len, data_len),
         20 => wire__crate__client__S2Client_list_basins_impl(port, ptr, rust_vec_len, data_len),
+        21 => wire__crate__client__S2Client_new_impl(port, ptr, rust_vec_len, data_len),
         22 => {
             wire__crate__client__S2Client_reconfigure_basin_impl(port, ptr, rust_vec_len, data_len)
         }
@@ -3205,7 +3213,6 @@ fn pde_ffi_dispatcher_sync_impl(
     match func_id {
         11 => wire__crate__basin__S2Basin_stream_impl(ptr, rust_vec_len, data_len),
         12 => wire__crate__client__S2Client_basin_impl(ptr, rust_vec_len, data_len),
-        21 => wire__crate__client__S2Client_new_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }

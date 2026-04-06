@@ -13,7 +13,7 @@ final class S2 {
 
   static Future<S2> create(ClientConfig config) async {
     await RustLib.init();
-    return S2._(inner.S2Client(config: config));
+    return S2._(await inner.S2Client.newInstance(config: config));
   }
 
   S2AccessTokens get accessTokens {
