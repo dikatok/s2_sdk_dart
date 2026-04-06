@@ -1,6 +1,6 @@
 import 'package:s2_sdk_dart/src/rust/client.dart';
 
-sealed class S2AccessTokens {
+final class S2AccessTokens {
   final S2Client _client;
 
   S2AccessTokens(this._client);
