@@ -1,4 +1,4 @@
-use std::str::FromStr;
+use std::{str::FromStr, time::Duration};
 
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
 use tokio_stream::StreamExt;
@@ -91,7 +91,18 @@ impl S2Basin {
             .map_err(|e| e.into())
     }
 
-    pub async fn reconfigure_stream(&self) {}
+    pub async fn reconfigure_stream(
+        &self,
+        input: ReconfigureStreamInput,
+    ) -> Result<StreamConfig, S2Error> {
+        self.basin
+            .try_read()
+            .unwrap()
+            .reconfigure_stream(input.into())
+            .await
+            .map(|config| config.into())
+            .map_err(|e| e.into())
+    }
 }
 
 impl From<s2_sdk::S2Basin> for S2Basin {
@@ -315,5 +326,45 @@ impl From<s2_sdk::types::DeleteOnEmptyConfig> for DeleteOnEmptyConfig {
         DeleteOnEmptyConfig {
             min_age_secs: value.min_age_secs,
         }
+    }
+}
+
+pub struct ReconfigureStreamInput {
+    pub name: String,
+    pub config: StreamConfig,
+}
+
+impl From<ReconfigureStreamInput> for s2_sdk::types::ReconfigureStreamInput {
+    fn from(value: ReconfigureStreamInput) -> Self {
+        s2_sdk::types::ReconfigureStreamInput::new(
+            s2_sdk::types::StreamName::from_str(value.name.as_str()).unwrap(),
+            value.config.into(),
+        )
+    }
+}
+
+impl From<StreamConfig> for s2_sdk::types::StreamReconfiguration {
+    fn from(value: StreamConfig) -> Self {
+        let mut config = s2_sdk::types::StreamReconfiguration::new();
+        if let Some(storage_class) = value.storage_class {
+            config = config.with_storage_class(storage_class.into());
+        }
+        if let Some(retention_policy) = value.retention_policy {
+            config = config.with_retention_policy(retention_policy.into());
+        }
+        if let Some(timestamping) = value.timestamping {
+            let mut timestamping_reconfig = s2_sdk::types::TimestampingReconfiguration::new();
+            if let Some(mode) = timestamping.mode {
+                timestamping_reconfig = timestamping_reconfig.with_mode(mode.into());
+            }
+            timestamping_reconfig = timestamping_reconfig.with_uncapped(timestamping.uncapped);
+            config = config.with_timestamping(timestamping_reconfig);
+        }
+        if let Some(delete_on_empty) = value.delete_on_empty {
+            let delete_on_empty_reconfig = s2_sdk::types::DeleteOnEmptyReconfiguration::new()
+                .with_min_age(Duration::from_secs(delete_on_empty.min_age_secs));
+            config = config.with_delete_on_empty(delete_on_empty_reconfig);
+        }
+        config
     }
 }

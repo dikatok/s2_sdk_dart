@@ -126,7 +126,10 @@ abstract class RustLibApi extends BaseApi {
     required ListStreamsInput input,
   });
 
-  Future<void> crateBasinS2BasinReconfigureStream({required S2Basin that});
+  Future<StreamConfig> crateBasinS2BasinReconfigureStream({
+    required S2Basin that,
+    required ReconfigureStreamInput input,
+  });
 
   Future<S2Stream> crateBasinS2BasinStream({
     required S2Basin that,
@@ -630,7 +633,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<void> crateBasinS2BasinReconfigureStream({required S2Basin that}) {
+  Future<StreamConfig> crateBasinS2BasinReconfigureStream({
+    required S2Basin that,
+    required ReconfigureStreamInput input,
+  }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
@@ -639,6 +645,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             that,
             serializer,
           );
+          sse_encode_box_autoadd_reconfigure_stream_input(input, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -647,11 +654,11 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+          decodeSuccessData: sse_decode_stream_config,
+          decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateBasinS2BasinReconfigureStreamConstMeta,
-        argValues: [that],
+        argValues: [that, input],
         apiImpl: this,
       ),
     );
@@ -660,7 +667,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateBasinS2BasinReconfigureStreamConstMeta =>
       const TaskConstMeta(
         debugName: "S2Basin_reconfigure_stream",
-        argNames: ["that"],
+        argNames: ["that", "input"],
       );
 
   @override
@@ -2062,6 +2069,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ReconfigureStreamInput dco_decode_box_autoadd_reconfigure_stream_input(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_reconfigure_stream_input(raw);
+  }
+
+  @protected
   ResourceSet dco_decode_box_autoadd_resource_set(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_resource_set(raw);
@@ -2648,6 +2663,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     return ReconfigureBasinInput(
       name: dco_decode_String(arr[0]),
       config: dco_decode_basin_config(arr[1]),
+    );
+  }
+
+  @protected
+  ReconfigureStreamInput dco_decode_reconfigure_stream_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return ReconfigureStreamInput(
+      name: dco_decode_String(arr[0]),
+      config: dco_decode_stream_config(arr[1]),
     );
   }
 
@@ -3453,6 +3480,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ReconfigureStreamInput sse_decode_box_autoadd_reconfigure_stream_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_reconfigure_stream_input(deserializer));
+  }
+
+  @protected
   ResourceSet sse_decode_box_autoadd_resource_set(
     SseDeserializer deserializer,
   ) {
@@ -4214,6 +4249,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_name = sse_decode_String(deserializer);
     var var_config = sse_decode_basin_config(deserializer);
     return ReconfigureBasinInput(name: var_name, config: var_config);
+  }
+
+  @protected
+  ReconfigureStreamInput sse_decode_reconfigure_stream_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_name = sse_decode_String(deserializer);
+    var var_config = sse_decode_stream_config(deserializer);
+    return ReconfigureStreamInput(name: var_name, config: var_config);
   }
 
   @protected
@@ -5079,6 +5124,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_reconfigure_stream_input(
+    ReconfigureStreamInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_reconfigure_stream_input(self, serializer);
+  }
+
+  @protected
   void sse_encode_box_autoadd_resource_set(
     ResourceSet self,
     SseSerializer serializer,
@@ -5782,6 +5836,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_reconfigure_stream_input(
+    ReconfigureStreamInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.name, serializer);
+    sse_encode_stream_config(self.config, serializer);
+  }
+
+  @protected
   void sse_encode_record_list_prim_u_8_strict_list_prim_u_8_strict(
     (Uint8List, Uint8List) self,
     SseSerializer serializer,
@@ -6074,8 +6138,12 @@ class S2BasinImpl extends RustOpaque implements S2Basin {
         input: input,
       );
 
-  Future<void> reconfigureStream() =>
-      RustLib.instance.api.crateBasinS2BasinReconfigureStream(that: this);
+  Future<StreamConfig> reconfigureStream({
+    required ReconfigureStreamInput input,
+  }) => RustLib.instance.api.crateBasinS2BasinReconfigureStream(
+    that: this,
+    input: input,
+  );
 
   Future<S2Stream> stream({required String name}) =>
       RustLib.instance.api.crateBasinS2BasinStream(that: this, name: name);

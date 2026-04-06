@@ -316,6 +316,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  ReconfigureStreamInput dco_decode_box_autoadd_reconfigure_stream_input(
+    dynamic raw,
+  );
+
+  @protected
   ResourceSet dco_decode_box_autoadd_resource_set(dynamic raw);
 
   @protected
@@ -525,6 +530,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   ReconfigureBasinInput dco_decode_reconfigure_basin_input(dynamic raw);
+
+  @protected
+  ReconfigureStreamInput dco_decode_reconfigure_stream_input(dynamic raw);
 
   @protected
   (Uint8List, Uint8List)
@@ -876,6 +884,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  ReconfigureStreamInput sse_decode_box_autoadd_reconfigure_stream_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   ResourceSet sse_decode_box_autoadd_resource_set(SseDeserializer deserializer);
 
   @protected
@@ -1149,6 +1162,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   ReconfigureBasinInput sse_decode_reconfigure_basin_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ReconfigureStreamInput sse_decode_reconfigure_stream_input(
     SseDeserializer deserializer,
   );
 
@@ -1576,6 +1594,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_box_autoadd_reconfigure_stream_input(
+    ReconfigureStreamInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_box_autoadd_resource_set(
     ResourceSet self,
     SseSerializer serializer,
@@ -1923,6 +1947,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_reconfigure_basin_input(
     ReconfigureBasinInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_reconfigure_stream_input(
+    ReconfigureStreamInput self,
     SseSerializer serializer,
   );
 

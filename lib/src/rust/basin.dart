@@ -11,7 +11,7 @@ import 'stream.dart';
 part 'basin.freezed.dart';
 
 // These functions are ignored because they are not marked as `pub`: `new`
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Basin>>
 abstract class S2Basin implements RustOpaqueInterface {
@@ -27,7 +27,9 @@ abstract class S2Basin implements RustOpaqueInterface {
 
   Future<PageOfStreamInfo> listStreams({required ListStreamsInput input});
 
-  Future<void> reconfigureStream();
+  Future<StreamConfig> reconfigureStream({
+    required ReconfigureStreamInput input,
+  });
 
   Future<S2Stream> stream({required String name});
 }
@@ -149,6 +151,24 @@ class PageOfStreamInfo {
           runtimeType == other.runtimeType &&
           values == other.values &&
           hasMore == other.hasMore;
+}
+
+class ReconfigureStreamInput {
+  final String name;
+  final StreamConfig config;
+
+  const ReconfigureStreamInput({required this.name, required this.config});
+
+  @override
+  int get hashCode => name.hashCode ^ config.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ReconfigureStreamInput &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          config == other.config;
 }
 
 @freezed
