@@ -17,7 +17,8 @@ impl S2Basin {
         }
     }
 
-    pub async fn stream(&self, name: String) -> S2Stream {
+    #[flutter_rust_bridge::frb(sync)]
+    pub fn stream(&self, name: String) -> S2Stream {
         self.basin
             .try_read()
             .unwrap()

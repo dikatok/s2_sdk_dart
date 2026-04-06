@@ -17,13 +17,15 @@ pub struct S2Client {
 }
 
 impl S2Client {
+    #[frb(sync)]
     pub fn new(config: ClientConfig) -> S2Client {
         S2Client {
             client: RustAutoOpaqueNom::new(s2_sdk::S2::new(config.into()).unwrap()),
         }
     }
 
-    pub async fn basin(&self, name: String) -> S2Basin {
+    #[frb(sync)]
+    pub fn basin(&self, name: String) -> S2Basin {
         self.client
             .try_read()
             .unwrap()

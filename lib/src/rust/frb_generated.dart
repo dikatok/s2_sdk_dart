@@ -131,12 +131,12 @@ abstract class RustLibApi extends BaseApi {
     required ReconfigureStreamInput input,
   });
 
-  Future<S2Stream> crateBasinS2BasinStream({
+  S2Stream crateBasinS2BasinStream({
     required S2Basin that,
     required String name,
   });
 
-  Future<S2Basin> crateClientS2ClientBasin({
+  S2Basin crateClientS2ClientBasin({
     required S2Client that,
     required String name,
   });
@@ -181,7 +181,7 @@ abstract class RustLibApi extends BaseApi {
     required ListBasinsInput input,
   });
 
-  Future<S2Client> crateClientS2ClientNew({required ClientConfig config});
+  S2Client crateClientS2ClientNew({required ClientConfig config});
 
   Future<BasinConfig> crateClientS2ClientReconfigureBasin({
     required S2Client that,
@@ -671,25 +671,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<S2Stream> crateBasinS2BasinStream({
+  S2Stream crateBasinS2BasinStream({
     required S2Basin that,
     required String name,
   }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Basin(
             that,
             serializer,
           );
           sse_encode_String(name, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 11,
-            port: port_,
-          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 11)!;
         },
         codec: SseCodec(
           decodeSuccessData:
@@ -709,25 +704,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   );
 
   @override
-  Future<S2Basin> crateClientS2ClientBasin({
+  S2Basin crateClientS2ClientBasin({
     required S2Client that,
     required String name,
   }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
             that,
             serializer,
           );
           sse_encode_String(name, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 12,
-            port: port_,
-          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 12)!;
         },
         codec: SseCodec(
           decodeSuccessData:
@@ -1064,18 +1054,13 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<S2Client> crateClientS2ClientNew({required ClientConfig config}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+  S2Client crateClientS2ClientNew({required ClientConfig config}) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_box_autoadd_client_config(config, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 21,
-            port: port_,
-          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 21)!;
         },
         codec: SseCodec(
           decodeSuccessData:
@@ -6145,7 +6130,7 @@ class S2BasinImpl extends RustOpaque implements S2Basin {
     input: input,
   );
 
-  Future<S2Stream> stream({required String name}) =>
+  S2Stream stream({required String name}) =>
       RustLib.instance.api.crateBasinS2BasinStream(that: this, name: name);
 }
 
@@ -6168,7 +6153,7 @@ class S2ClientImpl extends RustOpaque implements S2Client {
         RustLib.instance.api.rust_arc_decrement_strong_count_S2ClientPtr,
   );
 
-  Future<S2Basin> basin({required String name}) =>
+  S2Basin basin({required String name}) =>
       RustLib.instance.api.crateClientS2ClientBasin(that: this, name: name);
 
   Future<BasinInfo> createBasin({required CreateBasinInput input}) => RustLib

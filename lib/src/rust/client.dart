@@ -13,7 +13,7 @@ import 'types.dart';
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>>
 abstract class S2Client implements RustOpaqueInterface {
-  Future<S2Basin> basin({required String name});
+  S2Basin basin({required String name});
 
   Future<BasinInfo> createBasin({required CreateBasinInput input});
 
@@ -35,8 +35,7 @@ abstract class S2Client implements RustOpaqueInterface {
 
   Future<PageOfBasinInfo> listBasins({required ListBasinsInput input});
 
-  // HINT: Make it `#[frb(sync)]` to let it become the default constructor of Dart class.
-  static Future<S2Client> newInstance({required ClientConfig config}) =>
+  factory S2Client({required ClientConfig config}) =>
       RustLib.instance.api.crateClientS2ClientNew(config: config);
 
   Future<BasinConfig> reconfigureBasin({required ReconfigureBasinInput input});

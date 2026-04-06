@@ -31,7 +31,7 @@ abstract class S2Basin implements RustOpaqueInterface {
     required ReconfigureStreamInput input,
   });
 
-  Future<S2Stream> stream({required String name});
+  S2Stream stream({required String name});
 }
 
 class CreateStreamInput {

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:s2_sdk_dart/s2_sdk_dart.dart' as s2_sdk_dart;
+import 'package:flutter/material.dart';
+import 'package:s2_sdk_dart/s2_sdk_dart.dart';
 
-void main() {
+Future<void> main() async {
+  final s2 = await S2.create(ClientConfig(accessToken: "blah"));
   runApp(const MyApp());
 }
 
@@ -21,8 +22,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    sumResult = s2_sdk_dart.sum(1, 2);
-    sumAsyncResult = s2_sdk_dart.sumAsync(3, 4);
   }
 
   @override
