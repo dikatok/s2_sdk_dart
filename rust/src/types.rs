@@ -292,3 +292,163 @@ impl From<s2_sdk::types::AppendAck> for AppendAck {
         }
     }
 }
+
+pub enum ResourceSet {
+    None,
+    Exact(String),
+    Prefix(String),
+}
+
+impl From<s2_sdk::types::BasinMatcher> for ResourceSet {
+    fn from(value: s2_sdk::types::BasinMatcher) -> Self {
+        match value {
+            s2_sdk::types::BasinMatcher::Exact(name) => ResourceSet::Exact(name.to_string()),
+            s2_sdk::types::BasinMatcher::Prefix(prefix) => ResourceSet::Prefix(prefix.to_string()),
+            s2_sdk::types::BasinMatcher::None => ResourceSet::None,
+        }
+    }
+}
+
+impl From<ResourceSet> for s2_sdk::types::BasinMatcher {
+    fn from(value: ResourceSet) -> Self {
+        match value {
+            ResourceSet::Exact(name) => s2_sdk::types::BasinMatcher::Exact(
+                s2_sdk::types::BasinName::from_str(&name).unwrap(),
+            ),
+            ResourceSet::Prefix(prefix) => s2_sdk::types::BasinMatcher::Prefix(
+                s2_sdk::types::BasinNamePrefix::from_str(&prefix).unwrap(),
+            ),
+            ResourceSet::None => s2_sdk::types::BasinMatcher::None,
+        }
+    }
+}
+
+impl From<s2_sdk::types::StreamMatcher> for ResourceSet {
+    fn from(value: s2_sdk::types::StreamMatcher) -> Self {
+        match value {
+            s2_sdk::types::StreamMatcher::Exact(name) => ResourceSet::Exact(name.to_string()),
+            s2_sdk::types::StreamMatcher::Prefix(prefix) => ResourceSet::Prefix(prefix.to_string()),
+            s2_sdk::types::StreamMatcher::None => ResourceSet::None,
+        }
+    }
+}
+
+impl From<ResourceSet> for s2_sdk::types::StreamMatcher {
+    fn from(value: ResourceSet) -> Self {
+        match value {
+            ResourceSet::Exact(name) => s2_sdk::types::StreamMatcher::Exact(
+                s2_sdk::types::StreamName::from_str(&name).unwrap(),
+            ),
+            ResourceSet::Prefix(prefix) => s2_sdk::types::StreamMatcher::Prefix(
+                s2_sdk::types::StreamNamePrefix::from_str(&prefix).unwrap(),
+            ),
+            ResourceSet::None => s2_sdk::types::StreamMatcher::None,
+        }
+    }
+}
+
+impl From<s2_sdk::types::AccessTokenMatcher> for ResourceSet {
+    fn from(value: s2_sdk::types::AccessTokenMatcher) -> Self {
+        match value {
+            s2_sdk::types::AccessTokenMatcher::Exact(id) => ResourceSet::Exact(id.to_string()),
+            s2_sdk::types::AccessTokenMatcher::Prefix(prefix) => {
+                ResourceSet::Prefix(prefix.to_string())
+            }
+            s2_sdk::types::AccessTokenMatcher::None => ResourceSet::None,
+        }
+    }
+}
+
+impl From<ResourceSet> for s2_sdk::types::AccessTokenMatcher {
+    fn from(value: ResourceSet) -> Self {
+        match value {
+            ResourceSet::Exact(id) => s2_sdk::types::AccessTokenMatcher::Exact(
+                s2_sdk::types::AccessTokenId::from_str(&id).unwrap(),
+            ),
+            ResourceSet::Prefix(prefix) => s2_sdk::types::AccessTokenMatcher::Prefix(
+                s2_sdk::types::AccessTokenIdPrefix::from_str(&prefix).unwrap(),
+            ),
+            ResourceSet::None => s2_sdk::types::AccessTokenMatcher::None,
+        }
+    }
+}
+
+pub enum Operation {
+    ListBasins,
+    CreateBasin,
+    GetBasinConfig,
+    DeleteBasin,
+    ReconfigureBasin,
+    ListAccessTokens,
+    IssueAccessToken,
+    RevokeAccessToken,
+    GetAccountMetrics,
+    GetBasinMetrics,
+    GetStreamMetrics,
+    ListStreams,
+    CreateStream,
+    GetStreamConfig,
+    DeleteStream,
+    ReconfigureStream,
+    CheckTail,
+    Append,
+    Read,
+    Trim,
+    Fence,
+}
+
+impl From<s2_sdk::types::Operation> for Operation {
+    fn from(value: s2_sdk::types::Operation) -> Self {
+        match value {
+            s2_sdk::types::Operation::ListBasins => Operation::ListBasins,
+            s2_sdk::types::Operation::CreateBasin => Operation::CreateBasin,
+            s2_sdk::types::Operation::GetBasinConfig => Operation::GetBasinConfig,
+            s2_sdk::types::Operation::DeleteBasin => Operation::DeleteBasin,
+            s2_sdk::types::Operation::ReconfigureBasin => Operation::ReconfigureBasin,
+            s2_sdk::types::Operation::ListAccessTokens => Operation::ListAccessTokens,
+            s2_sdk::types::Operation::IssueAccessToken => Operation::IssueAccessToken,
+            s2_sdk::types::Operation::RevokeAccessToken => Operation::RevokeAccessToken,
+            s2_sdk::types::Operation::GetAccountMetrics => Operation::GetAccountMetrics,
+            s2_sdk::types::Operation::GetBasinMetrics => Operation::GetBasinMetrics,
+            s2_sdk::types::Operation::GetStreamMetrics => Operation::GetStreamMetrics,
+            s2_sdk::types::Operation::ListStreams => Operation::ListStreams,
+            s2_sdk::types::Operation::CreateStream => Operation::CreateStream,
+            s2_sdk::types::Operation::GetStreamConfig => Operation::GetStreamConfig,
+            s2_sdk::types::Operation::DeleteStream => Operation::DeleteStream,
+            s2_sdk::types::Operation::ReconfigureStream => Operation::ReconfigureStream,
+            s2_sdk::types::Operation::CheckTail => Operation::CheckTail,
+            s2_sdk::types::Operation::Append => Operation::Append,
+            s2_sdk::types::Operation::Read => Operation::Read,
+            s2_sdk::types::Operation::Trim => Operation::Trim,
+            s2_sdk::types::Operation::Fence => Operation::Fence,
+        }
+    }
+}
+
+impl From<Operation> for s2_sdk::types::Operation {
+    fn from(value: Operation) -> Self {
+        match value {
+            Operation::ListBasins => s2_sdk::types::Operation::ListBasins,
+            Operation::CreateBasin => s2_sdk::types::Operation::CreateBasin,
+            Operation::GetBasinConfig => s2_sdk::types::Operation::GetBasinConfig,
+            Operation::DeleteBasin => s2_sdk::types::Operation::DeleteBasin,
+            Operation::ReconfigureBasin => s2_sdk::types::Operation::ReconfigureBasin,
+            Operation::ListAccessTokens => s2_sdk::types::Operation::ListAccessTokens,
+            Operation::IssueAccessToken => s2_sdk::types::Operation::IssueAccessToken,
+            Operation::RevokeAccessToken => s2_sdk::types::Operation::RevokeAccessToken,
+            Operation::GetAccountMetrics => s2_sdk::types::Operation::GetAccountMetrics,
+            Operation::GetBasinMetrics => s2_sdk::types::Operation::GetBasinMetrics,
+            Operation::GetStreamMetrics => s2_sdk::types::Operation::GetStreamMetrics,
+            Operation::ListStreams => s2_sdk::types::Operation::ListStreams,
+            Operation::CreateStream => s2_sdk::types::Operation::CreateStream,
+            Operation::GetStreamConfig => s2_sdk::types::Operation::GetStreamConfig,
+            Operation::DeleteStream => s2_sdk::types::Operation::DeleteStream,
+            Operation::ReconfigureStream => s2_sdk::types::Operation::ReconfigureStream,
+            Operation::CheckTail => s2_sdk::types::Operation::CheckTail,
+            Operation::Append => s2_sdk::types::Operation::Append,
+            Operation::Read => s2_sdk::types::Operation::Read,
+            Operation::Trim => s2_sdk::types::Operation::Trim,
+            Operation::Fence => s2_sdk::types::Operation::Fence,
+        }
+    }
+}

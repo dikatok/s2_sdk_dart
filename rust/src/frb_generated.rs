@@ -658,6 +658,7 @@ fn wire__crate__client__S2Client_basin_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_name = <String>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
                 transform_result_sse::<_, ()>(
@@ -679,9 +680,9 @@ fn wire__crate__client__S2Client_basin_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::basin(&*api_that_guard).await;
-                        })?;
+                        let output_ok = Result::<_, ()>::Ok(
+                            crate::client::S2Client::basin(&*api_that_guard, api_name).await,
+                        )?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -715,9 +716,10 @@ fn wire__crate__client__S2Client_create_basin_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_input = <crate::client::CreateBasinInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -736,9 +738,9 @@ fn wire__crate__client__S2Client_create_basin_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::create_basin(&*api_that_guard).await;
-                        })?;
+                        let output_ok =
+                            crate::client::S2Client::create_basin(&*api_that_guard, api_input)
+                                .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -772,9 +774,10 @@ fn wire__crate__client__S2Client_delete_basin_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_input = <crate::client::DeleteBasinInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -793,9 +796,9 @@ fn wire__crate__client__S2Client_delete_basin_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::delete_basin(&*api_that_guard).await;
-                        })?;
+                        let output_ok =
+                            crate::client::S2Client::delete_basin(&*api_that_guard, api_input)
+                                .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -829,9 +832,10 @@ fn wire__crate__client__S2Client_get_basin_config_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_name = <String>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -850,9 +854,9 @@ fn wire__crate__client__S2Client_get_basin_config_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::get_basin_config(&*api_that_guard).await;
-                        })?;
+                        let output_ok =
+                            crate::client::S2Client::get_basin_config(&*api_that_guard, api_name)
+                                .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -886,9 +890,10 @@ fn wire__crate__client__S2Client_issue_access_token_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_input = <crate::client::IssueAccessTokenInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -907,9 +912,11 @@ fn wire__crate__client__S2Client_issue_access_token_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::issue_access_token(&*api_that_guard).await;
-                        })?;
+                        let output_ok = crate::client::S2Client::issue_access_token(
+                            &*api_that_guard,
+                            api_input,
+                        )
+                        .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -943,9 +950,10 @@ fn wire__crate__client__S2Client_list_access_tokens_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_input = <crate::client::ListAccessTokensInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -964,9 +972,11 @@ fn wire__crate__client__S2Client_list_access_tokens_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::list_access_tokens(&*api_that_guard).await;
-                        })?;
+                        let output_ok = crate::client::S2Client::list_access_tokens(
+                            &*api_that_guard,
+                            api_input,
+                        )
+                        .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -1000,9 +1010,15 @@ fn wire__crate__client__S2Client_list_all_access_tokens_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_sink = <StreamSink<
+                crate::client::AccessTokenInfo,
+                flutter_rust_bridge::for_generated::SseCodec,
+            >>::sse_decode(&mut deserializer);
+            let api_input =
+                <crate::client::ListAllAccessTokensInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -1021,9 +1037,12 @@ fn wire__crate__client__S2Client_list_all_access_tokens_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::list_all_access_tokens(&*api_that_guard).await;
-                        })?;
+                        let output_ok = crate::client::S2Client::list_all_access_tokens(
+                            &*api_that_guard,
+                            api_sink,
+                            api_input,
+                        )
+                        .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -1057,9 +1076,14 @@ fn wire__crate__client__S2Client_list_all_basins_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_sink = <StreamSink<
+                crate::client::BasinInfo,
+                flutter_rust_bridge::for_generated::SseCodec,
+            >>::sse_decode(&mut deserializer);
+            let api_input = <crate::client::ListAllBasinsInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -1078,9 +1102,12 @@ fn wire__crate__client__S2Client_list_all_basins_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::list_all_basins(&*api_that_guard).await;
-                        })?;
+                        let output_ok = crate::client::S2Client::list_all_basins(
+                            &*api_that_guard,
+                            api_sink,
+                            api_input,
+                        )
+                        .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -1114,9 +1141,10 @@ fn wire__crate__client__S2Client_list_basins_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_input = <crate::client::ListBasinsInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -1135,9 +1163,9 @@ fn wire__crate__client__S2Client_list_basins_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::list_basins(&*api_that_guard).await;
-                        })?;
+                        let output_ok =
+                            crate::client::S2Client::list_basins(&*api_that_guard, api_input)
+                                .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -1204,9 +1232,10 @@ fn wire__crate__client__S2Client_reconfigure_basin_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_input = <crate::client::ReconfigureBasinInput>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -1225,9 +1254,9 @@ fn wire__crate__client__S2Client_reconfigure_basin_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::reconfigure_basin(&*api_that_guard).await;
-                        })?;
+                        let output_ok =
+                            crate::client::S2Client::reconfigure_basin(&*api_that_guard, api_input)
+                                .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -1261,9 +1290,10 @@ fn wire__crate__client__S2Client_revoke_access_token_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>,
             >>::sse_decode(&mut deserializer);
+            let api_id = <String>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
                         let mut api_that_guard = None;
                         let decode_indices_ =
@@ -1282,9 +1312,9 @@ fn wire__crate__client__S2Client_revoke_access_token_impl(
                             }
                         }
                         let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = Result::<_, ()>::Ok({
-                            crate::client::S2Client::revoke_access_token(&*api_that_guard).await;
-                        })?;
+                        let output_ok =
+                            crate::client::S2Client::revoke_access_token(&*api_that_guard, api_id)
+                                .await?;
                         Ok(output_ok)
                     })()
                     .await,
@@ -1946,6 +1976,26 @@ impl SseDecode
 }
 
 impl SseDecode
+    for StreamSink<crate::client::AccessTokenInfo, flutter_rust_bridge::for_generated::SseCodec>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <String>::sse_decode(deserializer);
+        return StreamSink::deserialize(inner);
+    }
+}
+
+impl SseDecode
+    for StreamSink<crate::client::BasinInfo, flutter_rust_bridge::for_generated::SseCodec>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <String>::sse_decode(deserializer);
+        return StreamSink::deserialize(inner);
+    }
+}
+
+impl SseDecode
     for StreamSink<crate::types::SequencedRecord, flutter_rust_bridge::for_generated::SseCodec>
 {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -1970,6 +2020,60 @@ impl SseDecode for String {
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut inner = <Vec<u8>>::sse_decode(deserializer);
         return String::from_utf8(inner).unwrap();
+    }
+}
+
+impl SseDecode for crate::client::AccessTokenInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_id = <String>::sse_decode(deserializer);
+        let mut var_expiresAt = <Option<u64>>::sse_decode(deserializer);
+        let mut var_autoPrefixStreams = <bool>::sse_decode(deserializer);
+        let mut var_scope = <crate::client::AccessTokenScope>::sse_decode(deserializer);
+        return crate::client::AccessTokenInfo {
+            id: var_id,
+            expires_at: var_expiresAt,
+            auto_prefix_streams: var_autoPrefixStreams,
+            scope: var_scope,
+        };
+    }
+}
+
+impl SseDecode for crate::client::AccessTokenScope {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_basins = <crate::types::ResourceSet>::sse_decode(deserializer);
+        let mut var_streams = <crate::types::ResourceSet>::sse_decode(deserializer);
+        let mut var_accessTokens = <crate::types::ResourceSet>::sse_decode(deserializer);
+        let mut var_opGroupPermissions =
+            <Option<crate::client::OperationGroupPermissions>>::sse_decode(deserializer);
+        let mut var_ops = <Vec<crate::types::Operation>>::sse_decode(deserializer);
+        return crate::client::AccessTokenScope {
+            basins: var_basins,
+            streams: var_streams,
+            access_tokens: var_accessTokens,
+            op_group_permissions: var_opGroupPermissions,
+            ops: var_ops,
+        };
+    }
+}
+
+impl SseDecode for crate::client::AccessTokenScopeInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_basins = <Option<crate::types::ResourceSet>>::sse_decode(deserializer);
+        let mut var_streams = <Option<crate::types::ResourceSet>>::sse_decode(deserializer);
+        let mut var_accessTokens = <Option<crate::types::ResourceSet>>::sse_decode(deserializer);
+        let mut var_opGroupPermissions =
+            <Option<crate::client::OperationGroupPermissions>>::sse_decode(deserializer);
+        let mut var_ops = <Vec<crate::types::Operation>>::sse_decode(deserializer);
+        return crate::client::AccessTokenScopeInput {
+            basins: var_basins,
+            streams: var_streams,
+            access_tokens: var_accessTokens,
+            op_group_permissions: var_opGroupPermissions,
+            ops: var_ops,
+        };
     }
 }
 
@@ -2049,6 +2153,48 @@ impl SseDecode for crate::stream::AppendSessionConfig {
     }
 }
 
+impl SseDecode for crate::client::BasinConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_defaultStreamConfig =
+            <Option<crate::basin::StreamConfig>>::sse_decode(deserializer);
+        let mut var_createStreamOnAppend = <bool>::sse_decode(deserializer);
+        let mut var_createStreamOnRead = <bool>::sse_decode(deserializer);
+        return crate::client::BasinConfig {
+            default_stream_config: var_defaultStreamConfig,
+            create_stream_on_append: var_createStreamOnAppend,
+            create_stream_on_read: var_createStreamOnRead,
+        };
+    }
+}
+
+impl SseDecode for crate::client::BasinInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_name = <String>::sse_decode(deserializer);
+        let mut var_scope = <Option<crate::client::BasinScope>>::sse_decode(deserializer);
+        let mut var_createdAt = <u64>::sse_decode(deserializer);
+        let mut var_deletedAt = <Option<u64>>::sse_decode(deserializer);
+        return crate::client::BasinInfo {
+            name: var_name,
+            scope: var_scope,
+            created_at: var_createdAt,
+            deleted_at: var_deletedAt,
+        };
+    }
+}
+
+impl SseDecode for crate::client::BasinScope {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::client::BasinScope::AwsUsEast1,
+            _ => unreachable!("Invalid variant for BasinScope: {}", inner),
+        };
+    }
+}
+
 impl SseDecode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2089,6 +2235,20 @@ impl SseDecode for crate::types::Compression {
     }
 }
 
+impl SseDecode for crate::client::CreateBasinInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_name = <String>::sse_decode(deserializer);
+        let mut var_config = <Option<crate::client::BasinConfig>>::sse_decode(deserializer);
+        let mut var_scope = <Option<crate::client::BasinScope>>::sse_decode(deserializer);
+        return crate::client::CreateBasinInput {
+            name: var_name,
+            config: var_config,
+            scope: var_scope,
+        };
+    }
+}
+
 impl SseDecode for crate::basin::CreateStreamInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2097,6 +2257,18 @@ impl SseDecode for crate::basin::CreateStreamInput {
         return crate::basin::CreateStreamInput {
             name: var_name,
             config: var_config,
+        };
+    }
+}
+
+impl SseDecode for crate::client::DeleteBasinInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_name = <String>::sse_decode(deserializer);
+        let mut var_ignoreNotFound = <bool>::sse_decode(deserializer);
+        return crate::client::DeleteBasinInput {
+            name: var_name,
+            ignore_not_found: var_ignoreNotFound,
         };
     }
 }
@@ -2142,11 +2314,79 @@ impl SseDecode for crate::producer::IndexedAppendAck {
     }
 }
 
+impl SseDecode for crate::client::IssueAccessTokenInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_id = <String>::sse_decode(deserializer);
+        let mut var_expiresAt = <Option<u64>>::sse_decode(deserializer);
+        let mut var_autoPrefixStreams = <bool>::sse_decode(deserializer);
+        let mut var_scope = <crate::client::AccessTokenScopeInput>::sse_decode(deserializer);
+        return crate::client::IssueAccessTokenInput {
+            id: var_id,
+            expires_at: var_expiresAt,
+            auto_prefix_streams: var_autoPrefixStreams,
+            scope: var_scope,
+        };
+    }
+}
+
+impl SseDecode for Vec<crate::client::AccessTokenInfo> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::client::AccessTokenInfo>::sse_decode(deserializer));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for crate::client::ListAccessTokensInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_prefix = <String>::sse_decode(deserializer);
+        let mut var_startAfter = <String>::sse_decode(deserializer);
+        let mut var_limit = <Option<usize>>::sse_decode(deserializer);
+        return crate::client::ListAccessTokensInput {
+            prefix: var_prefix,
+            start_after: var_startAfter,
+            limit: var_limit,
+        };
+    }
+}
+
+impl SseDecode for crate::client::ListAllAccessTokensInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_prefix = <String>::sse_decode(deserializer);
+        let mut var_startAfter = <String>::sse_decode(deserializer);
+        return crate::client::ListAllAccessTokensInput {
+            prefix: var_prefix,
+            start_after: var_startAfter,
+        };
+    }
+}
+
+impl SseDecode for crate::client::ListAllBasinsInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_prefix = <String>::sse_decode(deserializer);
+        let mut var_startAfter = <String>::sse_decode(deserializer);
+        let mut var_includeDeleted = <bool>::sse_decode(deserializer);
+        return crate::client::ListAllBasinsInput {
+            prefix: var_prefix,
+            start_after: var_startAfter,
+            include_deleted: var_includeDeleted,
+        };
+    }
+}
+
 impl SseDecode for crate::basin::ListAllStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
-        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
+        let mut var_prefix = <String>::sse_decode(deserializer);
+        let mut var_startAfter = <String>::sse_decode(deserializer);
         let mut var_includeDeleted = <bool>::sse_decode(deserializer);
         return crate::basin::ListAllStreamsInput {
             prefix: var_prefix,
@@ -2163,6 +2403,44 @@ impl SseDecode for Vec<crate::types::AppendRecord> {
         let mut ans_ = Vec::with_capacity(len_ as usize);
         for idx_ in 0..len_ {
             ans_.push(<crate::types::AppendRecord>::sse_decode(deserializer));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::client::BasinInfo> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::client::BasinInfo>::sse_decode(deserializer));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for crate::client::ListBasinsInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_prefix = <String>::sse_decode(deserializer);
+        let mut var_startAfter = <String>::sse_decode(deserializer);
+        let mut var_limit = <Option<usize>>::sse_decode(deserializer);
+        return crate::client::ListBasinsInput {
+            prefix: var_prefix,
+            start_after: var_startAfter,
+            limit: var_limit,
+        };
+    }
+}
+
+impl SseDecode for Vec<crate::types::Operation> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::types::Operation>::sse_decode(deserializer));
         }
         return ans_;
     }
@@ -2219,13 +2497,60 @@ impl SseDecode for Vec<crate::basin::StreamInfo> {
 impl SseDecode for crate::basin::ListStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
-        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
+        let mut var_prefix = <String>::sse_decode(deserializer);
+        let mut var_startAfter = <String>::sse_decode(deserializer);
         let mut var_limit = <Option<usize>>::sse_decode(deserializer);
         return crate::basin::ListStreamsInput {
             prefix: var_prefix,
             start_after: var_startAfter,
             limit: var_limit,
+        };
+    }
+}
+
+impl SseDecode for crate::types::Operation {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::types::Operation::ListBasins,
+            1 => crate::types::Operation::CreateBasin,
+            2 => crate::types::Operation::GetBasinConfig,
+            3 => crate::types::Operation::DeleteBasin,
+            4 => crate::types::Operation::ReconfigureBasin,
+            5 => crate::types::Operation::ListAccessTokens,
+            6 => crate::types::Operation::IssueAccessToken,
+            7 => crate::types::Operation::RevokeAccessToken,
+            8 => crate::types::Operation::GetAccountMetrics,
+            9 => crate::types::Operation::GetBasinMetrics,
+            10 => crate::types::Operation::GetStreamMetrics,
+            11 => crate::types::Operation::ListStreams,
+            12 => crate::types::Operation::CreateStream,
+            13 => crate::types::Operation::GetStreamConfig,
+            14 => crate::types::Operation::DeleteStream,
+            15 => crate::types::Operation::ReconfigureStream,
+            16 => crate::types::Operation::CheckTail,
+            17 => crate::types::Operation::Append,
+            18 => crate::types::Operation::Read,
+            19 => crate::types::Operation::Trim,
+            20 => crate::types::Operation::Fence,
+            _ => unreachable!("Invalid variant for Operation: {}", inner),
+        };
+    }
+}
+
+impl SseDecode for crate::client::OperationGroupPermissions {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_basin = <Option<crate::client::ReadWritePermissions>>::sse_decode(deserializer);
+        let mut var_stream =
+            <Option<crate::client::ReadWritePermissions>>::sse_decode(deserializer);
+        let mut var_account =
+            <Option<crate::client::ReadWritePermissions>>::sse_decode(deserializer);
+        return crate::client::OperationGroupPermissions {
+            basin: var_basin,
+            stream: var_stream,
+            account: var_account,
         };
     }
 }
@@ -2252,6 +2577,28 @@ impl SseDecode for Option<crate::types::AppendRetryPolicy> {
     }
 }
 
+impl SseDecode for Option<crate::client::BasinConfig> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::client::BasinConfig>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::client::BasinScope> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::client::BasinScope>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
 impl SseDecode for Option<crate::types::Compression> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2270,6 +2617,43 @@ impl SseDecode for Option<crate::basin::DeleteOnEmptyConfig> {
             return Some(<crate::basin::DeleteOnEmptyConfig>::sse_decode(
                 deserializer,
             ));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::client::OperationGroupPermissions> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::client::OperationGroupPermissions>::sse_decode(
+                deserializer,
+            ));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::client::ReadWritePermissions> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::client::ReadWritePermissions>::sse_decode(
+                deserializer,
+            ));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::types::ResourceSet> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::types::ResourceSet>::sse_decode(deserializer));
         } else {
             return None;
         }
@@ -2386,6 +2770,30 @@ impl SseDecode for Option<usize> {
     }
 }
 
+impl SseDecode for crate::client::PageOfAccessTokenInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_values = <Vec<crate::client::AccessTokenInfo>>::sse_decode(deserializer);
+        let mut var_hasMore = <bool>::sse_decode(deserializer);
+        return crate::client::PageOfAccessTokenInfo {
+            values: var_values,
+            has_more: var_hasMore,
+        };
+    }
+}
+
+impl SseDecode for crate::client::PageOfBasinInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_values = <Vec<crate::client::BasinInfo>>::sse_decode(deserializer);
+        let mut var_hasMore = <bool>::sse_decode(deserializer);
+        return crate::client::PageOfBasinInfo {
+            values: var_values,
+            has_more: var_hasMore,
+        };
+    }
+}
+
 impl SseDecode for crate::basin::PageOfStreamInfo {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2484,12 +2892,60 @@ impl SseDecode for crate::types::ReadStop {
     }
 }
 
+impl SseDecode for crate::client::ReadWritePermissions {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::client::ReadWritePermissions::Read,
+            1 => crate::client::ReadWritePermissions::Write,
+            2 => crate::client::ReadWritePermissions::ReadWrite,
+            _ => unreachable!("Invalid variant for ReadWritePermissions: {}", inner),
+        };
+    }
+}
+
+impl SseDecode for crate::client::ReconfigureBasinInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_name = <String>::sse_decode(deserializer);
+        let mut var_config = <crate::client::BasinConfig>::sse_decode(deserializer);
+        return crate::client::ReconfigureBasinInput {
+            name: var_name,
+            config: var_config,
+        };
+    }
+}
+
 impl SseDecode for (Vec<u8>, Vec<u8>) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut var_field0 = <Vec<u8>>::sse_decode(deserializer);
         let mut var_field1 = <Vec<u8>>::sse_decode(deserializer);
         return (var_field0, var_field1);
+    }
+}
+
+impl SseDecode for crate::types::ResourceSet {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut tag_ = <i32>::sse_decode(deserializer);
+        match tag_ {
+            0 => {
+                return crate::types::ResourceSet::None;
+            }
+            1 => {
+                let mut var_field0 = <String>::sse_decode(deserializer);
+                return crate::types::ResourceSet::Exact(var_field0);
+            }
+            2 => {
+                let mut var_field0 = <String>::sse_decode(deserializer);
+                return crate::types::ResourceSet::Prefix(var_field0);
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
     }
 }
 
@@ -2873,6 +3329,77 @@ impl flutter_rust_bridge::IntoIntoDart<FrbWrapper<S2Stream>> for S2Stream {
 }
 
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::AccessTokenInfo {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.id.into_into_dart().into_dart(),
+            self.expires_at.into_into_dart().into_dart(),
+            self.auto_prefix_streams.into_into_dart().into_dart(),
+            self.scope.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::AccessTokenInfo
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::AccessTokenInfo>
+    for crate::client::AccessTokenInfo
+{
+    fn into_into_dart(self) -> crate::client::AccessTokenInfo {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::AccessTokenScope {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.basins.into_into_dart().into_dart(),
+            self.streams.into_into_dart().into_dart(),
+            self.access_tokens.into_into_dart().into_dart(),
+            self.op_group_permissions.into_into_dart().into_dart(),
+            self.ops.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::AccessTokenScope
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::AccessTokenScope>
+    for crate::client::AccessTokenScope
+{
+    fn into_into_dart(self) -> crate::client::AccessTokenScope {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::AccessTokenScopeInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.basins.into_into_dart().into_dart(),
+            self.streams.into_into_dart().into_dart(),
+            self.access_tokens.into_into_dart().into_dart(),
+            self.op_group_permissions.into_into_dart().into_dart(),
+            self.ops.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::AccessTokenScopeInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::AccessTokenScopeInput>
+    for crate::client::AccessTokenScopeInput
+{
+    fn into_into_dart(self) -> crate::client::AccessTokenScopeInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::types::AppendAck {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -2983,6 +3510,56 @@ impl flutter_rust_bridge::IntoIntoDart<crate::stream::AppendSessionConfig>
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::BasinConfig {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.default_stream_config.into_into_dart().into_dart(),
+            self.create_stream_on_append.into_into_dart().into_dart(),
+            self.create_stream_on_read.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::client::BasinConfig {}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::BasinConfig> for crate::client::BasinConfig {
+    fn into_into_dart(self) -> crate::client::BasinConfig {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::BasinInfo {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.name.into_into_dart().into_dart(),
+            self.scope.into_into_dart().into_dart(),
+            self.created_at.into_into_dart().into_dart(),
+            self.deleted_at.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::client::BasinInfo {}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::BasinInfo> for crate::client::BasinInfo {
+    fn into_into_dart(self) -> crate::client::BasinInfo {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::BasinScope {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::AwsUsEast1 => 0.into_dart(),
+            _ => unreachable!(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::client::BasinScope {}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::BasinScope> for crate::client::BasinScope {
+    fn into_into_dart(self) -> crate::client::BasinScope {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::types::ClientConfig {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -3020,6 +3597,28 @@ impl flutter_rust_bridge::IntoIntoDart<crate::types::Compression> for crate::typ
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::CreateBasinInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.name.into_into_dart().into_dart(),
+            self.config.into_into_dart().into_dart(),
+            self.scope.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::CreateBasinInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::CreateBasinInput>
+    for crate::client::CreateBasinInput
+{
+    fn into_into_dart(self) -> crate::client::CreateBasinInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::basin::CreateStreamInput {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -3037,6 +3636,27 @@ impl flutter_rust_bridge::IntoIntoDart<crate::basin::CreateStreamInput>
     for crate::basin::CreateStreamInput
 {
     fn into_into_dart(self) -> crate::basin::CreateStreamInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::DeleteBasinInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.name.into_into_dart().into_dart(),
+            self.ignore_not_found.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::DeleteBasinInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::DeleteBasinInput>
+    for crate::client::DeleteBasinInput
+{
+    fn into_into_dart(self) -> crate::client::DeleteBasinInput {
         self
     }
 }
@@ -3100,6 +3720,94 @@ impl flutter_rust_bridge::IntoIntoDart<crate::producer::IndexedAppendAck>
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::IssueAccessTokenInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.id.into_into_dart().into_dart(),
+            self.expires_at.into_into_dart().into_dart(),
+            self.auto_prefix_streams.into_into_dart().into_dart(),
+            self.scope.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::IssueAccessTokenInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::IssueAccessTokenInput>
+    for crate::client::IssueAccessTokenInput
+{
+    fn into_into_dart(self) -> crate::client::IssueAccessTokenInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::ListAccessTokensInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.prefix.into_into_dart().into_dart(),
+            self.start_after.into_into_dart().into_dart(),
+            self.limit.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::ListAccessTokensInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::ListAccessTokensInput>
+    for crate::client::ListAccessTokensInput
+{
+    fn into_into_dart(self) -> crate::client::ListAccessTokensInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::ListAllAccessTokensInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.prefix.into_into_dart().into_dart(),
+            self.start_after.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::ListAllAccessTokensInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::ListAllAccessTokensInput>
+    for crate::client::ListAllAccessTokensInput
+{
+    fn into_into_dart(self) -> crate::client::ListAllAccessTokensInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::ListAllBasinsInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.prefix.into_into_dart().into_dart(),
+            self.start_after.into_into_dart().into_dart(),
+            self.include_deleted.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::ListAllBasinsInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::ListAllBasinsInput>
+    for crate::client::ListAllBasinsInput
+{
+    fn into_into_dart(self) -> crate::client::ListAllBasinsInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::basin::ListAllStreamsInput {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -3122,6 +3830,28 @@ impl flutter_rust_bridge::IntoIntoDart<crate::basin::ListAllStreamsInput>
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::ListBasinsInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.prefix.into_into_dart().into_dart(),
+            self.start_after.into_into_dart().into_dart(),
+            self.limit.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::ListBasinsInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::ListBasinsInput>
+    for crate::client::ListBasinsInput
+{
+    fn into_into_dart(self) -> crate::client::ListBasinsInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::basin::ListStreamsInput {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -3140,6 +3870,105 @@ impl flutter_rust_bridge::IntoIntoDart<crate::basin::ListStreamsInput>
     for crate::basin::ListStreamsInput
 {
     fn into_into_dart(self) -> crate::basin::ListStreamsInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::types::Operation {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::ListBasins => 0.into_dart(),
+            Self::CreateBasin => 1.into_dart(),
+            Self::GetBasinConfig => 2.into_dart(),
+            Self::DeleteBasin => 3.into_dart(),
+            Self::ReconfigureBasin => 4.into_dart(),
+            Self::ListAccessTokens => 5.into_dart(),
+            Self::IssueAccessToken => 6.into_dart(),
+            Self::RevokeAccessToken => 7.into_dart(),
+            Self::GetAccountMetrics => 8.into_dart(),
+            Self::GetBasinMetrics => 9.into_dart(),
+            Self::GetStreamMetrics => 10.into_dart(),
+            Self::ListStreams => 11.into_dart(),
+            Self::CreateStream => 12.into_dart(),
+            Self::GetStreamConfig => 13.into_dart(),
+            Self::DeleteStream => 14.into_dart(),
+            Self::ReconfigureStream => 15.into_dart(),
+            Self::CheckTail => 16.into_dart(),
+            Self::Append => 17.into_dart(),
+            Self::Read => 18.into_dart(),
+            Self::Trim => 19.into_dart(),
+            Self::Fence => 20.into_dart(),
+            _ => unreachable!(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::types::Operation {}
+impl flutter_rust_bridge::IntoIntoDart<crate::types::Operation> for crate::types::Operation {
+    fn into_into_dart(self) -> crate::types::Operation {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::OperationGroupPermissions {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.basin.into_into_dart().into_dart(),
+            self.stream.into_into_dart().into_dart(),
+            self.account.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::OperationGroupPermissions
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::OperationGroupPermissions>
+    for crate::client::OperationGroupPermissions
+{
+    fn into_into_dart(self) -> crate::client::OperationGroupPermissions {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::PageOfAccessTokenInfo {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.values.into_into_dart().into_dart(),
+            self.has_more.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::PageOfAccessTokenInfo
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::PageOfAccessTokenInfo>
+    for crate::client::PageOfAccessTokenInfo
+{
+    fn into_into_dart(self) -> crate::client::PageOfAccessTokenInfo {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::PageOfBasinInfo {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.values.into_into_dart().into_dart(),
+            self.has_more.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::PageOfBasinInfo
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::PageOfBasinInfo>
+    for crate::client::PageOfBasinInfo
+{
+    fn into_into_dart(self) -> crate::client::PageOfBasinInfo {
         self
     }
 }
@@ -3267,6 +4096,72 @@ impl flutter_rust_bridge::IntoDart for crate::types::ReadStop {
 impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::types::ReadStop {}
 impl flutter_rust_bridge::IntoIntoDart<crate::types::ReadStop> for crate::types::ReadStop {
     fn into_into_dart(self) -> crate::types::ReadStop {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::ReadWritePermissions {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::Read => 0.into_dart(),
+            Self::Write => 1.into_dart(),
+            Self::ReadWrite => 2.into_dart(),
+            _ => unreachable!(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::ReadWritePermissions
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::ReadWritePermissions>
+    for crate::client::ReadWritePermissions
+{
+    fn into_into_dart(self) -> crate::client::ReadWritePermissions {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::client::ReconfigureBasinInput {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.name.into_into_dart().into_dart(),
+            self.config.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::client::ReconfigureBasinInput
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::client::ReconfigureBasinInput>
+    for crate::client::ReconfigureBasinInput
+{
+    fn into_into_dart(self) -> crate::client::ReconfigureBasinInput {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::types::ResourceSet {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            crate::types::ResourceSet::None => [0.into_dart()].into_dart(),
+            crate::types::ResourceSet::Exact(field0) => {
+                [1.into_dart(), field0.into_into_dart().into_dart()].into_dart()
+            }
+            crate::types::ResourceSet::Prefix(field0) => {
+                [2.into_dart(), field0.into_into_dart().into_dart()].into_dart()
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::types::ResourceSet {}
+impl flutter_rust_bridge::IntoIntoDart<crate::types::ResourceSet> for crate::types::ResourceSet {
+    fn into_into_dart(self) -> crate::types::ResourceSet {
         self
     }
 }
@@ -3587,6 +4482,24 @@ impl SseEncode
 }
 
 impl SseEncode
+    for StreamSink<crate::client::AccessTokenInfo, flutter_rust_bridge::for_generated::SseCodec>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        unimplemented!("")
+    }
+}
+
+impl SseEncode
+    for StreamSink<crate::client::BasinInfo, flutter_rust_bridge::for_generated::SseCodec>
+{
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        unimplemented!("")
+    }
+}
+
+impl SseEncode
     for StreamSink<crate::types::SequencedRecord, flutter_rust_bridge::for_generated::SseCodec>
 {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -3608,6 +4521,44 @@ impl SseEncode for String {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <Vec<u8>>::sse_encode(self.into_bytes(), serializer);
+    }
+}
+
+impl SseEncode for crate::client::AccessTokenInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.id, serializer);
+        <Option<u64>>::sse_encode(self.expires_at, serializer);
+        <bool>::sse_encode(self.auto_prefix_streams, serializer);
+        <crate::client::AccessTokenScope>::sse_encode(self.scope, serializer);
+    }
+}
+
+impl SseEncode for crate::client::AccessTokenScope {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <crate::types::ResourceSet>::sse_encode(self.basins, serializer);
+        <crate::types::ResourceSet>::sse_encode(self.streams, serializer);
+        <crate::types::ResourceSet>::sse_encode(self.access_tokens, serializer);
+        <Option<crate::client::OperationGroupPermissions>>::sse_encode(
+            self.op_group_permissions,
+            serializer,
+        );
+        <Vec<crate::types::Operation>>::sse_encode(self.ops, serializer);
+    }
+}
+
+impl SseEncode for crate::client::AccessTokenScopeInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Option<crate::types::ResourceSet>>::sse_encode(self.basins, serializer);
+        <Option<crate::types::ResourceSet>>::sse_encode(self.streams, serializer);
+        <Option<crate::types::ResourceSet>>::sse_encode(self.access_tokens, serializer);
+        <Option<crate::client::OperationGroupPermissions>>::sse_encode(
+            self.op_group_permissions,
+            serializer,
+        );
+        <Vec<crate::types::Operation>>::sse_encode(self.ops, serializer);
     }
 }
 
@@ -3669,6 +4620,40 @@ impl SseEncode for crate::stream::AppendSessionConfig {
     }
 }
 
+impl SseEncode for crate::client::BasinConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Option<crate::basin::StreamConfig>>::sse_encode(self.default_stream_config, serializer);
+        <bool>::sse_encode(self.create_stream_on_append, serializer);
+        <bool>::sse_encode(self.create_stream_on_read, serializer);
+    }
+}
+
+impl SseEncode for crate::client::BasinInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.name, serializer);
+        <Option<crate::client::BasinScope>>::sse_encode(self.scope, serializer);
+        <u64>::sse_encode(self.created_at, serializer);
+        <Option<u64>>::sse_encode(self.deleted_at, serializer);
+    }
+}
+
+impl SseEncode for crate::client::BasinScope {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::client::BasinScope::AwsUsEast1 => 0,
+                _ => {
+                    unimplemented!("");
+                }
+            },
+            serializer,
+        );
+    }
+}
+
 impl SseEncode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -3705,11 +4690,28 @@ impl SseEncode for crate::types::Compression {
     }
 }
 
+impl SseEncode for crate::client::CreateBasinInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.name, serializer);
+        <Option<crate::client::BasinConfig>>::sse_encode(self.config, serializer);
+        <Option<crate::client::BasinScope>>::sse_encode(self.scope, serializer);
+    }
+}
+
 impl SseEncode for crate::basin::CreateStreamInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <String>::sse_encode(self.name, serializer);
         <Option<crate::basin::StreamConfig>>::sse_encode(self.config, serializer);
+    }
+}
+
+impl SseEncode for crate::client::DeleteBasinInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.name, serializer);
+        <bool>::sse_encode(self.ignore_not_found, serializer);
     }
 }
 
@@ -3743,11 +4745,57 @@ impl SseEncode for crate::producer::IndexedAppendAck {
     }
 }
 
+impl SseEncode for crate::client::IssueAccessTokenInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.id, serializer);
+        <Option<u64>>::sse_encode(self.expires_at, serializer);
+        <bool>::sse_encode(self.auto_prefix_streams, serializer);
+        <crate::client::AccessTokenScopeInput>::sse_encode(self.scope, serializer);
+    }
+}
+
+impl SseEncode for Vec<crate::client::AccessTokenInfo> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::client::AccessTokenInfo>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for crate::client::ListAccessTokensInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.prefix, serializer);
+        <String>::sse_encode(self.start_after, serializer);
+        <Option<usize>>::sse_encode(self.limit, serializer);
+    }
+}
+
+impl SseEncode for crate::client::ListAllAccessTokensInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.prefix, serializer);
+        <String>::sse_encode(self.start_after, serializer);
+    }
+}
+
+impl SseEncode for crate::client::ListAllBasinsInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.prefix, serializer);
+        <String>::sse_encode(self.start_after, serializer);
+        <bool>::sse_encode(self.include_deleted, serializer);
+    }
+}
+
 impl SseEncode for crate::basin::ListAllStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <Option<String>>::sse_encode(self.prefix, serializer);
-        <Option<String>>::sse_encode(self.start_after, serializer);
+        <String>::sse_encode(self.prefix, serializer);
+        <String>::sse_encode(self.start_after, serializer);
         <bool>::sse_encode(self.include_deleted, serializer);
     }
 }
@@ -3758,6 +4806,35 @@ impl SseEncode for Vec<crate::types::AppendRecord> {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
             <crate::types::AppendRecord>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::client::BasinInfo> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::client::BasinInfo>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for crate::client::ListBasinsInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.prefix, serializer);
+        <String>::sse_encode(self.start_after, serializer);
+        <Option<usize>>::sse_encode(self.limit, serializer);
+    }
+}
+
+impl SseEncode for Vec<crate::types::Operation> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::types::Operation>::sse_encode(item, serializer);
         }
     }
 }
@@ -3805,9 +4882,53 @@ impl SseEncode for Vec<crate::basin::StreamInfo> {
 impl SseEncode for crate::basin::ListStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <Option<String>>::sse_encode(self.prefix, serializer);
-        <Option<String>>::sse_encode(self.start_after, serializer);
+        <String>::sse_encode(self.prefix, serializer);
+        <String>::sse_encode(self.start_after, serializer);
         <Option<usize>>::sse_encode(self.limit, serializer);
+    }
+}
+
+impl SseEncode for crate::types::Operation {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::types::Operation::ListBasins => 0,
+                crate::types::Operation::CreateBasin => 1,
+                crate::types::Operation::GetBasinConfig => 2,
+                crate::types::Operation::DeleteBasin => 3,
+                crate::types::Operation::ReconfigureBasin => 4,
+                crate::types::Operation::ListAccessTokens => 5,
+                crate::types::Operation::IssueAccessToken => 6,
+                crate::types::Operation::RevokeAccessToken => 7,
+                crate::types::Operation::GetAccountMetrics => 8,
+                crate::types::Operation::GetBasinMetrics => 9,
+                crate::types::Operation::GetStreamMetrics => 10,
+                crate::types::Operation::ListStreams => 11,
+                crate::types::Operation::CreateStream => 12,
+                crate::types::Operation::GetStreamConfig => 13,
+                crate::types::Operation::DeleteStream => 14,
+                crate::types::Operation::ReconfigureStream => 15,
+                crate::types::Operation::CheckTail => 16,
+                crate::types::Operation::Append => 17,
+                crate::types::Operation::Read => 18,
+                crate::types::Operation::Trim => 19,
+                crate::types::Operation::Fence => 20,
+                _ => {
+                    unimplemented!("");
+                }
+            },
+            serializer,
+        );
+    }
+}
+
+impl SseEncode for crate::client::OperationGroupPermissions {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Option<crate::client::ReadWritePermissions>>::sse_encode(self.basin, serializer);
+        <Option<crate::client::ReadWritePermissions>>::sse_encode(self.stream, serializer);
+        <Option<crate::client::ReadWritePermissions>>::sse_encode(self.account, serializer);
     }
 }
 
@@ -3831,6 +4952,26 @@ impl SseEncode for Option<crate::types::AppendRetryPolicy> {
     }
 }
 
+impl SseEncode for Option<crate::client::BasinConfig> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::client::BasinConfig>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::client::BasinScope> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::client::BasinScope>::sse_encode(value, serializer);
+        }
+    }
+}
+
 impl SseEncode for Option<crate::types::Compression> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -3847,6 +4988,36 @@ impl SseEncode for Option<crate::basin::DeleteOnEmptyConfig> {
         <bool>::sse_encode(self.is_some(), serializer);
         if let Some(value) = self {
             <crate::basin::DeleteOnEmptyConfig>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::client::OperationGroupPermissions> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::client::OperationGroupPermissions>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::client::ReadWritePermissions> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::client::ReadWritePermissions>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::types::ResourceSet> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::types::ResourceSet>::sse_encode(value, serializer);
         }
     }
 }
@@ -3951,6 +5122,22 @@ impl SseEncode for Option<usize> {
     }
 }
 
+impl SseEncode for crate::client::PageOfAccessTokenInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Vec<crate::client::AccessTokenInfo>>::sse_encode(self.values, serializer);
+        <bool>::sse_encode(self.has_more, serializer);
+    }
+}
+
+impl SseEncode for crate::client::PageOfBasinInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Vec<crate::client::BasinInfo>>::sse_encode(self.values, serializer);
+        <bool>::sse_encode(self.has_more, serializer);
+    }
+}
+
 impl SseEncode for crate::basin::PageOfStreamInfo {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -4023,11 +5210,58 @@ impl SseEncode for crate::types::ReadStop {
     }
 }
 
+impl SseEncode for crate::client::ReadWritePermissions {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::client::ReadWritePermissions::Read => 0,
+                crate::client::ReadWritePermissions::Write => 1,
+                crate::client::ReadWritePermissions::ReadWrite => 2,
+                _ => {
+                    unimplemented!("");
+                }
+            },
+            serializer,
+        );
+    }
+}
+
+impl SseEncode for crate::client::ReconfigureBasinInput {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.name, serializer);
+        <crate::client::BasinConfig>::sse_encode(self.config, serializer);
+    }
+}
+
 impl SseEncode for (Vec<u8>, Vec<u8>) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <Vec<u8>>::sse_encode(self.0, serializer);
         <Vec<u8>>::sse_encode(self.1, serializer);
+    }
+}
+
+impl SseEncode for crate::types::ResourceSet {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        match self {
+            crate::types::ResourceSet::None => {
+                <i32>::sse_encode(0, serializer);
+            }
+            crate::types::ResourceSet::Exact(field0) => {
+                <i32>::sse_encode(1, serializer);
+                <String>::sse_encode(field0, serializer);
+            }
+            crate::types::ResourceSet::Prefix(field0) => {
+                <i32>::sse_encode(2, serializer);
+                <String>::sse_encode(field0, serializer);
+            }
+            _ => {
+                unimplemented!("");
+            }
+        }
     }
 }
 

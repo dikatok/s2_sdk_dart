@@ -170,6 +170,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  RustStreamSink<AccessTokenInfo> dco_decode_StreamSink_access_token_info_Sse(
+    dynamic raw,
+  );
+
+  @protected
+  RustStreamSink<BasinInfo> dco_decode_StreamSink_basin_info_Sse(dynamic raw);
+
+  @protected
   RustStreamSink<SequencedRecord> dco_decode_StreamSink_sequenced_record_Sse(
     dynamic raw,
   );
@@ -179,6 +187,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   String dco_decode_String(dynamic raw);
+
+  @protected
+  AccessTokenInfo dco_decode_access_token_info(dynamic raw);
+
+  @protected
+  AccessTokenScope dco_decode_access_token_scope(dynamic raw);
+
+  @protected
+  AccessTokenScopeInput dco_decode_access_token_scope_input(dynamic raw);
 
   @protected
   AppendAck dco_decode_append_ack(dynamic raw);
@@ -199,6 +216,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AppendSessionConfig dco_decode_append_session_config(dynamic raw);
 
   @protected
+  BasinConfig dco_decode_basin_config(dynamic raw);
+
+  @protected
+  BasinInfo dco_decode_basin_info(dynamic raw);
+
+  @protected
+  BasinScope dco_decode_basin_scope(dynamic raw);
+
+  @protected
   bool dco_decode_bool(dynamic raw);
 
   @protected
@@ -214,13 +240,25 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   AppendSessionConfig dco_decode_box_autoadd_append_session_config(dynamic raw);
 
   @protected
+  BasinConfig dco_decode_box_autoadd_basin_config(dynamic raw);
+
+  @protected
+  BasinScope dco_decode_box_autoadd_basin_scope(dynamic raw);
+
+  @protected
   ClientConfig dco_decode_box_autoadd_client_config(dynamic raw);
 
   @protected
   Compression dco_decode_box_autoadd_compression(dynamic raw);
 
   @protected
+  CreateBasinInput dco_decode_box_autoadd_create_basin_input(dynamic raw);
+
+  @protected
   CreateStreamInput dco_decode_box_autoadd_create_stream_input(dynamic raw);
+
+  @protected
+  DeleteBasinInput dco_decode_box_autoadd_delete_basin_input(dynamic raw);
 
   @protected
   DeleteOnEmptyConfig dco_decode_box_autoadd_delete_on_empty_config(
@@ -231,15 +269,54 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   DeleteStreamInput dco_decode_box_autoadd_delete_stream_input(dynamic raw);
 
   @protected
+  IssueAccessTokenInput dco_decode_box_autoadd_issue_access_token_input(
+    dynamic raw,
+  );
+
+  @protected
+  ListAccessTokensInput dco_decode_box_autoadd_list_access_tokens_input(
+    dynamic raw,
+  );
+
+  @protected
+  ListAllAccessTokensInput dco_decode_box_autoadd_list_all_access_tokens_input(
+    dynamic raw,
+  );
+
+  @protected
+  ListAllBasinsInput dco_decode_box_autoadd_list_all_basins_input(dynamic raw);
+
+  @protected
   ListAllStreamsInput dco_decode_box_autoadd_list_all_streams_input(
     dynamic raw,
   );
 
   @protected
+  ListBasinsInput dco_decode_box_autoadd_list_basins_input(dynamic raw);
+
+  @protected
   ListStreamsInput dco_decode_box_autoadd_list_streams_input(dynamic raw);
 
   @protected
+  OperationGroupPermissions dco_decode_box_autoadd_operation_group_permissions(
+    dynamic raw,
+  );
+
+  @protected
   ReadInput dco_decode_box_autoadd_read_input(dynamic raw);
+
+  @protected
+  ReadWritePermissions dco_decode_box_autoadd_read_write_permissions(
+    dynamic raw,
+  );
+
+  @protected
+  ReconfigureBasinInput dco_decode_box_autoadd_reconfigure_basin_input(
+    dynamic raw,
+  );
+
+  @protected
+  ResourceSet dco_decode_box_autoadd_resource_set(dynamic raw);
 
   @protected
   RetentionPolicy dco_decode_box_autoadd_retention_policy(dynamic raw);
@@ -278,7 +355,13 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression dco_decode_compression(dynamic raw);
 
   @protected
+  CreateBasinInput dco_decode_create_basin_input(dynamic raw);
+
+  @protected
   CreateStreamInput dco_decode_create_stream_input(dynamic raw);
+
+  @protected
+  DeleteBasinInput dco_decode_delete_basin_input(dynamic raw);
 
   @protected
   DeleteOnEmptyConfig dco_decode_delete_on_empty_config(dynamic raw);
@@ -293,10 +376,34 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   IndexedAppendAck dco_decode_indexed_append_ack(dynamic raw);
 
   @protected
+  IssueAccessTokenInput dco_decode_issue_access_token_input(dynamic raw);
+
+  @protected
+  List<AccessTokenInfo> dco_decode_list_access_token_info(dynamic raw);
+
+  @protected
+  ListAccessTokensInput dco_decode_list_access_tokens_input(dynamic raw);
+
+  @protected
+  ListAllAccessTokensInput dco_decode_list_all_access_tokens_input(dynamic raw);
+
+  @protected
+  ListAllBasinsInput dco_decode_list_all_basins_input(dynamic raw);
+
+  @protected
   ListAllStreamsInput dco_decode_list_all_streams_input(dynamic raw);
 
   @protected
   List<AppendRecord> dco_decode_list_append_record(dynamic raw);
+
+  @protected
+  List<BasinInfo> dco_decode_list_basin_info(dynamic raw);
+
+  @protected
+  ListBasinsInput dco_decode_list_basins_input(dynamic raw);
+
+  @protected
+  List<Operation> dco_decode_list_operation(dynamic raw);
 
   @protected
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
@@ -315,6 +422,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   ListStreamsInput dco_decode_list_streams_input(dynamic raw);
 
   @protected
+  Operation dco_decode_operation(dynamic raw);
+
+  @protected
+  OperationGroupPermissions dco_decode_operation_group_permissions(dynamic raw);
+
+  @protected
   String? dco_decode_opt_String(dynamic raw);
 
   @protected
@@ -323,12 +436,30 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  BasinConfig? dco_decode_opt_box_autoadd_basin_config(dynamic raw);
+
+  @protected
+  BasinScope? dco_decode_opt_box_autoadd_basin_scope(dynamic raw);
+
+  @protected
   Compression? dco_decode_opt_box_autoadd_compression(dynamic raw);
 
   @protected
   DeleteOnEmptyConfig? dco_decode_opt_box_autoadd_delete_on_empty_config(
     dynamic raw,
   );
+
+  @protected
+  OperationGroupPermissions?
+  dco_decode_opt_box_autoadd_operation_group_permissions(dynamic raw);
+
+  @protected
+  ReadWritePermissions? dco_decode_opt_box_autoadd_read_write_permissions(
+    dynamic raw,
+  );
+
+  @protected
+  ResourceSet? dco_decode_opt_box_autoadd_resource_set(dynamic raw);
 
   @protected
   RetentionPolicy? dco_decode_opt_box_autoadd_retention_policy(dynamic raw);
@@ -363,6 +494,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   BigInt? dco_decode_opt_box_autoadd_usize(dynamic raw);
 
   @protected
+  PageOfAccessTokenInfo dco_decode_page_of_access_token_info(dynamic raw);
+
+  @protected
+  PageOfBasinInfo dco_decode_page_of_basin_info(dynamic raw);
+
+  @protected
   PageOfStreamInfo dco_decode_page_of_stream_info(dynamic raw);
 
   @protected
@@ -384,8 +521,17 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   ReadStop dco_decode_read_stop(dynamic raw);
 
   @protected
+  ReadWritePermissions dco_decode_read_write_permissions(dynamic raw);
+
+  @protected
+  ReconfigureBasinInput dco_decode_reconfigure_basin_input(dynamic raw);
+
+  @protected
   (Uint8List, Uint8List)
   dco_decode_record_list_prim_u_8_strict_list_prim_u_8_strict(dynamic raw);
+
+  @protected
+  ResourceSet dco_decode_resource_set(dynamic raw);
 
   @protected
   RetentionPolicy dco_decode_retention_policy(dynamic raw);
@@ -550,6 +696,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  RustStreamSink<AccessTokenInfo> sse_decode_StreamSink_access_token_info_Sse(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  RustStreamSink<BasinInfo> sse_decode_StreamSink_basin_info_Sse(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   RustStreamSink<SequencedRecord> sse_decode_StreamSink_sequenced_record_Sse(
     SseDeserializer deserializer,
   );
@@ -561,6 +717,17 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
+
+  @protected
+  AccessTokenInfo sse_decode_access_token_info(SseDeserializer deserializer);
+
+  @protected
+  AccessTokenScope sse_decode_access_token_scope(SseDeserializer deserializer);
+
+  @protected
+  AccessTokenScopeInput sse_decode_access_token_scope_input(
+    SseDeserializer deserializer,
+  );
 
   @protected
   AppendAck sse_decode_append_ack(SseDeserializer deserializer);
@@ -587,6 +754,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  BasinConfig sse_decode_basin_config(SseDeserializer deserializer);
+
+  @protected
+  BasinInfo sse_decode_basin_info(SseDeserializer deserializer);
+
+  @protected
+  BasinScope sse_decode_basin_scope(SseDeserializer deserializer);
+
+  @protected
   bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
@@ -608,6 +784,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  BasinConfig sse_decode_box_autoadd_basin_config(SseDeserializer deserializer);
+
+  @protected
+  BasinScope sse_decode_box_autoadd_basin_scope(SseDeserializer deserializer);
+
+  @protected
   ClientConfig sse_decode_box_autoadd_client_config(
     SseDeserializer deserializer,
   );
@@ -616,7 +798,17 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression sse_decode_box_autoadd_compression(SseDeserializer deserializer);
 
   @protected
+  CreateBasinInput sse_decode_box_autoadd_create_basin_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   CreateStreamInput sse_decode_box_autoadd_create_stream_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  DeleteBasinInput sse_decode_box_autoadd_delete_basin_input(
     SseDeserializer deserializer,
   );
 
@@ -631,7 +823,32 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  IssueAccessTokenInput sse_decode_box_autoadd_issue_access_token_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListAccessTokensInput sse_decode_box_autoadd_list_access_tokens_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListAllAccessTokensInput sse_decode_box_autoadd_list_all_access_tokens_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListAllBasinsInput sse_decode_box_autoadd_list_all_basins_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   ListAllStreamsInput sse_decode_box_autoadd_list_all_streams_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListBasinsInput sse_decode_box_autoadd_list_basins_input(
     SseDeserializer deserializer,
   );
 
@@ -641,7 +858,25 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  OperationGroupPermissions sse_decode_box_autoadd_operation_group_permissions(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   ReadInput sse_decode_box_autoadd_read_input(SseDeserializer deserializer);
+
+  @protected
+  ReadWritePermissions sse_decode_box_autoadd_read_write_permissions(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ReconfigureBasinInput sse_decode_box_autoadd_reconfigure_basin_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ResourceSet sse_decode_box_autoadd_resource_set(SseDeserializer deserializer);
 
   @protected
   RetentionPolicy sse_decode_box_autoadd_retention_policy(
@@ -692,9 +927,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   Compression sse_decode_compression(SseDeserializer deserializer);
 
   @protected
+  CreateBasinInput sse_decode_create_basin_input(SseDeserializer deserializer);
+
+  @protected
   CreateStreamInput sse_decode_create_stream_input(
     SseDeserializer deserializer,
   );
+
+  @protected
+  DeleteBasinInput sse_decode_delete_basin_input(SseDeserializer deserializer);
 
   @protected
   DeleteOnEmptyConfig sse_decode_delete_on_empty_config(
@@ -713,6 +954,31 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   IndexedAppendAck sse_decode_indexed_append_ack(SseDeserializer deserializer);
 
   @protected
+  IssueAccessTokenInput sse_decode_issue_access_token_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  List<AccessTokenInfo> sse_decode_list_access_token_info(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListAccessTokensInput sse_decode_list_access_tokens_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListAllAccessTokensInput sse_decode_list_all_access_tokens_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ListAllBasinsInput sse_decode_list_all_basins_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   ListAllStreamsInput sse_decode_list_all_streams_input(
     SseDeserializer deserializer,
   );
@@ -721,6 +987,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<AppendRecord> sse_decode_list_append_record(
     SseDeserializer deserializer,
   );
+
+  @protected
+  List<BasinInfo> sse_decode_list_basin_info(SseDeserializer deserializer);
+
+  @protected
+  ListBasinsInput sse_decode_list_basins_input(SseDeserializer deserializer);
+
+  @protected
+  List<Operation> sse_decode_list_operation(SseDeserializer deserializer);
 
   @protected
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
@@ -743,10 +1018,28 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   ListStreamsInput sse_decode_list_streams_input(SseDeserializer deserializer);
 
   @protected
+  Operation sse_decode_operation(SseDeserializer deserializer);
+
+  @protected
+  OperationGroupPermissions sse_decode_operation_group_permissions(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
 
   @protected
   AppendRetryPolicy? sse_decode_opt_box_autoadd_append_retry_policy(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  BasinConfig? sse_decode_opt_box_autoadd_basin_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  BasinScope? sse_decode_opt_box_autoadd_basin_scope(
     SseDeserializer deserializer,
   );
 
@@ -757,6 +1050,22 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   DeleteOnEmptyConfig? sse_decode_opt_box_autoadd_delete_on_empty_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  OperationGroupPermissions?
+  sse_decode_opt_box_autoadd_operation_group_permissions(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ReadWritePermissions? sse_decode_opt_box_autoadd_read_write_permissions(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ResourceSet? sse_decode_opt_box_autoadd_resource_set(
     SseDeserializer deserializer,
   );
 
@@ -805,6 +1114,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   BigInt? sse_decode_opt_box_autoadd_usize(SseDeserializer deserializer);
 
   @protected
+  PageOfAccessTokenInfo sse_decode_page_of_access_token_info(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  PageOfBasinInfo sse_decode_page_of_basin_info(SseDeserializer deserializer);
+
+  @protected
   PageOfStreamInfo sse_decode_page_of_stream_info(SseDeserializer deserializer);
 
   @protected
@@ -826,10 +1143,23 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   ReadStop sse_decode_read_stop(SseDeserializer deserializer);
 
   @protected
+  ReadWritePermissions sse_decode_read_write_permissions(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ReconfigureBasinInput sse_decode_reconfigure_basin_input(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   (Uint8List, Uint8List)
   sse_decode_record_list_prim_u_8_strict_list_prim_u_8_strict(
     SseDeserializer deserializer,
   );
+
+  @protected
+  ResourceSet sse_decode_resource_set(SseDeserializer deserializer);
 
   @protected
   RetentionPolicy sse_decode_retention_policy(SseDeserializer deserializer);
@@ -1018,6 +1348,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_StreamSink_access_token_info_Sse(
+    RustStreamSink<AccessTokenInfo> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_StreamSink_basin_info_Sse(
+    RustStreamSink<BasinInfo> self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_StreamSink_sequenced_record_Sse(
     RustStreamSink<SequencedRecord> self,
     SseSerializer serializer,
@@ -1031,6 +1373,24 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_access_token_info(
+    AccessTokenInfo self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_access_token_scope(
+    AccessTokenScope self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_access_token_scope_input(
+    AccessTokenScopeInput self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_append_ack(AppendAck self, SseSerializer serializer);
@@ -1060,6 +1420,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_basin_config(BasinConfig self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_basin_info(BasinInfo self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_basin_scope(BasinScope self, SseSerializer serializer);
+
+  @protected
   void sse_encode_bool(bool self, SseSerializer serializer);
 
   @protected
@@ -1087,6 +1456,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_box_autoadd_basin_config(
+    BasinConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_basin_scope(
+    BasinScope self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_box_autoadd_client_config(
     ClientConfig self,
     SseSerializer serializer,
@@ -1099,8 +1480,20 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_box_autoadd_create_basin_input(
+    CreateBasinInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_box_autoadd_create_stream_input(
     CreateStreamInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_delete_basin_input(
+    DeleteBasinInput self,
     SseSerializer serializer,
   );
 
@@ -1117,8 +1510,38 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_box_autoadd_issue_access_token_input(
+    IssueAccessTokenInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_list_access_tokens_input(
+    ListAccessTokensInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_list_all_access_tokens_input(
+    ListAllAccessTokensInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_list_all_basins_input(
+    ListAllBasinsInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_box_autoadd_list_all_streams_input(
     ListAllStreamsInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_list_basins_input(
+    ListBasinsInput self,
     SseSerializer serializer,
   );
 
@@ -1129,8 +1552,32 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_box_autoadd_operation_group_permissions(
+    OperationGroupPermissions self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_box_autoadd_read_input(
     ReadInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_read_write_permissions(
+    ReadWritePermissions self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_reconfigure_basin_input(
+    ReconfigureBasinInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_resource_set(
+    ResourceSet self,
     SseSerializer serializer,
   );
 
@@ -1192,8 +1639,20 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_compression(Compression self, SseSerializer serializer);
 
   @protected
+  void sse_encode_create_basin_input(
+    CreateBasinInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_create_stream_input(
     CreateStreamInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_delete_basin_input(
+    DeleteBasinInput self,
     SseSerializer serializer,
   );
 
@@ -1219,6 +1678,36 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_issue_access_token_input(
+    IssueAccessTokenInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_access_token_info(
+    List<AccessTokenInfo> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_access_tokens_input(
+    ListAccessTokensInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_all_access_tokens_input(
+    ListAllAccessTokensInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_all_basins_input(
+    ListAllBasinsInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_list_all_streams_input(
     ListAllStreamsInput self,
     SseSerializer serializer,
@@ -1227,6 +1716,24 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_list_append_record(
     List<AppendRecord> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_basin_info(
+    List<BasinInfo> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_basins_input(
+    ListBasinsInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_operation(
+    List<Operation> self,
     SseSerializer serializer,
   );
 
@@ -1261,11 +1768,32 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_operation(Operation self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_operation_group_permissions(
+    OperationGroupPermissions self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_box_autoadd_append_retry_policy(
     AppendRetryPolicy? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_basin_config(
+    BasinConfig? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_basin_scope(
+    BasinScope? self,
     SseSerializer serializer,
   );
 
@@ -1278,6 +1806,24 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_opt_box_autoadd_delete_on_empty_config(
     DeleteOnEmptyConfig? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_operation_group_permissions(
+    OperationGroupPermissions? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_read_write_permissions(
+    ReadWritePermissions? self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_opt_box_autoadd_resource_set(
+    ResourceSet? self,
     SseSerializer serializer,
   );
 
@@ -1333,6 +1879,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_opt_box_autoadd_usize(BigInt? self, SseSerializer serializer);
 
   @protected
+  void sse_encode_page_of_access_token_info(
+    PageOfAccessTokenInfo self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_page_of_basin_info(
+    PageOfBasinInfo self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_page_of_stream_info(
     PageOfStreamInfo self,
     SseSerializer serializer,
@@ -1357,10 +1915,25 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_read_stop(ReadStop self, SseSerializer serializer);
 
   @protected
+  void sse_encode_read_write_permissions(
+    ReadWritePermissions self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_reconfigure_basin_input(
+    ReconfigureBasinInput self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_record_list_prim_u_8_strict_list_prim_u_8_strict(
     (Uint8List, Uint8List) self,
     SseSerializer serializer,
   );
+
+  @protected
+  void sse_encode_resource_set(ResourceSet self, SseSerializer serializer);
 
   @protected
   void sse_encode_retention_policy(

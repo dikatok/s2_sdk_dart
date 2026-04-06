@@ -11,7 +11,7 @@ import 'stream.dart';
 part 'basin.freezed.dart';
 
 // These functions are ignored because they are not marked as `pub`: `new`
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Basin>>
 abstract class S2Basin implements RustOpaqueInterface {
@@ -85,13 +85,13 @@ class DeleteStreamInput {
 }
 
 class ListAllStreamsInput {
-  final String? prefix;
-  final String? startAfter;
+  final String prefix;
+  final String startAfter;
   final bool includeDeleted;
 
   const ListAllStreamsInput({
-    this.prefix,
-    this.startAfter,
+    required this.prefix,
+    required this.startAfter,
     required this.includeDeleted,
   });
 
@@ -110,11 +110,15 @@ class ListAllStreamsInput {
 }
 
 class ListStreamsInput {
-  final String? prefix;
-  final String? startAfter;
+  final String prefix;
+  final String startAfter;
   final BigInt? limit;
 
-  const ListStreamsInput({this.prefix, this.startAfter, this.limit});
+  const ListStreamsInput({
+    required this.prefix,
+    required this.startAfter,
+    this.limit,
+  });
 
   @override
   int get hashCode => prefix.hashCode ^ startAfter.hashCode ^ limit.hashCode;

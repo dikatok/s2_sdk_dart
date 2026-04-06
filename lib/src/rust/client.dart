@@ -3,35 +3,440 @@
 
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
+import 'basin.dart';
+import 'error.dart';
 import 'frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'types.dart';
 
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
+
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Client>>
 abstract class S2Client implements RustOpaqueInterface {
-  Future<void> basin();
+  Future<S2Basin> basin({required String name});
 
-  Future<void> createBasin();
+  Future<BasinInfo> createBasin({required CreateBasinInput input});
 
-  Future<void> deleteBasin();
+  Future<void> deleteBasin({required DeleteBasinInput input});
 
-  Future<void> getBasinConfig();
+  Future<BasinConfig> getBasinConfig({required String name});
 
-  Future<void> issueAccessToken();
+  Future<String> issueAccessToken({required IssueAccessTokenInput input});
 
-  Future<void> listAccessTokens();
+  Future<PageOfAccessTokenInfo> listAccessTokens({
+    required ListAccessTokensInput input,
+  });
 
-  Future<void> listAllAccessTokens();
+  Stream<AccessTokenInfo> listAllAccessTokens({
+    required ListAllAccessTokensInput input,
+  });
 
-  Future<void> listAllBasins();
+  Stream<BasinInfo> listAllBasins({required ListAllBasinsInput input});
 
-  Future<void> listBasins();
+  Future<PageOfBasinInfo> listBasins({required ListBasinsInput input});
 
   // HINT: Make it `#[frb(sync)]` to let it become the default constructor of Dart class.
   static Future<S2Client> newInstance({required ClientConfig config}) =>
       RustLib.instance.api.crateClientS2ClientNew(config: config);
 
-  Future<void> reconfigureBasin();
+  Future<BasinConfig> reconfigureBasin({required ReconfigureBasinInput input});
 
-  Future<void> revokeAccessToken();
+  Future<void> revokeAccessToken({required String id});
+}
+
+class AccessTokenInfo {
+  final String id;
+  final BigInt? expiresAt;
+  final bool autoPrefixStreams;
+  final AccessTokenScope scope;
+
+  const AccessTokenInfo({
+    required this.id,
+    this.expiresAt,
+    required this.autoPrefixStreams,
+    required this.scope,
+  });
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      expiresAt.hashCode ^
+      autoPrefixStreams.hashCode ^
+      scope.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AccessTokenInfo &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          expiresAt == other.expiresAt &&
+          autoPrefixStreams == other.autoPrefixStreams &&
+          scope == other.scope;
+}
+
+class AccessTokenScope {
+  final ResourceSet basins;
+  final ResourceSet streams;
+  final ResourceSet accessTokens;
+  final OperationGroupPermissions? opGroupPermissions;
+  final List<Operation> ops;
+
+  const AccessTokenScope({
+    required this.basins,
+    required this.streams,
+    required this.accessTokens,
+    this.opGroupPermissions,
+    required this.ops,
+  });
+
+  @override
+  int get hashCode =>
+      basins.hashCode ^
+      streams.hashCode ^
+      accessTokens.hashCode ^
+      opGroupPermissions.hashCode ^
+      ops.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AccessTokenScope &&
+          runtimeType == other.runtimeType &&
+          basins == other.basins &&
+          streams == other.streams &&
+          accessTokens == other.accessTokens &&
+          opGroupPermissions == other.opGroupPermissions &&
+          ops == other.ops;
+}
+
+class AccessTokenScopeInput {
+  final ResourceSet? basins;
+  final ResourceSet? streams;
+  final ResourceSet? accessTokens;
+  final OperationGroupPermissions? opGroupPermissions;
+  final List<Operation> ops;
+
+  const AccessTokenScopeInput({
+    this.basins,
+    this.streams,
+    this.accessTokens,
+    this.opGroupPermissions,
+    required this.ops,
+  });
+
+  @override
+  int get hashCode =>
+      basins.hashCode ^
+      streams.hashCode ^
+      accessTokens.hashCode ^
+      opGroupPermissions.hashCode ^
+      ops.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AccessTokenScopeInput &&
+          runtimeType == other.runtimeType &&
+          basins == other.basins &&
+          streams == other.streams &&
+          accessTokens == other.accessTokens &&
+          opGroupPermissions == other.opGroupPermissions &&
+          ops == other.ops;
+}
+
+class BasinConfig {
+  final StreamConfig? defaultStreamConfig;
+  final bool createStreamOnAppend;
+  final bool createStreamOnRead;
+
+  const BasinConfig({
+    this.defaultStreamConfig,
+    required this.createStreamOnAppend,
+    required this.createStreamOnRead,
+  });
+
+  @override
+  int get hashCode =>
+      defaultStreamConfig.hashCode ^
+      createStreamOnAppend.hashCode ^
+      createStreamOnRead.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BasinConfig &&
+          runtimeType == other.runtimeType &&
+          defaultStreamConfig == other.defaultStreamConfig &&
+          createStreamOnAppend == other.createStreamOnAppend &&
+          createStreamOnRead == other.createStreamOnRead;
+}
+
+class BasinInfo {
+  final String name;
+  final BasinScope? scope;
+  final BigInt createdAt;
+  final BigInt? deletedAt;
+
+  const BasinInfo({
+    required this.name,
+    this.scope,
+    required this.createdAt,
+    this.deletedAt,
+  });
+
+  @override
+  int get hashCode =>
+      name.hashCode ^ scope.hashCode ^ createdAt.hashCode ^ deletedAt.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BasinInfo &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          scope == other.scope &&
+          createdAt == other.createdAt &&
+          deletedAt == other.deletedAt;
+}
+
+enum BasinScope { awsUsEast1 }
+
+class CreateBasinInput {
+  final String name;
+  final BasinConfig? config;
+  final BasinScope? scope;
+
+  const CreateBasinInput({required this.name, this.config, this.scope});
+
+  @override
+  int get hashCode => name.hashCode ^ config.hashCode ^ scope.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CreateBasinInput &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          config == other.config &&
+          scope == other.scope;
+}
+
+class DeleteBasinInput {
+  final String name;
+  final bool ignoreNotFound;
+
+  const DeleteBasinInput({required this.name, required this.ignoreNotFound});
+
+  @override
+  int get hashCode => name.hashCode ^ ignoreNotFound.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DeleteBasinInput &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          ignoreNotFound == other.ignoreNotFound;
+}
+
+class IssueAccessTokenInput {
+  final String id;
+  final BigInt? expiresAt;
+  final bool autoPrefixStreams;
+  final AccessTokenScopeInput scope;
+
+  const IssueAccessTokenInput({
+    required this.id,
+    this.expiresAt,
+    required this.autoPrefixStreams,
+    required this.scope,
+  });
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      expiresAt.hashCode ^
+      autoPrefixStreams.hashCode ^
+      scope.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is IssueAccessTokenInput &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          expiresAt == other.expiresAt &&
+          autoPrefixStreams == other.autoPrefixStreams &&
+          scope == other.scope;
+}
+
+class ListAccessTokensInput {
+  final String prefix;
+  final String startAfter;
+  final BigInt? limit;
+
+  const ListAccessTokensInput({
+    required this.prefix,
+    required this.startAfter,
+    this.limit,
+  });
+
+  @override
+  int get hashCode => prefix.hashCode ^ startAfter.hashCode ^ limit.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ListAccessTokensInput &&
+          runtimeType == other.runtimeType &&
+          prefix == other.prefix &&
+          startAfter == other.startAfter &&
+          limit == other.limit;
+}
+
+class ListAllAccessTokensInput {
+  final String prefix;
+  final String startAfter;
+
+  const ListAllAccessTokensInput({
+    required this.prefix,
+    required this.startAfter,
+  });
+
+  @override
+  int get hashCode => prefix.hashCode ^ startAfter.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ListAllAccessTokensInput &&
+          runtimeType == other.runtimeType &&
+          prefix == other.prefix &&
+          startAfter == other.startAfter;
+}
+
+class ListAllBasinsInput {
+  final String prefix;
+  final String startAfter;
+  final bool includeDeleted;
+
+  const ListAllBasinsInput({
+    required this.prefix,
+    required this.startAfter,
+    required this.includeDeleted,
+  });
+
+  @override
+  int get hashCode =>
+      prefix.hashCode ^ startAfter.hashCode ^ includeDeleted.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ListAllBasinsInput &&
+          runtimeType == other.runtimeType &&
+          prefix == other.prefix &&
+          startAfter == other.startAfter &&
+          includeDeleted == other.includeDeleted;
+}
+
+class ListBasinsInput {
+  final String prefix;
+  final String startAfter;
+  final BigInt? limit;
+
+  const ListBasinsInput({
+    required this.prefix,
+    required this.startAfter,
+    this.limit,
+  });
+
+  @override
+  int get hashCode => prefix.hashCode ^ startAfter.hashCode ^ limit.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ListBasinsInput &&
+          runtimeType == other.runtimeType &&
+          prefix == other.prefix &&
+          startAfter == other.startAfter &&
+          limit == other.limit;
+}
+
+class OperationGroupPermissions {
+  final ReadWritePermissions? basin;
+  final ReadWritePermissions? stream;
+  final ReadWritePermissions? account;
+
+  const OperationGroupPermissions({this.basin, this.stream, this.account});
+
+  @override
+  int get hashCode => basin.hashCode ^ stream.hashCode ^ account.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OperationGroupPermissions &&
+          runtimeType == other.runtimeType &&
+          basin == other.basin &&
+          stream == other.stream &&
+          account == other.account;
+}
+
+class PageOfAccessTokenInfo {
+  final List<AccessTokenInfo> values;
+  final bool hasMore;
+
+  const PageOfAccessTokenInfo({required this.values, required this.hasMore});
+
+  @override
+  int get hashCode => values.hashCode ^ hasMore.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PageOfAccessTokenInfo &&
+          runtimeType == other.runtimeType &&
+          values == other.values &&
+          hasMore == other.hasMore;
+}
+
+class PageOfBasinInfo {
+  final List<BasinInfo> values;
+  final bool hasMore;
+
+  const PageOfBasinInfo({required this.values, required this.hasMore});
+
+  @override
+  int get hashCode => values.hashCode ^ hasMore.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PageOfBasinInfo &&
+          runtimeType == other.runtimeType &&
+          values == other.values &&
+          hasMore == other.hasMore;
+}
+
+enum ReadWritePermissions { read, write, readWrite }
+
+class ReconfigureBasinInput {
+  final String name;
+  final BasinConfig config;
+
+  const ReconfigureBasinInput({required this.name, required this.config});
+
+  @override
+  int get hashCode => name.hashCode ^ config.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ReconfigureBasinInput &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          config == other.config;
 }

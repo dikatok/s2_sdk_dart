@@ -8,7 +8,7 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'package:freezed_annotation/freezed_annotation.dart' hide protected;
 part 'types.freezed.dart';
 
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`, `from`
 
 class AppendAck {
   final StreamPosition start;
@@ -138,6 +138,30 @@ class ClientConfig {
 
 enum Compression { none, gzip, zstd }
 
+enum Operation {
+  listBasins,
+  createBasin,
+  getBasinConfig,
+  deleteBasin,
+  reconfigureBasin,
+  listAccessTokens,
+  issueAccessToken,
+  revokeAccessToken,
+  getAccountMetrics,
+  getBasinMetrics,
+  getStreamMetrics,
+  listStreams,
+  createStream,
+  getStreamConfig,
+  deleteStream,
+  reconfigureStream,
+  checkTail,
+  append,
+  read,
+  trim,
+  fence,
+}
+
 class ReadBatch {
   final List<SequencedRecord> records;
   final StreamPosition? tail;
@@ -238,6 +262,15 @@ class ReadStop {
           limits == other.limits &&
           untilTimestamp == other.untilTimestamp &&
           waitSecs == other.waitSecs;
+}
+
+@freezed
+sealed class ResourceSet with _$ResourceSet {
+  const ResourceSet._();
+
+  const factory ResourceSet.none() = ResourceSet_None;
+  const factory ResourceSet.exact(String field0) = ResourceSet_Exact;
+  const factory ResourceSet.prefix(String field0) = ResourceSet_Prefix;
 }
 
 class RetryConfig {

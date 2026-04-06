@@ -52,15 +52,16 @@ impl S2Basin {
         while let Some(info) = stream.next().await {
             match info {
                 Ok(info) => {
-                    sink.add(info.into());
+                    let _ = sink.add(info.into());
                 }
                 Err(err) => {
-                    sink.add_error(anyhow::anyhow!(err.to_string()));
+                    let _ = sink.add_error(anyhow::anyhow!(err.to_string()));
                 }
             };
         }
         Ok(())
     }
+
     pub async fn create_stream(&self, input: CreateStreamInput) -> Result<StreamInfo, S2Error> {
         self.basin
             .try_read()
@@ -93,24 +94,26 @@ impl S2Basin {
     pub async fn reconfigure_stream(&self) {}
 }
 
+impl From<s2_sdk::S2Basin> for S2Basin {
+    fn from(basin: s2_sdk::S2Basin) -> Self {
+        S2Basin::new(basin)
+    }
+}
+
 pub struct ListStreamsInput {
-    pub prefix: Option<String>,
-    pub start_after: Option<String>,
+    pub prefix: String,
+    pub start_after: String,
     pub limit: Option<usize>,
 }
 
 impl From<ListStreamsInput> for s2_sdk::types::ListStreamsInput {
     fn from(value: ListStreamsInput) -> Self {
         let mut input = s2_sdk::types::ListStreamsInput::default();
-        if let Some(prefix) = value.prefix {
-            input = input
-                .with_prefix(s2_sdk::types::StreamNamePrefix::from_str(prefix.as_str()).unwrap());
-        }
-        if let Some(start_after) = value.start_after {
-            input = input.with_start_after(
-                s2_sdk::types::StreamNameStartAfter::from_str(start_after.as_str()).unwrap(),
-            );
-        }
+        input =
+            input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&value.prefix).unwrap());
+        input = input.with_start_after(
+            s2_sdk::types::StreamNameStartAfter::from_str(&value.start_after).unwrap(),
+        );
         if let Some(limit) = value.limit {
             input = input.with_limit(limit);
         }
@@ -142,23 +145,19 @@ pub struct PageOfStreamInfo {
 }
 
 pub struct ListAllStreamsInput {
-    pub prefix: Option<String>,
-    pub start_after: Option<String>,
+    pub prefix: String,
+    pub start_after: String,
     pub include_deleted: bool,
 }
 
 impl From<ListAllStreamsInput> for s2_sdk::types::ListAllStreamsInput {
     fn from(value: ListAllStreamsInput) -> Self {
         let mut input = s2_sdk::types::ListAllStreamsInput::default();
-        if let Some(prefix) = value.prefix {
-            input = input
-                .with_prefix(s2_sdk::types::StreamNamePrefix::from_str(prefix.as_str()).unwrap());
-        }
-        if let Some(start_after) = value.start_after {
-            input = input.with_start_after(
-                s2_sdk::types::StreamNameStartAfter::from_str(start_after.as_str()).unwrap(),
-            );
-        }
+        input =
+            input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&value.prefix).unwrap());
+        input = input.with_start_after(
+            s2_sdk::types::StreamNameStartAfter::from_str(&value.start_after).unwrap(),
+        );
         input.with_include_deleted(value.include_deleted)
     }
 }

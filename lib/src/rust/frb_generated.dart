@@ -133,29 +133,62 @@ abstract class RustLibApi extends BaseApi {
     required String name,
   });
 
-  Future<void> crateClientS2ClientBasin({required S2Client that});
+  Future<S2Basin> crateClientS2ClientBasin({
+    required S2Client that,
+    required String name,
+  });
 
-  Future<void> crateClientS2ClientCreateBasin({required S2Client that});
+  Future<BasinInfo> crateClientS2ClientCreateBasin({
+    required S2Client that,
+    required CreateBasinInput input,
+  });
 
-  Future<void> crateClientS2ClientDeleteBasin({required S2Client that});
+  Future<void> crateClientS2ClientDeleteBasin({
+    required S2Client that,
+    required DeleteBasinInput input,
+  });
 
-  Future<void> crateClientS2ClientGetBasinConfig({required S2Client that});
+  Future<BasinConfig> crateClientS2ClientGetBasinConfig({
+    required S2Client that,
+    required String name,
+  });
 
-  Future<void> crateClientS2ClientIssueAccessToken({required S2Client that});
+  Future<String> crateClientS2ClientIssueAccessToken({
+    required S2Client that,
+    required IssueAccessTokenInput input,
+  });
 
-  Future<void> crateClientS2ClientListAccessTokens({required S2Client that});
+  Future<PageOfAccessTokenInfo> crateClientS2ClientListAccessTokens({
+    required S2Client that,
+    required ListAccessTokensInput input,
+  });
 
-  Future<void> crateClientS2ClientListAllAccessTokens({required S2Client that});
+  Stream<AccessTokenInfo> crateClientS2ClientListAllAccessTokens({
+    required S2Client that,
+    required ListAllAccessTokensInput input,
+  });
 
-  Future<void> crateClientS2ClientListAllBasins({required S2Client that});
+  Stream<BasinInfo> crateClientS2ClientListAllBasins({
+    required S2Client that,
+    required ListAllBasinsInput input,
+  });
 
-  Future<void> crateClientS2ClientListBasins({required S2Client that});
+  Future<PageOfBasinInfo> crateClientS2ClientListBasins({
+    required S2Client that,
+    required ListBasinsInput input,
+  });
 
   Future<S2Client> crateClientS2ClientNew({required ClientConfig config});
 
-  Future<void> crateClientS2ClientReconfigureBasin({required S2Client that});
+  Future<BasinConfig> crateClientS2ClientReconfigureBasin({
+    required S2Client that,
+    required ReconfigureBasinInput input,
+  });
 
-  Future<void> crateClientS2ClientRevokeAccessToken({required S2Client that});
+  Future<void> crateClientS2ClientRevokeAccessToken({
+    required S2Client that,
+    required String id,
+  });
 
   Future<void> crateProducerS2ProducerClose({required S2Producer that});
 
@@ -669,209 +702,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   );
 
   @override
-  Future<void> crateClientS2ClientBasin({required S2Client that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 12,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateClientS2ClientBasinConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateClientS2ClientBasinConstMeta =>
-      const TaskConstMeta(debugName: "S2Client_basin", argNames: ["that"]);
-
-  @override
-  Future<void> crateClientS2ClientCreateBasin({required S2Client that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 13,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateClientS2ClientCreateBasinConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateClientS2ClientCreateBasinConstMeta =>
-      const TaskConstMeta(
-        debugName: "S2Client_create_basin",
-        argNames: ["that"],
-      );
-
-  @override
-  Future<void> crateClientS2ClientDeleteBasin({required S2Client that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 14,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateClientS2ClientDeleteBasinConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateClientS2ClientDeleteBasinConstMeta =>
-      const TaskConstMeta(
-        debugName: "S2Client_delete_basin",
-        argNames: ["that"],
-      );
-
-  @override
-  Future<void> crateClientS2ClientGetBasinConfig({required S2Client that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 15,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateClientS2ClientGetBasinConfigConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateClientS2ClientGetBasinConfigConstMeta =>
-      const TaskConstMeta(
-        debugName: "S2Client_get_basin_config",
-        argNames: ["that"],
-      );
-
-  @override
-  Future<void> crateClientS2ClientIssueAccessToken({required S2Client that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 16,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateClientS2ClientIssueAccessTokenConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateClientS2ClientIssueAccessTokenConstMeta =>
-      const TaskConstMeta(
-        debugName: "S2Client_issue_access_token",
-        argNames: ["that"],
-      );
-
-  @override
-  Future<void> crateClientS2ClientListAccessTokens({required S2Client that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 17,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateClientS2ClientListAccessTokensConstMeta,
-        argValues: [that],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateClientS2ClientListAccessTokensConstMeta =>
-      const TaskConstMeta(
-        debugName: "S2Client_list_access_tokens",
-        argNames: ["that"],
-      );
-
-  @override
-  Future<void> crateClientS2ClientListAllAccessTokens({
+  Future<S2Basin> crateClientS2ClientBasin({
     required S2Client that,
+    required String name,
   }) {
     return handler.executeNormal(
       NormalTask(
@@ -881,66 +714,315 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             that,
             serializer,
           );
+          sse_encode_String(name, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 18,
+            funcId: 12,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Basin,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateClientS2ClientBasinConstMeta,
+        argValues: [that, name],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateClientS2ClientBasinConstMeta => const TaskConstMeta(
+    debugName: "S2Client_basin",
+    argNames: ["that", "name"],
+  );
+
+  @override
+  Future<BasinInfo> crateClientS2ClientCreateBasin({
+    required S2Client that,
+    required CreateBasinInput input,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+            that,
+            serializer,
+          );
+          sse_encode_box_autoadd_create_basin_input(input, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 13,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_basin_info,
+          decodeErrorData: sse_decode_s_2_error,
+        ),
+        constMeta: kCrateClientS2ClientCreateBasinConstMeta,
+        argValues: [that, input],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateClientS2ClientCreateBasinConstMeta =>
+      const TaskConstMeta(
+        debugName: "S2Client_create_basin",
+        argNames: ["that", "input"],
+      );
+
+  @override
+  Future<void> crateClientS2ClientDeleteBasin({
+    required S2Client that,
+    required DeleteBasinInput input,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+            that,
+            serializer,
+          );
+          sse_encode_box_autoadd_delete_basin_input(input, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 14,
             port: port_,
           );
         },
         codec: SseCodec(
           decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+          decodeErrorData: sse_decode_s_2_error,
         ),
-        constMeta: kCrateClientS2ClientListAllAccessTokensConstMeta,
-        argValues: [that],
+        constMeta: kCrateClientS2ClientDeleteBasinConstMeta,
+        argValues: [that, input],
         apiImpl: this,
       ),
     );
+  }
+
+  TaskConstMeta get kCrateClientS2ClientDeleteBasinConstMeta =>
+      const TaskConstMeta(
+        debugName: "S2Client_delete_basin",
+        argNames: ["that", "input"],
+      );
+
+  @override
+  Future<BasinConfig> crateClientS2ClientGetBasinConfig({
+    required S2Client that,
+    required String name,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+            that,
+            serializer,
+          );
+          sse_encode_String(name, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 15,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_basin_config,
+          decodeErrorData: sse_decode_s_2_error,
+        ),
+        constMeta: kCrateClientS2ClientGetBasinConfigConstMeta,
+        argValues: [that, name],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateClientS2ClientGetBasinConfigConstMeta =>
+      const TaskConstMeta(
+        debugName: "S2Client_get_basin_config",
+        argNames: ["that", "name"],
+      );
+
+  @override
+  Future<String> crateClientS2ClientIssueAccessToken({
+    required S2Client that,
+    required IssueAccessTokenInput input,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+            that,
+            serializer,
+          );
+          sse_encode_box_autoadd_issue_access_token_input(input, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 16,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: sse_decode_s_2_error,
+        ),
+        constMeta: kCrateClientS2ClientIssueAccessTokenConstMeta,
+        argValues: [that, input],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateClientS2ClientIssueAccessTokenConstMeta =>
+      const TaskConstMeta(
+        debugName: "S2Client_issue_access_token",
+        argNames: ["that", "input"],
+      );
+
+  @override
+  Future<PageOfAccessTokenInfo> crateClientS2ClientListAccessTokens({
+    required S2Client that,
+    required ListAccessTokensInput input,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+            that,
+            serializer,
+          );
+          sse_encode_box_autoadd_list_access_tokens_input(input, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 17,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_page_of_access_token_info,
+          decodeErrorData: sse_decode_s_2_error,
+        ),
+        constMeta: kCrateClientS2ClientListAccessTokensConstMeta,
+        argValues: [that, input],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateClientS2ClientListAccessTokensConstMeta =>
+      const TaskConstMeta(
+        debugName: "S2Client_list_access_tokens",
+        argNames: ["that", "input"],
+      );
+
+  @override
+  Stream<AccessTokenInfo> crateClientS2ClientListAllAccessTokens({
+    required S2Client that,
+    required ListAllAccessTokensInput input,
+  }) {
+    final sink = RustStreamSink<AccessTokenInfo>();
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+              that,
+              serializer,
+            );
+            sse_encode_StreamSink_access_token_info_Sse(sink, serializer);
+            sse_encode_box_autoadd_list_all_access_tokens_input(
+              input,
+              serializer,
+            );
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 18,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: sse_decode_s_2_error,
+          ),
+          constMeta: kCrateClientS2ClientListAllAccessTokensConstMeta,
+          argValues: [that, sink, input],
+          apiImpl: this,
+        ),
+      ),
+    );
+    return sink.stream;
   }
 
   TaskConstMeta get kCrateClientS2ClientListAllAccessTokensConstMeta =>
       const TaskConstMeta(
         debugName: "S2Client_list_all_access_tokens",
-        argNames: ["that"],
+        argNames: ["that", "sink", "input"],
       );
 
   @override
-  Future<void> crateClientS2ClientListAllBasins({required S2Client that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 19,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+  Stream<BasinInfo> crateClientS2ClientListAllBasins({
+    required S2Client that,
+    required ListAllBasinsInput input,
+  }) {
+    final sink = RustStreamSink<BasinInfo>();
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+              that,
+              serializer,
+            );
+            sse_encode_StreamSink_basin_info_Sse(sink, serializer);
+            sse_encode_box_autoadd_list_all_basins_input(input, serializer);
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 19,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: sse_decode_s_2_error,
+          ),
+          constMeta: kCrateClientS2ClientListAllBasinsConstMeta,
+          argValues: [that, sink, input],
+          apiImpl: this,
         ),
-        constMeta: kCrateClientS2ClientListAllBasinsConstMeta,
-        argValues: [that],
-        apiImpl: this,
       ),
     );
+    return sink.stream;
   }
 
   TaskConstMeta get kCrateClientS2ClientListAllBasinsConstMeta =>
       const TaskConstMeta(
         debugName: "S2Client_list_all_basins",
-        argNames: ["that"],
+        argNames: ["that", "sink", "input"],
       );
 
   @override
-  Future<void> crateClientS2ClientListBasins({required S2Client that}) {
+  Future<PageOfBasinInfo> crateClientS2ClientListBasins({
+    required S2Client that,
+    required ListBasinsInput input,
+  }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
@@ -949,6 +1031,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             that,
             serializer,
           );
+          sse_encode_box_autoadd_list_basins_input(input, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -957,11 +1040,11 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+          decodeSuccessData: sse_decode_page_of_basin_info,
+          decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateClientS2ClientListBasinsConstMeta,
-        argValues: [that],
+        argValues: [that, input],
         apiImpl: this,
       ),
     );
@@ -970,7 +1053,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateClientS2ClientListBasinsConstMeta =>
       const TaskConstMeta(
         debugName: "S2Client_list_basins",
-        argNames: ["that"],
+        argNames: ["that", "input"],
       );
 
   @override
@@ -1003,7 +1086,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       const TaskConstMeta(debugName: "S2Client_new", argNames: ["config"]);
 
   @override
-  Future<void> crateClientS2ClientReconfigureBasin({required S2Client that}) {
+  Future<BasinConfig> crateClientS2ClientReconfigureBasin({
+    required S2Client that,
+    required ReconfigureBasinInput input,
+  }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
@@ -1012,6 +1098,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             that,
             serializer,
           );
+          sse_encode_box_autoadd_reconfigure_basin_input(input, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -1020,11 +1107,11 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+          decodeSuccessData: sse_decode_basin_config,
+          decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateClientS2ClientReconfigureBasinConstMeta,
-        argValues: [that],
+        argValues: [that, input],
         apiImpl: this,
       ),
     );
@@ -1033,11 +1120,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateClientS2ClientReconfigureBasinConstMeta =>
       const TaskConstMeta(
         debugName: "S2Client_reconfigure_basin",
-        argNames: ["that"],
+        argNames: ["that", "input"],
       );
 
   @override
-  Future<void> crateClientS2ClientRevokeAccessToken({required S2Client that}) {
+  Future<void> crateClientS2ClientRevokeAccessToken({
+    required S2Client that,
+    required String id,
+  }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
@@ -1046,6 +1136,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             that,
             serializer,
           );
+          sse_encode_String(id, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -1055,10 +1146,10 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         },
         codec: SseCodec(
           decodeSuccessData: sse_decode_unit,
-          decodeErrorData: null,
+          decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateClientS2ClientRevokeAccessTokenConstMeta,
-        argValues: [that],
+        argValues: [that, id],
         apiImpl: this,
       ),
     );
@@ -1067,7 +1158,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateClientS2ClientRevokeAccessTokenConstMeta =>
       const TaskConstMeta(
         debugName: "S2Client_revoke_access_token",
-        argNames: ["that"],
+        argNames: ["that", "id"],
       );
 
   @override
@@ -1620,6 +1711,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  RustStreamSink<AccessTokenInfo> dco_decode_StreamSink_access_token_info_Sse(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    throw UnimplementedError();
+  }
+
+  @protected
+  RustStreamSink<BasinInfo> dco_decode_StreamSink_basin_info_Sse(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    throw UnimplementedError();
+  }
+
+  @protected
   RustStreamSink<SequencedRecord> dco_decode_StreamSink_sequenced_record_Sse(
     dynamic raw,
   ) {
@@ -1639,6 +1744,52 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   String dco_decode_String(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as String;
+  }
+
+  @protected
+  AccessTokenInfo dco_decode_access_token_info(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 4)
+      throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
+    return AccessTokenInfo(
+      id: dco_decode_String(arr[0]),
+      expiresAt: dco_decode_opt_box_autoadd_u_64(arr[1]),
+      autoPrefixStreams: dco_decode_bool(arr[2]),
+      scope: dco_decode_access_token_scope(arr[3]),
+    );
+  }
+
+  @protected
+  AccessTokenScope dco_decode_access_token_scope(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 5)
+      throw Exception('unexpected arr length: expect 5 but see ${arr.length}');
+    return AccessTokenScope(
+      basins: dco_decode_resource_set(arr[0]),
+      streams: dco_decode_resource_set(arr[1]),
+      accessTokens: dco_decode_resource_set(arr[2]),
+      opGroupPermissions:
+          dco_decode_opt_box_autoadd_operation_group_permissions(arr[3]),
+      ops: dco_decode_list_operation(arr[4]),
+    );
+  }
+
+  @protected
+  AccessTokenScopeInput dco_decode_access_token_scope_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 5)
+      throw Exception('unexpected arr length: expect 5 but see ${arr.length}');
+    return AccessTokenScopeInput(
+      basins: dco_decode_opt_box_autoadd_resource_set(arr[0]),
+      streams: dco_decode_opt_box_autoadd_resource_set(arr[1]),
+      accessTokens: dco_decode_opt_box_autoadd_resource_set(arr[2]),
+      opGroupPermissions:
+          dco_decode_opt_box_autoadd_operation_group_permissions(arr[3]),
+      ops: dco_decode_list_operation(arr[4]),
+    );
   }
 
   @protected
@@ -1710,6 +1861,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BasinConfig dco_decode_basin_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return BasinConfig(
+      defaultStreamConfig: dco_decode_opt_box_autoadd_stream_config(arr[0]),
+      createStreamOnAppend: dco_decode_bool(arr[1]),
+      createStreamOnRead: dco_decode_bool(arr[2]),
+    );
+  }
+
+  @protected
+  BasinInfo dco_decode_basin_info(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 4)
+      throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
+    return BasinInfo(
+      name: dco_decode_String(arr[0]),
+      scope: dco_decode_opt_box_autoadd_basin_scope(arr[1]),
+      createdAt: dco_decode_u_64(arr[2]),
+      deletedAt: dco_decode_opt_box_autoadd_u_64(arr[3]),
+    );
+  }
+
+  @protected
+  BasinScope dco_decode_basin_scope(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return BasinScope.values[raw as int];
+  }
+
+  @protected
   bool dco_decode_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as bool;
@@ -1742,6 +1926,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BasinConfig dco_decode_box_autoadd_basin_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_basin_config(raw);
+  }
+
+  @protected
+  BasinScope dco_decode_box_autoadd_basin_scope(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_basin_scope(raw);
+  }
+
+  @protected
   ClientConfig dco_decode_box_autoadd_client_config(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_client_config(raw);
@@ -1754,9 +1950,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  CreateBasinInput dco_decode_box_autoadd_create_basin_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_create_basin_input(raw);
+  }
+
+  @protected
   CreateStreamInput dco_decode_box_autoadd_create_stream_input(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_create_stream_input(raw);
+  }
+
+  @protected
+  DeleteBasinInput dco_decode_box_autoadd_delete_basin_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_delete_basin_input(raw);
   }
 
   @protected
@@ -1774,11 +1982,47 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  IssueAccessTokenInput dco_decode_box_autoadd_issue_access_token_input(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_issue_access_token_input(raw);
+  }
+
+  @protected
+  ListAccessTokensInput dco_decode_box_autoadd_list_access_tokens_input(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_list_access_tokens_input(raw);
+  }
+
+  @protected
+  ListAllAccessTokensInput dco_decode_box_autoadd_list_all_access_tokens_input(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_list_all_access_tokens_input(raw);
+  }
+
+  @protected
+  ListAllBasinsInput dco_decode_box_autoadd_list_all_basins_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_list_all_basins_input(raw);
+  }
+
+  @protected
   ListAllStreamsInput dco_decode_box_autoadd_list_all_streams_input(
     dynamic raw,
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_list_all_streams_input(raw);
+  }
+
+  @protected
+  ListBasinsInput dco_decode_box_autoadd_list_basins_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_list_basins_input(raw);
   }
 
   @protected
@@ -1788,9 +2032,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  OperationGroupPermissions dco_decode_box_autoadd_operation_group_permissions(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_operation_group_permissions(raw);
+  }
+
+  @protected
   ReadInput dco_decode_box_autoadd_read_input(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_read_input(raw);
+  }
+
+  @protected
+  ReadWritePermissions dco_decode_box_autoadd_read_write_permissions(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_read_write_permissions(raw);
+  }
+
+  @protected
+  ReconfigureBasinInput dco_decode_box_autoadd_reconfigure_basin_input(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_reconfigure_basin_input(raw);
+  }
+
+  @protected
+  ResourceSet dco_decode_box_autoadd_resource_set(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_resource_set(raw);
   }
 
   @protected
@@ -1876,6 +2150,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  CreateBasinInput dco_decode_create_basin_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return CreateBasinInput(
+      name: dco_decode_String(arr[0]),
+      config: dco_decode_opt_box_autoadd_basin_config(arr[1]),
+      scope: dco_decode_opt_box_autoadd_basin_scope(arr[2]),
+    );
+  }
+
+  @protected
   CreateStreamInput dco_decode_create_stream_input(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
@@ -1884,6 +2171,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     return CreateStreamInput(
       name: dco_decode_String(arr[0]),
       config: dco_decode_opt_box_autoadd_stream_config(arr[1]),
+    );
+  }
+
+  @protected
+  DeleteBasinInput dco_decode_delete_basin_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return DeleteBasinInput(
+      name: dco_decode_String(arr[0]),
+      ignoreNotFound: dco_decode_bool(arr[1]),
     );
   }
 
@@ -1927,14 +2226,74 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  IssueAccessTokenInput dco_decode_issue_access_token_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 4)
+      throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
+    return IssueAccessTokenInput(
+      id: dco_decode_String(arr[0]),
+      expiresAt: dco_decode_opt_box_autoadd_u_64(arr[1]),
+      autoPrefixStreams: dco_decode_bool(arr[2]),
+      scope: dco_decode_access_token_scope_input(arr[3]),
+    );
+  }
+
+  @protected
+  List<AccessTokenInfo> dco_decode_list_access_token_info(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_access_token_info).toList();
+  }
+
+  @protected
+  ListAccessTokensInput dco_decode_list_access_tokens_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return ListAccessTokensInput(
+      prefix: dco_decode_String(arr[0]),
+      startAfter: dco_decode_String(arr[1]),
+      limit: dco_decode_opt_box_autoadd_usize(arr[2]),
+    );
+  }
+
+  @protected
+  ListAllAccessTokensInput dco_decode_list_all_access_tokens_input(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return ListAllAccessTokensInput(
+      prefix: dco_decode_String(arr[0]),
+      startAfter: dco_decode_String(arr[1]),
+    );
+  }
+
+  @protected
+  ListAllBasinsInput dco_decode_list_all_basins_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return ListAllBasinsInput(
+      prefix: dco_decode_String(arr[0]),
+      startAfter: dco_decode_String(arr[1]),
+      includeDeleted: dco_decode_bool(arr[2]),
+    );
+  }
+
+  @protected
   ListAllStreamsInput dco_decode_list_all_streams_input(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
     if (arr.length != 3)
       throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
     return ListAllStreamsInput(
-      prefix: dco_decode_opt_String(arr[0]),
-      startAfter: dco_decode_opt_String(arr[1]),
+      prefix: dco_decode_String(arr[0]),
+      startAfter: dco_decode_String(arr[1]),
       includeDeleted: dco_decode_bool(arr[2]),
     );
   }
@@ -1943,6 +2302,31 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   List<AppendRecord> dco_decode_list_append_record(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return (raw as List<dynamic>).map(dco_decode_append_record).toList();
+  }
+
+  @protected
+  List<BasinInfo> dco_decode_list_basin_info(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_basin_info).toList();
+  }
+
+  @protected
+  ListBasinsInput dco_decode_list_basins_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return ListBasinsInput(
+      prefix: dco_decode_String(arr[0]),
+      startAfter: dco_decode_String(arr[1]),
+      limit: dco_decode_opt_box_autoadd_usize(arr[2]),
+    );
+  }
+
+  @protected
+  List<Operation> dco_decode_list_operation(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_operation).toList();
   }
 
   @protected
@@ -1981,9 +2365,30 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     if (arr.length != 3)
       throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
     return ListStreamsInput(
-      prefix: dco_decode_opt_String(arr[0]),
-      startAfter: dco_decode_opt_String(arr[1]),
+      prefix: dco_decode_String(arr[0]),
+      startAfter: dco_decode_String(arr[1]),
       limit: dco_decode_opt_box_autoadd_usize(arr[2]),
+    );
+  }
+
+  @protected
+  Operation dco_decode_operation(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return Operation.values[raw as int];
+  }
+
+  @protected
+  OperationGroupPermissions dco_decode_operation_group_permissions(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return OperationGroupPermissions(
+      basin: dco_decode_opt_box_autoadd_read_write_permissions(arr[0]),
+      stream: dco_decode_opt_box_autoadd_read_write_permissions(arr[1]),
+      account: dco_decode_opt_box_autoadd_read_write_permissions(arr[2]),
     );
   }
 
@@ -2002,6 +2407,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BasinConfig? dco_decode_opt_box_autoadd_basin_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_basin_config(raw);
+  }
+
+  @protected
+  BasinScope? dco_decode_opt_box_autoadd_basin_scope(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_basin_scope(raw);
+  }
+
+  @protected
   Compression? dco_decode_opt_box_autoadd_compression(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_box_autoadd_compression(raw);
@@ -2015,6 +2432,31 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     return raw == null
         ? null
         : dco_decode_box_autoadd_delete_on_empty_config(raw);
+  }
+
+  @protected
+  OperationGroupPermissions?
+  dco_decode_opt_box_autoadd_operation_group_permissions(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null
+        ? null
+        : dco_decode_box_autoadd_operation_group_permissions(raw);
+  }
+
+  @protected
+  ReadWritePermissions? dco_decode_opt_box_autoadd_read_write_permissions(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null
+        ? null
+        : dco_decode_box_autoadd_read_write_permissions(raw);
+  }
+
+  @protected
+  ResourceSet? dco_decode_opt_box_autoadd_resource_set(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_resource_set(raw);
   }
 
   @protected
@@ -2077,6 +2519,30 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   BigInt? dco_decode_opt_box_autoadd_usize(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_box_autoadd_usize(raw);
+  }
+
+  @protected
+  PageOfAccessTokenInfo dco_decode_page_of_access_token_info(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return PageOfAccessTokenInfo(
+      values: dco_decode_list_access_token_info(arr[0]),
+      hasMore: dco_decode_bool(arr[1]),
+    );
+  }
+
+  @protected
+  PageOfBasinInfo dco_decode_page_of_basin_info(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return PageOfBasinInfo(
+      values: dco_decode_list_basin_info(arr[0]),
+      hasMore: dco_decode_bool(arr[1]),
+    );
   }
 
   @protected
@@ -2168,6 +2634,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ReadWritePermissions dco_decode_read_write_permissions(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return ReadWritePermissions.values[raw as int];
+  }
+
+  @protected
+  ReconfigureBasinInput dco_decode_reconfigure_basin_input(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return ReconfigureBasinInput(
+      name: dco_decode_String(arr[0]),
+      config: dco_decode_basin_config(arr[1]),
+    );
+  }
+
+  @protected
   (Uint8List, Uint8List)
   dco_decode_record_list_prim_u_8_strict_list_prim_u_8_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
@@ -2179,6 +2663,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       dco_decode_list_prim_u_8_strict(arr[0]),
       dco_decode_list_prim_u_8_strict(arr[1]),
     );
+  }
+
+  @protected
+  ResourceSet dco_decode_resource_set(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    switch (raw[0]) {
+      case 0:
+        return ResourceSet_None();
+      case 1:
+        return ResourceSet_Exact(dco_decode_String(raw[1]));
+      case 2:
+        return ResourceSet_Prefix(dco_decode_String(raw[1]));
+      default:
+        throw Exception("unreachable");
+    }
   }
 
   @protected
@@ -2562,6 +3061,22 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  RustStreamSink<AccessTokenInfo> sse_decode_StreamSink_access_token_info_Sse(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    throw UnimplementedError('Unreachable ()');
+  }
+
+  @protected
+  RustStreamSink<BasinInfo> sse_decode_StreamSink_basin_info_Sse(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    throw UnimplementedError('Unreachable ()');
+  }
+
+  @protected
   RustStreamSink<SequencedRecord> sse_decode_StreamSink_sequenced_record_Sse(
     SseDeserializer deserializer,
   ) {
@@ -2582,6 +3097,61 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var inner = sse_decode_list_prim_u_8_strict(deserializer);
     return utf8.decoder.convert(inner);
+  }
+
+  @protected
+  AccessTokenInfo sse_decode_access_token_info(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_id = sse_decode_String(deserializer);
+    var var_expiresAt = sse_decode_opt_box_autoadd_u_64(deserializer);
+    var var_autoPrefixStreams = sse_decode_bool(deserializer);
+    var var_scope = sse_decode_access_token_scope(deserializer);
+    return AccessTokenInfo(
+      id: var_id,
+      expiresAt: var_expiresAt,
+      autoPrefixStreams: var_autoPrefixStreams,
+      scope: var_scope,
+    );
+  }
+
+  @protected
+  AccessTokenScope sse_decode_access_token_scope(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_basins = sse_decode_resource_set(deserializer);
+    var var_streams = sse_decode_resource_set(deserializer);
+    var var_accessTokens = sse_decode_resource_set(deserializer);
+    var var_opGroupPermissions =
+        sse_decode_opt_box_autoadd_operation_group_permissions(deserializer);
+    var var_ops = sse_decode_list_operation(deserializer);
+    return AccessTokenScope(
+      basins: var_basins,
+      streams: var_streams,
+      accessTokens: var_accessTokens,
+      opGroupPermissions: var_opGroupPermissions,
+      ops: var_ops,
+    );
+  }
+
+  @protected
+  AccessTokenScopeInput sse_decode_access_token_scope_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_basins = sse_decode_opt_box_autoadd_resource_set(deserializer);
+    var var_streams = sse_decode_opt_box_autoadd_resource_set(deserializer);
+    var var_accessTokens = sse_decode_opt_box_autoadd_resource_set(
+      deserializer,
+    );
+    var var_opGroupPermissions =
+        sse_decode_opt_box_autoadd_operation_group_permissions(deserializer);
+    var var_ops = sse_decode_list_operation(deserializer);
+    return AccessTokenScopeInput(
+      basins: var_basins,
+      streams: var_streams,
+      accessTokens: var_accessTokens,
+      opGroupPermissions: var_opGroupPermissions,
+      ops: var_ops,
+    );
   }
 
   @protected
@@ -2654,6 +3224,43 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BasinConfig sse_decode_basin_config(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_defaultStreamConfig = sse_decode_opt_box_autoadd_stream_config(
+      deserializer,
+    );
+    var var_createStreamOnAppend = sse_decode_bool(deserializer);
+    var var_createStreamOnRead = sse_decode_bool(deserializer);
+    return BasinConfig(
+      defaultStreamConfig: var_defaultStreamConfig,
+      createStreamOnAppend: var_createStreamOnAppend,
+      createStreamOnRead: var_createStreamOnRead,
+    );
+  }
+
+  @protected
+  BasinInfo sse_decode_basin_info(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_name = sse_decode_String(deserializer);
+    var var_scope = sse_decode_opt_box_autoadd_basin_scope(deserializer);
+    var var_createdAt = sse_decode_u_64(deserializer);
+    var var_deletedAt = sse_decode_opt_box_autoadd_u_64(deserializer);
+    return BasinInfo(
+      name: var_name,
+      scope: var_scope,
+      createdAt: var_createdAt,
+      deletedAt: var_deletedAt,
+    );
+  }
+
+  @protected
+  BasinScope sse_decode_basin_scope(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_i_32(deserializer);
+    return BasinScope.values[inner];
+  }
+
+  @protected
   bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8() != 0;
@@ -2692,6 +3299,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BasinConfig sse_decode_box_autoadd_basin_config(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_basin_config(deserializer));
+  }
+
+  @protected
+  BasinScope sse_decode_box_autoadd_basin_scope(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_basin_scope(deserializer));
+  }
+
+  @protected
   ClientConfig sse_decode_box_autoadd_client_config(
     SseDeserializer deserializer,
   ) {
@@ -2706,11 +3327,27 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  CreateBasinInput sse_decode_box_autoadd_create_basin_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_create_basin_input(deserializer));
+  }
+
+  @protected
   CreateStreamInput sse_decode_box_autoadd_create_stream_input(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_create_stream_input(deserializer));
+  }
+
+  @protected
+  DeleteBasinInput sse_decode_box_autoadd_delete_basin_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_delete_basin_input(deserializer));
   }
 
   @protected
@@ -2730,11 +3367,51 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  IssueAccessTokenInput sse_decode_box_autoadd_issue_access_token_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_issue_access_token_input(deserializer));
+  }
+
+  @protected
+  ListAccessTokensInput sse_decode_box_autoadd_list_access_tokens_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_list_access_tokens_input(deserializer));
+  }
+
+  @protected
+  ListAllAccessTokensInput sse_decode_box_autoadd_list_all_access_tokens_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_list_all_access_tokens_input(deserializer));
+  }
+
+  @protected
+  ListAllBasinsInput sse_decode_box_autoadd_list_all_basins_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_list_all_basins_input(deserializer));
+  }
+
+  @protected
   ListAllStreamsInput sse_decode_box_autoadd_list_all_streams_input(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_list_all_streams_input(deserializer));
+  }
+
+  @protected
+  ListBasinsInput sse_decode_box_autoadd_list_basins_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_list_basins_input(deserializer));
   }
 
   @protected
@@ -2746,9 +3423,41 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  OperationGroupPermissions sse_decode_box_autoadd_operation_group_permissions(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_operation_group_permissions(deserializer));
+  }
+
+  @protected
   ReadInput sse_decode_box_autoadd_read_input(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_read_input(deserializer));
+  }
+
+  @protected
+  ReadWritePermissions sse_decode_box_autoadd_read_write_permissions(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_read_write_permissions(deserializer));
+  }
+
+  @protected
+  ReconfigureBasinInput sse_decode_box_autoadd_reconfigure_basin_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_reconfigure_basin_input(deserializer));
+  }
+
+  @protected
+  ResourceSet sse_decode_box_autoadd_resource_set(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_resource_set(deserializer));
   }
 
   @protected
@@ -2856,6 +3565,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  CreateBasinInput sse_decode_create_basin_input(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_name = sse_decode_String(deserializer);
+    var var_config = sse_decode_opt_box_autoadd_basin_config(deserializer);
+    var var_scope = sse_decode_opt_box_autoadd_basin_scope(deserializer);
+    return CreateBasinInput(
+      name: var_name,
+      config: var_config,
+      scope: var_scope,
+    );
+  }
+
+  @protected
   CreateStreamInput sse_decode_create_stream_input(
     SseDeserializer deserializer,
   ) {
@@ -2863,6 +3585,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_name = sse_decode_String(deserializer);
     var var_config = sse_decode_opt_box_autoadd_stream_config(deserializer);
     return CreateStreamInput(name: var_name, config: var_config);
+  }
+
+  @protected
+  DeleteBasinInput sse_decode_delete_basin_input(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_name = sse_decode_String(deserializer);
+    var var_ignoreNotFound = sse_decode_bool(deserializer);
+    return DeleteBasinInput(name: var_name, ignoreNotFound: var_ignoreNotFound);
   }
 
   @protected
@@ -2902,12 +3632,86 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  IssueAccessTokenInput sse_decode_issue_access_token_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_id = sse_decode_String(deserializer);
+    var var_expiresAt = sse_decode_opt_box_autoadd_u_64(deserializer);
+    var var_autoPrefixStreams = sse_decode_bool(deserializer);
+    var var_scope = sse_decode_access_token_scope_input(deserializer);
+    return IssueAccessTokenInput(
+      id: var_id,
+      expiresAt: var_expiresAt,
+      autoPrefixStreams: var_autoPrefixStreams,
+      scope: var_scope,
+    );
+  }
+
+  @protected
+  List<AccessTokenInfo> sse_decode_list_access_token_info(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <AccessTokenInfo>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_access_token_info(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  ListAccessTokensInput sse_decode_list_access_tokens_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_prefix = sse_decode_String(deserializer);
+    var var_startAfter = sse_decode_String(deserializer);
+    var var_limit = sse_decode_opt_box_autoadd_usize(deserializer);
+    return ListAccessTokensInput(
+      prefix: var_prefix,
+      startAfter: var_startAfter,
+      limit: var_limit,
+    );
+  }
+
+  @protected
+  ListAllAccessTokensInput sse_decode_list_all_access_tokens_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_prefix = sse_decode_String(deserializer);
+    var var_startAfter = sse_decode_String(deserializer);
+    return ListAllAccessTokensInput(
+      prefix: var_prefix,
+      startAfter: var_startAfter,
+    );
+  }
+
+  @protected
+  ListAllBasinsInput sse_decode_list_all_basins_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_prefix = sse_decode_String(deserializer);
+    var var_startAfter = sse_decode_String(deserializer);
+    var var_includeDeleted = sse_decode_bool(deserializer);
+    return ListAllBasinsInput(
+      prefix: var_prefix,
+      startAfter: var_startAfter,
+      includeDeleted: var_includeDeleted,
+    );
+  }
+
+  @protected
   ListAllStreamsInput sse_decode_list_all_streams_input(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_prefix = sse_decode_opt_String(deserializer);
-    var var_startAfter = sse_decode_opt_String(deserializer);
+    var var_prefix = sse_decode_String(deserializer);
+    var var_startAfter = sse_decode_String(deserializer);
     var var_includeDeleted = sse_decode_bool(deserializer);
     return ListAllStreamsInput(
       prefix: var_prefix,
@@ -2926,6 +3730,43 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var ans_ = <AppendRecord>[];
     for (var idx_ = 0; idx_ < len_; ++idx_) {
       ans_.add(sse_decode_append_record(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<BasinInfo> sse_decode_list_basin_info(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <BasinInfo>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_basin_info(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  ListBasinsInput sse_decode_list_basins_input(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_prefix = sse_decode_String(deserializer);
+    var var_startAfter = sse_decode_String(deserializer);
+    var var_limit = sse_decode_opt_box_autoadd_usize(deserializer);
+    return ListBasinsInput(
+      prefix: var_prefix,
+      startAfter: var_startAfter,
+      limit: var_limit,
+    );
+  }
+
+  @protected
+  List<Operation> sse_decode_list_operation(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <Operation>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_operation(deserializer));
     }
     return ans_;
   }
@@ -2985,13 +3826,41 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   @protected
   ListStreamsInput sse_decode_list_streams_input(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_prefix = sse_decode_opt_String(deserializer);
-    var var_startAfter = sse_decode_opt_String(deserializer);
+    var var_prefix = sse_decode_String(deserializer);
+    var var_startAfter = sse_decode_String(deserializer);
     var var_limit = sse_decode_opt_box_autoadd_usize(deserializer);
     return ListStreamsInput(
       prefix: var_prefix,
       startAfter: var_startAfter,
       limit: var_limit,
+    );
+  }
+
+  @protected
+  Operation sse_decode_operation(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_i_32(deserializer);
+    return Operation.values[inner];
+  }
+
+  @protected
+  OperationGroupPermissions sse_decode_operation_group_permissions(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_basin = sse_decode_opt_box_autoadd_read_write_permissions(
+      deserializer,
+    );
+    var var_stream = sse_decode_opt_box_autoadd_read_write_permissions(
+      deserializer,
+    );
+    var var_account = sse_decode_opt_box_autoadd_read_write_permissions(
+      deserializer,
+    );
+    return OperationGroupPermissions(
+      basin: var_basin,
+      stream: var_stream,
+      account: var_account,
     );
   }
 
@@ -3020,6 +3889,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BasinConfig? sse_decode_opt_box_autoadd_basin_config(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_basin_config(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
+  BasinScope? sse_decode_opt_box_autoadd_basin_scope(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_basin_scope(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
   Compression? sse_decode_opt_box_autoadd_compression(
     SseDeserializer deserializer,
   ) {
@@ -3040,6 +3935,46 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
     if (sse_decode_bool(deserializer)) {
       return (sse_decode_box_autoadd_delete_on_empty_config(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
+  OperationGroupPermissions?
+  sse_decode_opt_box_autoadd_operation_group_permissions(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_operation_group_permissions(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
+  ReadWritePermissions? sse_decode_opt_box_autoadd_read_write_permissions(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_read_write_permissions(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
+  ResourceSet? sse_decode_opt_box_autoadd_resource_set(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_resource_set(deserializer));
     } else {
       return null;
     }
@@ -3170,6 +4105,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  PageOfAccessTokenInfo sse_decode_page_of_access_token_info(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_values = sse_decode_list_access_token_info(deserializer);
+    var var_hasMore = sse_decode_bool(deserializer);
+    return PageOfAccessTokenInfo(values: var_values, hasMore: var_hasMore);
+  }
+
+  @protected
+  PageOfBasinInfo sse_decode_page_of_basin_info(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_values = sse_decode_list_basin_info(deserializer);
+    var var_hasMore = sse_decode_bool(deserializer);
+    return PageOfBasinInfo(values: var_values, hasMore: var_hasMore);
+  }
+
+  @protected
   PageOfStreamInfo sse_decode_page_of_stream_info(
     SseDeserializer deserializer,
   ) {
@@ -3245,6 +4198,25 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  ReadWritePermissions sse_decode_read_write_permissions(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_i_32(deserializer);
+    return ReadWritePermissions.values[inner];
+  }
+
+  @protected
+  ReconfigureBasinInput sse_decode_reconfigure_basin_input(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_name = sse_decode_String(deserializer);
+    var var_config = sse_decode_basin_config(deserializer);
+    return ReconfigureBasinInput(name: var_name, config: var_config);
+  }
+
+  @protected
   (Uint8List, Uint8List)
   sse_decode_record_list_prim_u_8_strict_list_prim_u_8_strict(
     SseDeserializer deserializer,
@@ -3253,6 +4225,25 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_field0 = sse_decode_list_prim_u_8_strict(deserializer);
     var var_field1 = sse_decode_list_prim_u_8_strict(deserializer);
     return (var_field0, var_field1);
+  }
+
+  @protected
+  ResourceSet sse_decode_resource_set(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var tag_ = sse_decode_i_32(deserializer);
+    switch (tag_) {
+      case 0:
+        return ResourceSet_None();
+      case 1:
+        var var_field0 = sse_decode_String(deserializer);
+        return ResourceSet_Exact(var_field0);
+      case 2:
+        var var_field0 = sse_decode_String(deserializer);
+        return ResourceSet_Prefix(var_field0);
+      default:
+        throw UnimplementedError('');
+    }
   }
 
   @protected
@@ -3667,6 +4658,40 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_StreamSink_access_token_info_Sse(
+    RustStreamSink<AccessTokenInfo> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(
+      self.setupAndSerialize(
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_access_token_info,
+          decodeErrorData: sse_decode_AnyhowException,
+        ),
+      ),
+      serializer,
+    );
+  }
+
+  @protected
+  void sse_encode_StreamSink_basin_info_Sse(
+    RustStreamSink<BasinInfo> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(
+      self.setupAndSerialize(
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_basin_info,
+          decodeErrorData: sse_decode_AnyhowException,
+        ),
+      ),
+      serializer,
+    );
+  }
+
+  @protected
   void sse_encode_StreamSink_sequenced_record_Sse(
     RustStreamSink<SequencedRecord> self,
     SseSerializer serializer,
@@ -3704,6 +4729,50 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   void sse_encode_String(String self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
+  }
+
+  @protected
+  void sse_encode_access_token_info(
+    AccessTokenInfo self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.id, serializer);
+    sse_encode_opt_box_autoadd_u_64(self.expiresAt, serializer);
+    sse_encode_bool(self.autoPrefixStreams, serializer);
+    sse_encode_access_token_scope(self.scope, serializer);
+  }
+
+  @protected
+  void sse_encode_access_token_scope(
+    AccessTokenScope self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_resource_set(self.basins, serializer);
+    sse_encode_resource_set(self.streams, serializer);
+    sse_encode_resource_set(self.accessTokens, serializer);
+    sse_encode_opt_box_autoadd_operation_group_permissions(
+      self.opGroupPermissions,
+      serializer,
+    );
+    sse_encode_list_operation(self.ops, serializer);
+  }
+
+  @protected
+  void sse_encode_access_token_scope_input(
+    AccessTokenScopeInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_opt_box_autoadd_resource_set(self.basins, serializer);
+    sse_encode_opt_box_autoadd_resource_set(self.streams, serializer);
+    sse_encode_opt_box_autoadd_resource_set(self.accessTokens, serializer);
+    sse_encode_opt_box_autoadd_operation_group_permissions(
+      self.opGroupPermissions,
+      serializer,
+    );
+    sse_encode_list_operation(self.ops, serializer);
   }
 
   @protected
@@ -3762,6 +4831,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_basin_config(BasinConfig self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_opt_box_autoadd_stream_config(
+      self.defaultStreamConfig,
+      serializer,
+    );
+    sse_encode_bool(self.createStreamOnAppend, serializer);
+    sse_encode_bool(self.createStreamOnRead, serializer);
+  }
+
+  @protected
+  void sse_encode_basin_info(BasinInfo self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.name, serializer);
+    sse_encode_opt_box_autoadd_basin_scope(self.scope, serializer);
+    sse_encode_u_64(self.createdAt, serializer);
+    sse_encode_opt_box_autoadd_u_64(self.deletedAt, serializer);
+  }
+
+  @protected
+  void sse_encode_basin_scope(BasinScope self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.index, serializer);
+  }
+
+  @protected
   void sse_encode_bool(bool self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self ? 1 : 0);
@@ -3804,6 +4899,24 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_basin_config(
+    BasinConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_basin_config(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_basin_scope(
+    BasinScope self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_basin_scope(self, serializer);
+  }
+
+  @protected
   void sse_encode_box_autoadd_client_config(
     ClientConfig self,
     SseSerializer serializer,
@@ -3822,12 +4935,30 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_create_basin_input(
+    CreateBasinInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_create_basin_input(self, serializer);
+  }
+
+  @protected
   void sse_encode_box_autoadd_create_stream_input(
     CreateStreamInput self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_create_stream_input(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_delete_basin_input(
+    DeleteBasinInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_delete_basin_input(self, serializer);
   }
 
   @protected
@@ -3849,12 +4980,57 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_issue_access_token_input(
+    IssueAccessTokenInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_issue_access_token_input(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_list_access_tokens_input(
+    ListAccessTokensInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_access_tokens_input(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_list_all_access_tokens_input(
+    ListAllAccessTokensInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_all_access_tokens_input(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_list_all_basins_input(
+    ListAllBasinsInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_all_basins_input(self, serializer);
+  }
+
+  @protected
   void sse_encode_box_autoadd_list_all_streams_input(
     ListAllStreamsInput self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_all_streams_input(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_list_basins_input(
+    ListBasinsInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_basins_input(self, serializer);
   }
 
   @protected
@@ -3867,12 +5043,48 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_box_autoadd_operation_group_permissions(
+    OperationGroupPermissions self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_operation_group_permissions(self, serializer);
+  }
+
+  @protected
   void sse_encode_box_autoadd_read_input(
     ReadInput self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_read_input(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_read_write_permissions(
+    ReadWritePermissions self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_read_write_permissions(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_reconfigure_basin_input(
+    ReconfigureBasinInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_reconfigure_basin_input(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_resource_set(
+    ResourceSet self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_resource_set(self, serializer);
   }
 
   @protected
@@ -3974,6 +5186,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_create_basin_input(
+    CreateBasinInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.name, serializer);
+    sse_encode_opt_box_autoadd_basin_config(self.config, serializer);
+    sse_encode_opt_box_autoadd_basin_scope(self.scope, serializer);
+  }
+
+  @protected
   void sse_encode_create_stream_input(
     CreateStreamInput self,
     SseSerializer serializer,
@@ -3981,6 +5204,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_String(self.name, serializer);
     sse_encode_opt_box_autoadd_stream_config(self.config, serializer);
+  }
+
+  @protected
+  void sse_encode_delete_basin_input(
+    DeleteBasinInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.name, serializer);
+    sse_encode_bool(self.ignoreNotFound, serializer);
   }
 
   @protected
@@ -4019,13 +5252,69 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_issue_access_token_input(
+    IssueAccessTokenInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.id, serializer);
+    sse_encode_opt_box_autoadd_u_64(self.expiresAt, serializer);
+    sse_encode_bool(self.autoPrefixStreams, serializer);
+    sse_encode_access_token_scope_input(self.scope, serializer);
+  }
+
+  @protected
+  void sse_encode_list_access_token_info(
+    List<AccessTokenInfo> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_access_token_info(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_access_tokens_input(
+    ListAccessTokensInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.prefix, serializer);
+    sse_encode_String(self.startAfter, serializer);
+    sse_encode_opt_box_autoadd_usize(self.limit, serializer);
+  }
+
+  @protected
+  void sse_encode_list_all_access_tokens_input(
+    ListAllAccessTokensInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.prefix, serializer);
+    sse_encode_String(self.startAfter, serializer);
+  }
+
+  @protected
+  void sse_encode_list_all_basins_input(
+    ListAllBasinsInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.prefix, serializer);
+    sse_encode_String(self.startAfter, serializer);
+    sse_encode_bool(self.includeDeleted, serializer);
+  }
+
+  @protected
   void sse_encode_list_all_streams_input(
     ListAllStreamsInput self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_opt_String(self.prefix, serializer);
-    sse_encode_opt_String(self.startAfter, serializer);
+    sse_encode_String(self.prefix, serializer);
+    sse_encode_String(self.startAfter, serializer);
     sse_encode_bool(self.includeDeleted, serializer);
   }
 
@@ -4038,6 +5327,41 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
       sse_encode_append_record(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_basin_info(
+    List<BasinInfo> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_basin_info(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_basins_input(
+    ListBasinsInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.prefix, serializer);
+    sse_encode_String(self.startAfter, serializer);
+    sse_encode_opt_box_autoadd_usize(self.limit, serializer);
+  }
+
+  @protected
+  void sse_encode_list_operation(
+    List<Operation> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_operation(item, serializer);
     }
   }
 
@@ -4096,9 +5420,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_opt_String(self.prefix, serializer);
-    sse_encode_opt_String(self.startAfter, serializer);
+    sse_encode_String(self.prefix, serializer);
+    sse_encode_String(self.startAfter, serializer);
     sse_encode_opt_box_autoadd_usize(self.limit, serializer);
+  }
+
+  @protected
+  void sse_encode_operation(Operation self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.index, serializer);
+  }
+
+  @protected
+  void sse_encode_operation_group_permissions(
+    OperationGroupPermissions self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_opt_box_autoadd_read_write_permissions(self.basin, serializer);
+    sse_encode_opt_box_autoadd_read_write_permissions(self.stream, serializer);
+    sse_encode_opt_box_autoadd_read_write_permissions(self.account, serializer);
   }
 
   @protected
@@ -4125,6 +5466,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_opt_box_autoadd_basin_config(
+    BasinConfig? self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_basin_config(self, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_opt_box_autoadd_basin_scope(
+    BasinScope? self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_basin_scope(self, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_opt_box_autoadd_compression(
     Compression? self,
     SseSerializer serializer,
@@ -4147,6 +5514,45 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_bool(self != null, serializer);
     if (self != null) {
       sse_encode_box_autoadd_delete_on_empty_config(self, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_opt_box_autoadd_operation_group_permissions(
+    OperationGroupPermissions? self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_operation_group_permissions(self, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_opt_box_autoadd_read_write_permissions(
+    ReadWritePermissions? self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_read_write_permissions(self, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_opt_box_autoadd_resource_set(
+    ResourceSet? self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_resource_set(self, serializer);
     }
   }
 
@@ -4275,6 +5681,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_page_of_access_token_info(
+    PageOfAccessTokenInfo self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_access_token_info(self.values, serializer);
+    sse_encode_bool(self.hasMore, serializer);
+  }
+
+  @protected
+  void sse_encode_page_of_basin_info(
+    PageOfBasinInfo self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_list_basin_info(self.values, serializer);
+    sse_encode_bool(self.hasMore, serializer);
+  }
+
+  @protected
   void sse_encode_page_of_stream_info(
     PageOfStreamInfo self,
     SseSerializer serializer,
@@ -4337,6 +5763,25 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_read_write_permissions(
+    ReadWritePermissions self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.index, serializer);
+  }
+
+  @protected
+  void sse_encode_reconfigure_basin_input(
+    ReconfigureBasinInput self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.name, serializer);
+    sse_encode_basin_config(self.config, serializer);
+  }
+
+  @protected
   void sse_encode_record_list_prim_u_8_strict_list_prim_u_8_strict(
     (Uint8List, Uint8List) self,
     SseSerializer serializer,
@@ -4344,6 +5789,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_prim_u_8_strict(self.$1, serializer);
     sse_encode_list_prim_u_8_strict(self.$2, serializer);
+  }
+
+  @protected
+  void sse_encode_resource_set(ResourceSet self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    switch (self) {
+      case ResourceSet_None():
+        sse_encode_i_32(0, serializer);
+      case ResourceSet_Exact(field0: final field0):
+        sse_encode_i_32(1, serializer);
+        sse_encode_String(field0, serializer);
+      case ResourceSet_Prefix(field0: final field0):
+        sse_encode_i_32(2, serializer);
+        sse_encode_String(field0, serializer);
+    }
   }
 
   @protected
@@ -4640,38 +6100,65 @@ class S2ClientImpl extends RustOpaque implements S2Client {
         RustLib.instance.api.rust_arc_decrement_strong_count_S2ClientPtr,
   );
 
-  Future<void> basin() =>
-      RustLib.instance.api.crateClientS2ClientBasin(that: this);
+  Future<S2Basin> basin({required String name}) =>
+      RustLib.instance.api.crateClientS2ClientBasin(that: this, name: name);
 
-  Future<void> createBasin() =>
-      RustLib.instance.api.crateClientS2ClientCreateBasin(that: this);
+  Future<BasinInfo> createBasin({required CreateBasinInput input}) => RustLib
+      .instance
+      .api
+      .crateClientS2ClientCreateBasin(that: this, input: input);
 
-  Future<void> deleteBasin() =>
-      RustLib.instance.api.crateClientS2ClientDeleteBasin(that: this);
+  Future<void> deleteBasin({required DeleteBasinInput input}) => RustLib
+      .instance
+      .api
+      .crateClientS2ClientDeleteBasin(that: this, input: input);
 
-  Future<void> getBasinConfig() =>
-      RustLib.instance.api.crateClientS2ClientGetBasinConfig(that: this);
+  Future<BasinConfig> getBasinConfig({required String name}) => RustLib
+      .instance
+      .api
+      .crateClientS2ClientGetBasinConfig(that: this, name: name);
 
-  Future<void> issueAccessToken() =>
-      RustLib.instance.api.crateClientS2ClientIssueAccessToken(that: this);
+  Future<String> issueAccessToken({required IssueAccessTokenInput input}) =>
+      RustLib.instance.api.crateClientS2ClientIssueAccessToken(
+        that: this,
+        input: input,
+      );
 
-  Future<void> listAccessTokens() =>
-      RustLib.instance.api.crateClientS2ClientListAccessTokens(that: this);
+  Future<PageOfAccessTokenInfo> listAccessTokens({
+    required ListAccessTokensInput input,
+  }) => RustLib.instance.api.crateClientS2ClientListAccessTokens(
+    that: this,
+    input: input,
+  );
 
-  Future<void> listAllAccessTokens() =>
-      RustLib.instance.api.crateClientS2ClientListAllAccessTokens(that: this);
+  Stream<AccessTokenInfo> listAllAccessTokens({
+    required ListAllAccessTokensInput input,
+  }) => RustLib.instance.api.crateClientS2ClientListAllAccessTokens(
+    that: this,
+    input: input,
+  );
 
-  Future<void> listAllBasins() =>
-      RustLib.instance.api.crateClientS2ClientListAllBasins(that: this);
+  Stream<BasinInfo> listAllBasins({required ListAllBasinsInput input}) =>
+      RustLib.instance.api.crateClientS2ClientListAllBasins(
+        that: this,
+        input: input,
+      );
 
-  Future<void> listBasins() =>
-      RustLib.instance.api.crateClientS2ClientListBasins(that: this);
+  Future<PageOfBasinInfo> listBasins({required ListBasinsInput input}) =>
+      RustLib.instance.api.crateClientS2ClientListBasins(
+        that: this,
+        input: input,
+      );
 
-  Future<void> reconfigureBasin() =>
-      RustLib.instance.api.crateClientS2ClientReconfigureBasin(that: this);
+  Future<BasinConfig> reconfigureBasin({
+    required ReconfigureBasinInput input,
+  }) => RustLib.instance.api.crateClientS2ClientReconfigureBasin(
+    that: this,
+    input: input,
+  );
 
-  Future<void> revokeAccessToken() =>
-      RustLib.instance.api.crateClientS2ClientRevokeAccessToken(that: this);
+  Future<void> revokeAccessToken({required String id}) => RustLib.instance.api
+      .crateClientS2ClientRevokeAccessToken(that: this, id: id);
 }
 
 @sealed
