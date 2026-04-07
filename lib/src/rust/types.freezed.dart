@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ReadFrom {
 
- BigInt get field0;
+ int get field0;
 /// Create a copy of ReadFrom
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ReadFromCopyWith<$Res>  {
   factory $ReadFromCopyWith(ReadFrom value, $Res Function(ReadFrom) _then) = _$ReadFromCopyWithImpl;
 @useResult
 $Res call({
- BigInt field0
+ int field0
 });
 
 
@@ -65,7 +65,7 @@ class _$ReadFromCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? field0 = null,}) {
   return _then(_self.copyWith(
 field0: null == field0 ? _self.field0 : field0 // ignore: cast_nullable_to_non_nullable
-as BigInt,
+as int,
   ));
 }
 
@@ -153,7 +153,7 @@ return tailOffset(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( BigInt field0)?  seqNum,TResult Function( BigInt field0)?  timestamp,TResult Function( BigInt field0)?  tailOffset,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int field0)?  seqNum,TResult Function( int field0)?  timestamp,TResult Function( int field0)?  tailOffset,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ReadFrom_SeqNum() when seqNum != null:
 return seqNum(_that.field0);case ReadFrom_Timestamp() when timestamp != null:
@@ -176,7 +176,7 @@ return tailOffset(_that.field0);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( BigInt field0)  seqNum,required TResult Function( BigInt field0)  timestamp,required TResult Function( BigInt field0)  tailOffset,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int field0)  seqNum,required TResult Function( int field0)  timestamp,required TResult Function( int field0)  tailOffset,}) {final _that = this;
 switch (_that) {
 case ReadFrom_SeqNum():
 return seqNum(_that.field0);case ReadFrom_Timestamp():
@@ -195,7 +195,7 @@ return tailOffset(_that.field0);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( BigInt field0)?  seqNum,TResult? Function( BigInt field0)?  timestamp,TResult? Function( BigInt field0)?  tailOffset,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int field0)?  seqNum,TResult? Function( int field0)?  timestamp,TResult? Function( int field0)?  tailOffset,}) {final _that = this;
 switch (_that) {
 case ReadFrom_SeqNum() when seqNum != null:
 return seqNum(_that.field0);case ReadFrom_Timestamp() when timestamp != null:
@@ -215,7 +215,7 @@ class ReadFrom_SeqNum extends ReadFrom {
   const ReadFrom_SeqNum(this.field0): super._();
   
 
-@override final  BigInt field0;
+@override final  int field0;
 
 /// Create a copy of ReadFrom
 /// with the given fields replaced by the non-null parameter values.
@@ -247,7 +247,7 @@ abstract mixin class $ReadFrom_SeqNumCopyWith<$Res> implements $ReadFromCopyWith
   factory $ReadFrom_SeqNumCopyWith(ReadFrom_SeqNum value, $Res Function(ReadFrom_SeqNum) _then) = _$ReadFrom_SeqNumCopyWithImpl;
 @override @useResult
 $Res call({
- BigInt field0
+ int field0
 });
 
 
@@ -267,7 +267,7 @@ class _$ReadFrom_SeqNumCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? field0 = null,}) {
   return _then(ReadFrom_SeqNum(
 null == field0 ? _self.field0 : field0 // ignore: cast_nullable_to_non_nullable
-as BigInt,
+as int,
   ));
 }
 
@@ -281,7 +281,7 @@ class ReadFrom_Timestamp extends ReadFrom {
   const ReadFrom_Timestamp(this.field0): super._();
   
 
-@override final  BigInt field0;
+@override final  int field0;
 
 /// Create a copy of ReadFrom
 /// with the given fields replaced by the non-null parameter values.
@@ -313,7 +313,7 @@ abstract mixin class $ReadFrom_TimestampCopyWith<$Res> implements $ReadFromCopyW
   factory $ReadFrom_TimestampCopyWith(ReadFrom_Timestamp value, $Res Function(ReadFrom_Timestamp) _then) = _$ReadFrom_TimestampCopyWithImpl;
 @override @useResult
 $Res call({
- BigInt field0
+ int field0
 });
 
 
@@ -333,7 +333,7 @@ class _$ReadFrom_TimestampCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? field0 = null,}) {
   return _then(ReadFrom_Timestamp(
 null == field0 ? _self.field0 : field0 // ignore: cast_nullable_to_non_nullable
-as BigInt,
+as int,
   ));
 }
 
@@ -347,7 +347,7 @@ class ReadFrom_TailOffset extends ReadFrom {
   const ReadFrom_TailOffset(this.field0): super._();
   
 
-@override final  BigInt field0;
+@override final  int field0;
 
 /// Create a copy of ReadFrom
 /// with the given fields replaced by the non-null parameter values.
@@ -379,7 +379,7 @@ abstract mixin class $ReadFrom_TailOffsetCopyWith<$Res> implements $ReadFromCopy
   factory $ReadFrom_TailOffsetCopyWith(ReadFrom_TailOffset value, $Res Function(ReadFrom_TailOffset) _then) = _$ReadFrom_TailOffsetCopyWithImpl;
 @override @useResult
 $Res call({
- BigInt field0
+ int field0
 });
 
 
@@ -399,7 +399,7 @@ class _$ReadFrom_TailOffsetCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? field0 = null,}) {
   return _then(ReadFrom_TailOffset(
 null == field0 ? _self.field0 : field0 // ignore: cast_nullable_to_non_nullable
-as BigInt,
+as int,
   ));
 }
 

@@ -24,7 +24,7 @@ abstract class S2Producer implements RustOpaqueInterface {
 }
 
 class IndexedAppendAck {
-  final BigInt seqNum;
+  final int seqNum;
   final AppendAck batch;
 
   const IndexedAppendAck({required this.seqNum, required this.batch});

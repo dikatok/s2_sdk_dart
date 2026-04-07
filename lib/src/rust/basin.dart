@@ -53,7 +53,7 @@ class CreateStreamInput {
 }
 
 class DeleteOnEmptyConfig {
-  final BigInt minAgeSecs;
+  final int minAgeSecs;
 
   const DeleteOnEmptyConfig({required this.minAgeSecs});
 
@@ -70,9 +70,9 @@ class DeleteOnEmptyConfig {
 
 class DeleteStreamInput {
   final String name;
-  final bool ignoreNotFound;
+  final bool? ignoreNotFound;
 
-  const DeleteStreamInput({required this.name, required this.ignoreNotFound});
+  const DeleteStreamInput({required this.name, this.ignoreNotFound});
 
   @override
   int get hashCode => name.hashCode ^ ignoreNotFound.hashCode;
@@ -87,14 +87,14 @@ class DeleteStreamInput {
 }
 
 class ListAllStreamsInput {
-  final String prefix;
-  final String startAfter;
-  final bool includeDeleted;
+  final String? prefix;
+  final String? startAfter;
+  final bool? includeDeleted;
 
   const ListAllStreamsInput({
-    required this.prefix,
-    required this.startAfter,
-    required this.includeDeleted,
+    this.prefix,
+    this.startAfter,
+    this.includeDeleted,
   });
 
   @override
@@ -112,15 +112,11 @@ class ListAllStreamsInput {
 }
 
 class ListStreamsInput {
-  final String prefix;
-  final String startAfter;
-  final BigInt? limit;
+  final String? prefix;
+  final String? startAfter;
+  final int? limit;
 
-  const ListStreamsInput({
-    required this.prefix,
-    required this.startAfter,
-    this.limit,
-  });
+  const ListStreamsInput({this.prefix, this.startAfter, this.limit});
 
   @override
   int get hashCode => prefix.hashCode ^ startAfter.hashCode ^ limit.hashCode;
@@ -176,7 +172,7 @@ sealed class RetentionPolicy with _$RetentionPolicy {
   const RetentionPolicy._();
 
   const factory RetentionPolicy.infinite() = RetentionPolicy_Infinite;
-  const factory RetentionPolicy.age(BigInt field0) = RetentionPolicy_Age;
+  const factory RetentionPolicy.age(int field0) = RetentionPolicy_Age;
 }
 
 enum StorageClass { standard, express }
@@ -214,8 +210,8 @@ class StreamConfig {
 
 class StreamInfo {
   final String name;
-  final BigInt createdAt;
-  final BigInt? deletedAt;
+  final int createdAt;
+  final int? deletedAt;
 
   const StreamInfo({
     required this.name,
@@ -238,9 +234,9 @@ class StreamInfo {
 
 class TimestampingConfig {
   final TimestampingMode? mode;
-  final bool uncapped;
+  final bool? uncapped;
 
-  const TimestampingConfig({this.mode, required this.uncapped});
+  const TimestampingConfig({this.mode, this.uncapped});
 
   @override
   int get hashCode => mode.hashCode ^ uncapped.hashCode;

@@ -13,7 +13,7 @@ final class S2AccessTokens {
     return _client.listAccessTokens(input: input);
   }
 
-  Stream<AccessTokenInfo> listAll(ListAllAccessTokensInput input) {
+  Future<Stream<AccessTokenInfo>> listAll(ListAllAccessTokensInput input) {
     return _client.listAllAccessTokens(input: input);
   }
 

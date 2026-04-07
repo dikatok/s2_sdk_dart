@@ -17,7 +17,7 @@ final class S2Basins {
     return _client.getBasinConfig(name: name);
   }
 
-  Stream<BasinInfo> listAll(ListAllBasinsInput input) {
+  Future<Stream<BasinInfo>> listAll(ListAllBasinsInput input) {
     return _client.listAllBasins(input: input);
   }
 

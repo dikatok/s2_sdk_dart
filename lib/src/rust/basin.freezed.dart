@@ -119,7 +119,7 @@ return age(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  infinite,TResult Function( BigInt field0)?  age,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  infinite,TResult Function( int field0)?  age,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case RetentionPolicy_Infinite() when infinite != null:
 return infinite();case RetentionPolicy_Age() when age != null:
@@ -141,7 +141,7 @@ return age(_that.field0);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  infinite,required TResult Function( BigInt field0)  age,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  infinite,required TResult Function( int field0)  age,}) {final _that = this;
 switch (_that) {
 case RetentionPolicy_Infinite():
 return infinite();case RetentionPolicy_Age():
@@ -159,7 +159,7 @@ return age(_that.field0);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  infinite,TResult? Function( BigInt field0)?  age,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  infinite,TResult? Function( int field0)?  age,}) {final _that = this;
 switch (_that) {
 case RetentionPolicy_Infinite() when infinite != null:
 return infinite();case RetentionPolicy_Age() when age != null:
@@ -210,7 +210,7 @@ class RetentionPolicy_Age extends RetentionPolicy {
   const RetentionPolicy_Age(this.field0): super._();
   
 
- final  BigInt field0;
+ final  int field0;
 
 /// Create a copy of RetentionPolicy
 /// with the given fields replaced by the non-null parameter values.
@@ -242,7 +242,7 @@ abstract mixin class $RetentionPolicy_AgeCopyWith<$Res> implements $RetentionPol
   factory $RetentionPolicy_AgeCopyWith(RetentionPolicy_Age value, $Res Function(RetentionPolicy_Age) _then) = _$RetentionPolicy_AgeCopyWithImpl;
 @useResult
 $Res call({
- BigInt field0
+ int field0
 });
 
 
@@ -262,7 +262,7 @@ class _$RetentionPolicy_AgeCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? field0 = null,}) {
   return _then(RetentionPolicy_Age(
 null == field0 ? _self.field0 : field0 // ignore: cast_nullable_to_non_nullable
-as BigInt,
+as int,
   ));
 }
 

@@ -2,3 +2,4 @@ rust_input: crate
 rust_root: rust/
 dart_output: lib/src/rust
 enable_lifetime: true
+type_64bit_int: true

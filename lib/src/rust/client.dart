@@ -27,11 +27,11 @@ abstract class S2Client implements RustOpaqueInterface {
     required ListAccessTokensInput input,
   });
 
-  Stream<AccessTokenInfo> listAllAccessTokens({
+  Future<Stream<AccessTokenInfo>> listAllAccessTokens({
     required ListAllAccessTokensInput input,
   });
 
-  Stream<BasinInfo> listAllBasins({required ListAllBasinsInput input});
+  Future<Stream<BasinInfo>> listAllBasins({required ListAllBasinsInput input});
 
   Future<PageOfBasinInfo> listBasins({required ListBasinsInput input});
 
@@ -46,7 +46,7 @@ abstract class S2Client implements RustOpaqueInterface {
 
 class AccessTokenInfo {
   final String id;
-  final BigInt? expiresAt;
+  final int? expiresAt;
   final bool autoPrefixStreams;
   final AccessTokenScope scope;
 
@@ -175,8 +175,8 @@ class BasinConfig {
 class BasinInfo {
   final String name;
   final BasinScope? scope;
-  final BigInt createdAt;
-  final BigInt? deletedAt;
+  final int createdAt;
+  final int? deletedAt;
 
   const BasinInfo({
     required this.name,
@@ -242,7 +242,7 @@ class DeleteBasinInput {
 
 class IssueAccessTokenInput {
   final String id;
-  final BigInt? expiresAt;
+  final int? expiresAt;
   final bool autoPrefixStreams;
   final AccessTokenScopeInput scope;
 
@@ -272,15 +272,11 @@ class IssueAccessTokenInput {
 }
 
 class ListAccessTokensInput {
-  final String prefix;
-  final String startAfter;
-  final BigInt? limit;
+  final String? prefix;
+  final String? startAfter;
+  final int? limit;
 
-  const ListAccessTokensInput({
-    required this.prefix,
-    required this.startAfter,
-    this.limit,
-  });
+  const ListAccessTokensInput({this.prefix, this.startAfter, this.limit});
 
   @override
   int get hashCode => prefix.hashCode ^ startAfter.hashCode ^ limit.hashCode;
@@ -296,13 +292,10 @@ class ListAccessTokensInput {
 }
 
 class ListAllAccessTokensInput {
-  final String prefix;
-  final String startAfter;
+  final String? prefix;
+  final String? startAfter;
 
-  const ListAllAccessTokensInput({
-    required this.prefix,
-    required this.startAfter,
-  });
+  const ListAllAccessTokensInput({this.prefix, this.startAfter});
 
   @override
   int get hashCode => prefix.hashCode ^ startAfter.hashCode;
@@ -317,15 +310,11 @@ class ListAllAccessTokensInput {
 }
 
 class ListAllBasinsInput {
-  final String prefix;
-  final String startAfter;
-  final bool includeDeleted;
+  final String? prefix;
+  final String? startAfter;
+  final bool? includeDeleted;
 
-  const ListAllBasinsInput({
-    required this.prefix,
-    required this.startAfter,
-    required this.includeDeleted,
-  });
+  const ListAllBasinsInput({this.prefix, this.startAfter, this.includeDeleted});
 
   @override
   int get hashCode =>
@@ -342,15 +331,11 @@ class ListAllBasinsInput {
 }
 
 class ListBasinsInput {
-  final String prefix;
-  final String startAfter;
-  final BigInt? limit;
+  final String? prefix;
+  final String? startAfter;
+  final int? limit;
 
-  const ListBasinsInput({
-    required this.prefix,
-    required this.startAfter,
-    this.limit,
-  });
+  const ListBasinsInput({this.prefix, this.startAfter, this.limit});
 
   @override
   int get hashCode => prefix.hashCode ^ startAfter.hashCode ^ limit.hashCode;

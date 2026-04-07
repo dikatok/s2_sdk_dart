@@ -101,8 +101,8 @@ impl S2Stream {
 }
 
 impl From<s2_sdk::S2Stream> for S2Stream {
-    fn from(stream: s2_sdk::S2Stream) -> Self {
-        S2Stream::new(stream)
+    fn from(value: s2_sdk::S2Stream) -> Self {
+        S2Stream::new(value)
     }
 }
 

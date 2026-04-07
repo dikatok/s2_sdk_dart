@@ -5,9 +5,9 @@ pub struct S2Error {
 }
 
 impl From<s2_sdk::types::S2Error> for S2Error {
-    fn from(error: s2_sdk::types::S2Error) -> Self {
+    fn from(value: s2_sdk::types::S2Error) -> Self {
         S2Error {
-            message: error.to_string(),
+            message: value.to_string(),
         }
     }
 }

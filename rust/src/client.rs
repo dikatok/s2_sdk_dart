@@ -52,6 +52,7 @@ impl S2Client {
             .map_err(|e| e.into())
     }
 
+    #[frb(stream_dart_await)]
     pub async fn list_all_basins(
         &self,
         sink: StreamSink<BasinInfo>,
@@ -133,6 +134,8 @@ impl S2Client {
             .map_err(|e| e.into())
     }
 
+    #[frb(stream_dart_await)]
+
     pub async fn list_all_access_tokens(
         &self,
         sink: StreamSink<AccessTokenInfo>,
@@ -187,12 +190,12 @@ pub struct BasinInfo {
 }
 
 impl From<s2_sdk::types::BasinInfo> for BasinInfo {
-    fn from(info: s2_sdk::types::BasinInfo) -> Self {
+    fn from(value: s2_sdk::types::BasinInfo) -> Self {
         BasinInfo {
-            name: info.name.to_string(),
-            scope: info.scope.map(|s| s.into()),
-            created_at: OffsetDateTime::from(info.created_at).unix_timestamp() as u64,
-            deleted_at: info
+            name: value.name.to_string(),
+            scope: value.scope.map(|s| s.into()),
+            created_at: OffsetDateTime::from(value.created_at).unix_timestamp() as u64,
+            deleted_at: value
                 .deleted_at
                 .map(|dt| OffsetDateTime::from(dt).unix_timestamp() as u64),
         }
@@ -204,16 +207,16 @@ pub enum BasinScope {
 }
 
 impl From<s2_sdk::types::BasinScope> for BasinScope {
-    fn from(scope: s2_sdk::types::BasinScope) -> Self {
-        match scope {
+    fn from(value: s2_sdk::types::BasinScope) -> Self {
+        match value {
             s2_sdk::types::BasinScope::AwsUsEast1 => BasinScope::AwsUsEast1,
         }
     }
 }
 
 impl From<BasinScope> for s2_sdk::types::BasinScope {
-    fn from(scope: BasinScope) -> Self {
-        match scope {
+    fn from(value: BasinScope) -> Self {
+        match value {
             BasinScope::AwsUsEast1 => s2_sdk::types::BasinScope::AwsUsEast1,
         }
     }
@@ -225,39 +228,49 @@ pub struct PageOfBasinInfo {
 }
 
 pub struct ListBasinsInput {
-    pub prefix: String,
-    pub start_after: String,
-    pub limit: Option<usize>,
+    pub prefix: Option<String>,
+    pub start_after: Option<String>,
+    pub limit: Option<u64>,
 }
 
 impl From<ListBasinsInput> for s2_sdk::types::ListBasinsInput {
     fn from(value: ListBasinsInput) -> Self {
-        let mut input = s2_sdk::types::ListBasinsInput::default();
-        input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&value.prefix).unwrap());
-        input = input.with_start_after(
-            s2_sdk::types::BasinNameStartAfter::from_str(&value.start_after).unwrap(),
-        );
+        let mut input = s2_sdk::types::ListBasinsInput::new();
+        if let Some(prefix) = value.prefix {
+            input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&prefix).unwrap());
+        }
+        if let Some(start_after) = value.start_after {
+            input = input.with_start_after(
+                s2_sdk::types::BasinNameStartAfter::from_str(&start_after).unwrap(),
+            );
+        }
         if let Some(limit) = value.limit {
-            input = input.with_limit(limit);
+            input = input.with_limit(limit.try_into().expect("limit too large for usize"));
         }
         input
     }
 }
 
 pub struct ListAllBasinsInput {
-    pub prefix: String,
-    pub start_after: String,
-    pub include_deleted: bool,
+    pub prefix: Option<String>,
+    pub start_after: Option<String>,
+    pub include_deleted: Option<bool>,
 }
 
 impl From<ListAllBasinsInput> for s2_sdk::types::ListAllBasinsInput {
     fn from(value: ListAllBasinsInput) -> Self {
         let mut input = s2_sdk::types::ListAllBasinsInput::default();
-        input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&value.prefix).unwrap());
-        input = input.with_start_after(
-            s2_sdk::types::BasinNameStartAfter::from_str(&value.start_after).unwrap(),
-        );
-        input = input.with_include_deleted(value.include_deleted);
+        if let Some(prefix) = value.prefix {
+            input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&prefix).unwrap());
+        }
+        if let Some(start_after) = value.start_after {
+            input = input.with_start_after(
+                s2_sdk::types::BasinNameStartAfter::from_str(&start_after).unwrap(),
+            );
+        }
+        if let Some(include_deleted) = value.include_deleted {
+            input = input.with_include_deleted(include_deleted);
+        }
         input
     }
 }
@@ -290,24 +303,24 @@ pub struct BasinConfig {
 }
 
 impl From<BasinConfig> for s2_sdk::types::BasinConfig {
-    fn from(config: BasinConfig) -> Self {
+    fn from(value: BasinConfig) -> Self {
         let mut basin_config = s2_sdk::types::BasinConfig::default();
-        if let Some(stream_config) = config.default_stream_config {
+        if let Some(stream_config) = value.default_stream_config {
             basin_config = basin_config.with_default_stream_config(stream_config.into());
         }
         basin_config = basin_config
-            .with_create_stream_on_append(config.create_stream_on_append)
-            .with_create_stream_on_read(config.create_stream_on_read);
+            .with_create_stream_on_append(value.create_stream_on_append)
+            .with_create_stream_on_read(value.create_stream_on_read);
         basin_config
     }
 }
 
 impl From<s2_sdk::types::BasinConfig> for BasinConfig {
-    fn from(config: s2_sdk::types::BasinConfig) -> Self {
+    fn from(value: s2_sdk::types::BasinConfig) -> Self {
         BasinConfig {
-            default_stream_config: config.default_stream_config.map(|sc| sc.into()),
-            create_stream_on_append: config.create_stream_on_append,
-            create_stream_on_read: config.create_stream_on_read,
+            default_stream_config: value.default_stream_config.map(|sc| sc.into()),
+            create_stream_on_append: value.create_stream_on_append,
+            create_stream_on_read: value.create_stream_on_read,
         }
     }
 }
@@ -318,11 +331,11 @@ pub struct DeleteBasinInput {
 }
 
 impl From<DeleteBasinInput> for s2_sdk::types::DeleteBasinInput {
-    fn from(input: DeleteBasinInput) -> Self {
+    fn from(value: DeleteBasinInput) -> Self {
         s2_sdk::types::DeleteBasinInput::new(
-            s2_sdk::types::BasinName::from_str(&input.name).unwrap(),
+            s2_sdk::types::BasinName::from_str(&value.name).unwrap(),
         )
-        .with_ignore_not_found(input.ignore_not_found)
+        .with_ignore_not_found(value.ignore_not_found)
     }
 }
 
@@ -332,18 +345,18 @@ pub struct ReconfigureBasinInput {
 }
 
 impl From<ReconfigureBasinInput> for s2_sdk::types::ReconfigureBasinInput {
-    fn from(input: ReconfigureBasinInput) -> Self {
+    fn from(value: ReconfigureBasinInput) -> Self {
         s2_sdk::types::ReconfigureBasinInput::new(
-            s2_sdk::types::BasinName::from_str(&input.name).unwrap(),
-            input.config.into(),
+            s2_sdk::types::BasinName::from_str(&value.name).unwrap(),
+            value.config.into(),
         )
     }
 }
 
 impl From<BasinConfig> for s2_sdk::types::BasinReconfiguration {
-    fn from(config: BasinConfig) -> Self {
+    fn from(value: BasinConfig) -> Self {
         let mut reconfig = s2_sdk::types::BasinReconfiguration::default();
-        if let Some(stream_config) = config.default_stream_config {
+        if let Some(stream_config) = value.default_stream_config {
             let mut stream_reconfig = s2_sdk::types::StreamReconfiguration::default();
             if let Some(storage_class) = stream_config.storage_class {
                 stream_reconfig = stream_reconfig.with_storage_class(storage_class.into());
@@ -356,7 +369,9 @@ impl From<BasinConfig> for s2_sdk::types::BasinReconfiguration {
                 if let Some(mode) = timestamping.mode {
                     timestamping_config = timestamping_config.with_mode(mode.into());
                 }
-                timestamping_config = timestamping_config.with_uncapped(timestamping.uncapped);
+                if let Some(uncapped) = timestamping.uncapped {
+                    timestamping_config = timestamping_config.with_uncapped(uncapped);
+                }
                 stream_reconfig = stream_reconfig.with_timestamping(timestamping_config);
             }
             if let Some(delete_on_empty) = stream_config.delete_on_empty {
@@ -368,25 +383,30 @@ impl From<BasinConfig> for s2_sdk::types::BasinReconfiguration {
             reconfig = reconfig.with_default_stream_config(stream_reconfig);
         }
         reconfig = reconfig
-            .with_create_stream_on_append(config.create_stream_on_append)
-            .with_create_stream_on_read(config.create_stream_on_read);
+            .with_create_stream_on_append(value.create_stream_on_append)
+            .with_create_stream_on_read(value.create_stream_on_read);
         reconfig
     }
 }
 
 pub struct ListAccessTokensInput {
-    pub prefix: String,
-    pub start_after: String,
-    pub limit: Option<usize>,
+    pub prefix: Option<String>,
+    pub start_after: Option<String>,
+    pub limit: Option<u64>,
 }
 
 impl From<ListAccessTokensInput> for s2_sdk::types::ListAccessTokensInput {
-    fn from(input: ListAccessTokensInput) -> Self {
-        let mut input = s2_sdk::types::ListAccessTokensInput::new()
-            .with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&input.prefix).unwrap())
-            .with_start_after(
-                s2_sdk::types::AccessTokenIdStartAfter::from_str(&input.start_after).unwrap(),
+    fn from(value: ListAccessTokensInput) -> Self {
+        let mut input = s2_sdk::types::ListAccessTokensInput::new();
+        if let Some(prefix) = value.prefix {
+            input =
+                input.with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&prefix).unwrap());
+        }
+        if let Some(start_after) = value.start_after {
+            input = input.with_start_after(
+                s2_sdk::types::AccessTokenIdStartAfter::from_str(&start_after).unwrap(),
             );
+        }
         if let Some(limit) = input.limit {
             input = input.with_limit(limit);
         }
@@ -506,17 +526,23 @@ impl From<OperationGroupPermissions> for s2_sdk::types::OperationGroupPermission
 }
 
 pub struct ListAllAccessTokensInput {
-    pub prefix: String,
-    pub start_after: String,
+    pub prefix: Option<String>,
+    pub start_after: Option<String>,
 }
 
 impl From<ListAllAccessTokensInput> for s2_sdk::types::ListAllAccessTokensInput {
-    fn from(input: ListAllAccessTokensInput) -> Self {
-        s2_sdk::types::ListAllAccessTokensInput::new()
-            .with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&input.prefix).unwrap())
-            .with_start_after(
-                s2_sdk::types::AccessTokenIdStartAfter::from_str(&input.start_after).unwrap(),
-            )
+    fn from(value: ListAllAccessTokensInput) -> Self {
+        let mut input = s2_sdk::types::ListAllAccessTokensInput::new();
+        if let Some(prefix) = value.prefix {
+            input =
+                input.with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&prefix).unwrap());
+        }
+        if let Some(start_after) = value.start_after {
+            input = input.with_start_after(
+                s2_sdk::types::AccessTokenIdStartAfter::from_str(&start_after).unwrap(),
+            );
+        }
+        input
     }
 }
 

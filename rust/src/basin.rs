@@ -107,27 +107,30 @@ impl S2Basin {
 }
 
 impl From<s2_sdk::S2Basin> for S2Basin {
-    fn from(basin: s2_sdk::S2Basin) -> Self {
-        S2Basin::new(basin)
+    fn from(value: s2_sdk::S2Basin) -> Self {
+        S2Basin::new(value)
     }
 }
 
 pub struct ListStreamsInput {
-    pub prefix: String,
-    pub start_after: String,
-    pub limit: Option<usize>,
+    pub prefix: Option<String>,
+    pub start_after: Option<String>,
+    pub limit: Option<u64>,
 }
 
 impl From<ListStreamsInput> for s2_sdk::types::ListStreamsInput {
     fn from(value: ListStreamsInput) -> Self {
         let mut input = s2_sdk::types::ListStreamsInput::default();
-        input =
-            input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&value.prefix).unwrap());
-        input = input.with_start_after(
-            s2_sdk::types::StreamNameStartAfter::from_str(&value.start_after).unwrap(),
-        );
+        if let Some(prefix) = value.prefix {
+            input = input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&prefix).unwrap());
+        }
+        if let Some(start_after) = value.start_after {
+            input = input.with_start_after(
+                s2_sdk::types::StreamNameStartAfter::from_str(&start_after).unwrap(),
+            );
+        }
         if let Some(limit) = value.limit {
-            input = input.with_limit(limit);
+            input = input.with_limit(limit.try_into().expect("limit too large for usize"));
         }
         input
     }
@@ -140,11 +143,11 @@ pub struct StreamInfo {
 }
 
 impl From<s2_sdk::types::StreamInfo> for StreamInfo {
-    fn from(info: s2_sdk::types::StreamInfo) -> Self {
+    fn from(value: s2_sdk::types::StreamInfo) -> Self {
         StreamInfo {
-            name: info.name.to_string(),
-            created_at: time::OffsetDateTime::from(info.created_at).unix_timestamp() as u64,
-            deleted_at: info
+            name: value.name.to_string(),
+            created_at: time::OffsetDateTime::from(value.created_at).unix_timestamp() as u64,
+            deleted_at: value
                 .deleted_at
                 .map(|t| time::OffsetDateTime::from(t).unix_timestamp() as u64),
         }
@@ -157,20 +160,26 @@ pub struct PageOfStreamInfo {
 }
 
 pub struct ListAllStreamsInput {
-    pub prefix: String,
-    pub start_after: String,
-    pub include_deleted: bool,
+    pub prefix: Option<String>,
+    pub start_after: Option<String>,
+    pub include_deleted: Option<bool>,
 }
 
 impl From<ListAllStreamsInput> for s2_sdk::types::ListAllStreamsInput {
     fn from(value: ListAllStreamsInput) -> Self {
         let mut input = s2_sdk::types::ListAllStreamsInput::default();
-        input =
-            input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&value.prefix).unwrap());
-        input = input.with_start_after(
-            s2_sdk::types::StreamNameStartAfter::from_str(&value.start_after).unwrap(),
-        );
-        input.with_include_deleted(value.include_deleted)
+        if let Some(prefix) = value.prefix {
+            input = input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&prefix).unwrap());
+        }
+        if let Some(start_after) = value.start_after {
+            input = input.with_start_after(
+                s2_sdk::types::StreamNameStartAfter::from_str(&start_after).unwrap(),
+            );
+        }
+        if let Some(include_deleted) = value.include_deleted {
+            input = input.with_include_deleted(include_deleted);
+        }
+        input
     }
 }
 
@@ -193,15 +202,18 @@ impl From<CreateStreamInput> for s2_sdk::types::CreateStreamInput {
 
 pub struct DeleteStreamInput {
     pub name: String,
-    pub ignore_not_found: bool,
+    pub ignore_not_found: Option<bool>,
 }
 
 impl From<DeleteStreamInput> for s2_sdk::types::DeleteStreamInput {
     fn from(value: DeleteStreamInput) -> Self {
-        s2_sdk::types::DeleteStreamInput::new(
+        let mut input = s2_sdk::types::DeleteStreamInput::new(
             s2_sdk::types::StreamName::from_str(value.name.as_str()).unwrap(),
-        )
-        .with_ignore_not_found(value.ignore_not_found)
+        );
+        if let Some(ignore_not_found) = value.ignore_not_found {
+            input = input.with_ignore_not_found(ignore_not_found);
+        }
+        input
     }
 }
 
@@ -215,22 +227,42 @@ pub struct StreamConfig {
 impl From<s2_sdk::types::StreamConfig> for StreamConfig {
     fn from(value: s2_sdk::types::StreamConfig) -> Self {
         StreamConfig {
-            storage_class: value.storage_class.map(|sc| sc.into()),
-            retention_policy: value.retention_policy.map(|rp| rp.into()),
-            timestamping: value.timestamping.map(|tc| TimestampingConfig {
-                mode: tc.mode.map(|m| m.into()),
-                uncapped: tc.uncapped,
+            storage_class: value.storage_class.map(|value| value.into()),
+            retention_policy: value.retention_policy.map(|value| value.into()),
+            timestamping: value.timestamping.map(|value| TimestampingConfig {
+                mode: value.mode.map(|mode| mode.into()),
+                uncapped: if value.uncapped { Some(true) } else { None },
             }),
-            delete_on_empty: value.delete_on_empty.map(|dec| DeleteOnEmptyConfig {
-                min_age_secs: dec.min_age_secs,
+            delete_on_empty: value.delete_on_empty.map(|value| DeleteOnEmptyConfig {
+                min_age_secs: value.min_age_secs,
             }),
         }
     }
 }
 
 impl From<StreamConfig> for s2_sdk::types::StreamConfig {
-    fn from(_config: StreamConfig) -> Self {
-        s2_sdk::types::StreamConfig::default()
+    fn from(value: StreamConfig) -> Self {
+        let mut config = s2_sdk::types::StreamConfig::default();
+        if let Some(storage_class) = value.storage_class {
+            config = config.with_storage_class(storage_class.into());
+        }
+        if let Some(retention_policy) = value.retention_policy {
+            config = config.with_retention_policy(retention_policy.into());
+        }
+        if let Some(timestamping) = value.timestamping {
+            let mut timestamping_config = s2_sdk::types::TimestampingConfig::new();
+            if let Some(mode) = timestamping.mode {
+                timestamping_config = timestamping_config.with_mode(mode.into());
+            }
+            if let Some(uncapped) = timestamping.uncapped {
+                timestamping_config = timestamping_config.with_uncapped(uncapped);
+            }
+            config = config.with_timestamping(timestamping_config);
+        }
+        if let Some(delete_on_empty) = value.delete_on_empty {
+            config = config.with_delete_on_empty(delete_on_empty.into());
+        }
+        config
     }
 }
 
@@ -282,7 +314,7 @@ impl From<s2_sdk::types::RetentionPolicy> for RetentionPolicy {
 
 pub struct TimestampingConfig {
     pub mode: Option<TimestampingMode>,
-    pub uncapped: bool,
+    pub uncapped: Option<bool>,
 }
 
 pub enum TimestampingMode {
@@ -358,7 +390,9 @@ impl From<StreamConfig> for s2_sdk::types::StreamReconfiguration {
             if let Some(mode) = timestamping.mode {
                 timestamping_reconfig = timestamping_reconfig.with_mode(mode.into());
             }
-            timestamping_reconfig = timestamping_reconfig.with_uncapped(timestamping.uncapped);
+            if let Some(uncapped) = timestamping.uncapped {
+                timestamping_reconfig = timestamping_reconfig.with_uncapped(uncapped);
+            }
             config = config.with_timestamping(timestamping_reconfig);
         }
         if let Some(delete_on_empty) = value.delete_on_empty {

@@ -2274,7 +2274,7 @@ impl SseDecode for crate::basin::DeleteStreamInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut var_name = <String>::sse_decode(deserializer);
-        let mut var_ignoreNotFound = <bool>::sse_decode(deserializer);
+        let mut var_ignoreNotFound = <Option<bool>>::sse_decode(deserializer);
         return crate::basin::DeleteStreamInput {
             name: var_name,
             ignore_not_found: var_ignoreNotFound,
@@ -2332,9 +2332,9 @@ impl SseDecode for Vec<crate::client::AccessTokenInfo> {
 impl SseDecode for crate::client::ListAccessTokensInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <String>::sse_decode(deserializer);
-        let mut var_startAfter = <String>::sse_decode(deserializer);
-        let mut var_limit = <Option<usize>>::sse_decode(deserializer);
+        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
+        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
+        let mut var_limit = <Option<u64>>::sse_decode(deserializer);
         return crate::client::ListAccessTokensInput {
             prefix: var_prefix,
             start_after: var_startAfter,
@@ -2346,8 +2346,8 @@ impl SseDecode for crate::client::ListAccessTokensInput {
 impl SseDecode for crate::client::ListAllAccessTokensInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <String>::sse_decode(deserializer);
-        let mut var_startAfter = <String>::sse_decode(deserializer);
+        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
+        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
         return crate::client::ListAllAccessTokensInput {
             prefix: var_prefix,
             start_after: var_startAfter,
@@ -2358,9 +2358,9 @@ impl SseDecode for crate::client::ListAllAccessTokensInput {
 impl SseDecode for crate::client::ListAllBasinsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <String>::sse_decode(deserializer);
-        let mut var_startAfter = <String>::sse_decode(deserializer);
-        let mut var_includeDeleted = <bool>::sse_decode(deserializer);
+        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
+        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
+        let mut var_includeDeleted = <Option<bool>>::sse_decode(deserializer);
         return crate::client::ListAllBasinsInput {
             prefix: var_prefix,
             start_after: var_startAfter,
@@ -2372,9 +2372,9 @@ impl SseDecode for crate::client::ListAllBasinsInput {
 impl SseDecode for crate::basin::ListAllStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <String>::sse_decode(deserializer);
-        let mut var_startAfter = <String>::sse_decode(deserializer);
-        let mut var_includeDeleted = <bool>::sse_decode(deserializer);
+        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
+        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
+        let mut var_includeDeleted = <Option<bool>>::sse_decode(deserializer);
         return crate::basin::ListAllStreamsInput {
             prefix: var_prefix,
             start_after: var_startAfter,
@@ -2410,9 +2410,9 @@ impl SseDecode for Vec<crate::client::BasinInfo> {
 impl SseDecode for crate::client::ListBasinsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <String>::sse_decode(deserializer);
-        let mut var_startAfter = <String>::sse_decode(deserializer);
-        let mut var_limit = <Option<usize>>::sse_decode(deserializer);
+        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
+        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
+        let mut var_limit = <Option<u64>>::sse_decode(deserializer);
         return crate::client::ListBasinsInput {
             prefix: var_prefix,
             start_after: var_startAfter,
@@ -2484,9 +2484,9 @@ impl SseDecode for Vec<crate::basin::StreamInfo> {
 impl SseDecode for crate::basin::ListStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_prefix = <String>::sse_decode(deserializer);
-        let mut var_startAfter = <String>::sse_decode(deserializer);
-        let mut var_limit = <Option<usize>>::sse_decode(deserializer);
+        let mut var_prefix = <Option<String>>::sse_decode(deserializer);
+        let mut var_startAfter = <Option<String>>::sse_decode(deserializer);
+        let mut var_limit = <Option<u64>>::sse_decode(deserializer);
         return crate::basin::ListStreamsInput {
             prefix: var_prefix,
             start_after: var_startAfter,
@@ -2542,6 +2542,17 @@ impl SseDecode for crate::client::OperationGroupPermissions {
     }
 }
 
+impl SseDecode for Option<u64> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<u64>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
 impl SseDecode for Option<String> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2586,6 +2597,17 @@ impl SseDecode for Option<crate::client::BasinScope> {
     }
 }
 
+impl SseDecode for Option<bool> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<bool>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
 impl SseDecode for Option<crate::types::Compression> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2617,6 +2639,50 @@ impl SseDecode for Option<crate::client::OperationGroupPermissions> {
             return Some(<crate::client::OperationGroupPermissions>::sse_decode(
                 deserializer,
             ));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::types::ReadFrom> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::types::ReadFrom>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::types::ReadLimits> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::types::ReadLimits>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::types::ReadStart> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::types::ReadStart>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
+impl SseDecode for Option<crate::types::ReadStop> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::types::ReadStop>::sse_decode(deserializer));
         } else {
             return None;
         }
@@ -2735,28 +2801,6 @@ impl SseDecode for Option<u32> {
     }
 }
 
-impl SseDecode for Option<u64> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        if (<bool>::sse_decode(deserializer)) {
-            return Some(<u64>::sse_decode(deserializer));
-        } else {
-            return None;
-        }
-    }
-}
-
-impl SseDecode for Option<usize> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        if (<bool>::sse_decode(deserializer)) {
-            return Some(<usize>::sse_decode(deserializer));
-        } else {
-            return None;
-        }
-    }
-}
-
 impl SseDecode for crate::client::PageOfAccessTokenInfo {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2832,8 +2876,8 @@ impl SseDecode for crate::types::ReadFrom {
 impl SseDecode for crate::types::ReadInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_start = <crate::types::ReadStart>::sse_decode(deserializer);
-        let mut var_stop = <crate::types::ReadStop>::sse_decode(deserializer);
+        let mut var_start = <Option<crate::types::ReadStart>>::sse_decode(deserializer);
+        let mut var_stop = <Option<crate::types::ReadStop>>::sse_decode(deserializer);
         return crate::types::ReadInput {
             start: var_start,
             stop: var_stop,
@@ -2844,8 +2888,8 @@ impl SseDecode for crate::types::ReadInput {
 impl SseDecode for crate::types::ReadLimits {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_count = <Option<usize>>::sse_decode(deserializer);
-        let mut var_bytes = <Option<usize>>::sse_decode(deserializer);
+        let mut var_count = <Option<u64>>::sse_decode(deserializer);
+        let mut var_bytes = <Option<u64>>::sse_decode(deserializer);
         return crate::types::ReadLimits {
             count: var_count,
             bytes: var_bytes,
@@ -2856,8 +2900,8 @@ impl SseDecode for crate::types::ReadLimits {
 impl SseDecode for crate::types::ReadStart {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_from = <crate::types::ReadFrom>::sse_decode(deserializer);
-        let mut var_clampToTail = <bool>::sse_decode(deserializer);
+        let mut var_from = <Option<crate::types::ReadFrom>>::sse_decode(deserializer);
+        let mut var_clampToTail = <Option<bool>>::sse_decode(deserializer);
         return crate::types::ReadStart {
             from: var_from,
             clamp_to_tail: var_clampToTail,
@@ -2868,7 +2912,7 @@ impl SseDecode for crate::types::ReadStart {
 impl SseDecode for crate::types::ReadStop {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_limits = <crate::types::ReadLimits>::sse_decode(deserializer);
+        let mut var_limits = <Option<crate::types::ReadLimits>>::sse_decode(deserializer);
         let mut var_untilTimestamp = <Option<u64>>::sse_decode(deserializer);
         let mut var_waitSecs = <Option<u32>>::sse_decode(deserializer);
         return crate::types::ReadStop {
@@ -3071,7 +3115,7 @@ impl SseDecode for crate::basin::TimestampingConfig {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut var_mode = <Option<crate::basin::TimestampingMode>>::sse_decode(deserializer);
-        let mut var_uncapped = <bool>::sse_decode(deserializer);
+        let mut var_uncapped = <Option<bool>>::sse_decode(deserializer);
         return crate::basin::TimestampingConfig {
             mode: var_mode,
             uncapped: var_uncapped,
@@ -4746,7 +4790,7 @@ impl SseEncode for crate::basin::DeleteStreamInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <String>::sse_encode(self.name, serializer);
-        <bool>::sse_encode(self.ignore_not_found, serializer);
+        <Option<bool>>::sse_encode(self.ignore_not_found, serializer);
     }
 }
 
@@ -4788,35 +4832,35 @@ impl SseEncode for Vec<crate::client::AccessTokenInfo> {
 impl SseEncode for crate::client::ListAccessTokensInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.prefix, serializer);
-        <String>::sse_encode(self.start_after, serializer);
-        <Option<usize>>::sse_encode(self.limit, serializer);
+        <Option<String>>::sse_encode(self.prefix, serializer);
+        <Option<String>>::sse_encode(self.start_after, serializer);
+        <Option<u64>>::sse_encode(self.limit, serializer);
     }
 }
 
 impl SseEncode for crate::client::ListAllAccessTokensInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.prefix, serializer);
-        <String>::sse_encode(self.start_after, serializer);
+        <Option<String>>::sse_encode(self.prefix, serializer);
+        <Option<String>>::sse_encode(self.start_after, serializer);
     }
 }
 
 impl SseEncode for crate::client::ListAllBasinsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.prefix, serializer);
-        <String>::sse_encode(self.start_after, serializer);
-        <bool>::sse_encode(self.include_deleted, serializer);
+        <Option<String>>::sse_encode(self.prefix, serializer);
+        <Option<String>>::sse_encode(self.start_after, serializer);
+        <Option<bool>>::sse_encode(self.include_deleted, serializer);
     }
 }
 
 impl SseEncode for crate::basin::ListAllStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.prefix, serializer);
-        <String>::sse_encode(self.start_after, serializer);
-        <bool>::sse_encode(self.include_deleted, serializer);
+        <Option<String>>::sse_encode(self.prefix, serializer);
+        <Option<String>>::sse_encode(self.start_after, serializer);
+        <Option<bool>>::sse_encode(self.include_deleted, serializer);
     }
 }
 
@@ -4843,9 +4887,9 @@ impl SseEncode for Vec<crate::client::BasinInfo> {
 impl SseEncode for crate::client::ListBasinsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.prefix, serializer);
-        <String>::sse_encode(self.start_after, serializer);
-        <Option<usize>>::sse_encode(self.limit, serializer);
+        <Option<String>>::sse_encode(self.prefix, serializer);
+        <Option<String>>::sse_encode(self.start_after, serializer);
+        <Option<u64>>::sse_encode(self.limit, serializer);
     }
 }
 
@@ -4902,9 +4946,9 @@ impl SseEncode for Vec<crate::basin::StreamInfo> {
 impl SseEncode for crate::basin::ListStreamsInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.prefix, serializer);
-        <String>::sse_encode(self.start_after, serializer);
-        <Option<usize>>::sse_encode(self.limit, serializer);
+        <Option<String>>::sse_encode(self.prefix, serializer);
+        <Option<String>>::sse_encode(self.start_after, serializer);
+        <Option<u64>>::sse_encode(self.limit, serializer);
     }
 }
 
@@ -4952,6 +4996,16 @@ impl SseEncode for crate::client::OperationGroupPermissions {
     }
 }
 
+impl SseEncode for Option<u64> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <u64>::sse_encode(value, serializer);
+        }
+    }
+}
+
 impl SseEncode for Option<String> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -4992,6 +5046,16 @@ impl SseEncode for Option<crate::client::BasinScope> {
     }
 }
 
+impl SseEncode for Option<bool> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <bool>::sse_encode(value, serializer);
+        }
+    }
+}
+
 impl SseEncode for Option<crate::types::Compression> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5018,6 +5082,46 @@ impl SseEncode for Option<crate::client::OperationGroupPermissions> {
         <bool>::sse_encode(self.is_some(), serializer);
         if let Some(value) = self {
             <crate::client::OperationGroupPermissions>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::types::ReadFrom> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::types::ReadFrom>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::types::ReadLimits> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::types::ReadLimits>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::types::ReadStart> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::types::ReadStart>::sse_encode(value, serializer);
+        }
+    }
+}
+
+impl SseEncode for Option<crate::types::ReadStop> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::types::ReadStop>::sse_encode(value, serializer);
         }
     }
 }
@@ -5122,26 +5226,6 @@ impl SseEncode for Option<u32> {
     }
 }
 
-impl SseEncode for Option<u64> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <bool>::sse_encode(self.is_some(), serializer);
-        if let Some(value) = self {
-            <u64>::sse_encode(value, serializer);
-        }
-    }
-}
-
-impl SseEncode for Option<usize> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <bool>::sse_encode(self.is_some(), serializer);
-        if let Some(value) = self {
-            <usize>::sse_encode(value, serializer);
-        }
-    }
-}
-
 impl SseEncode for crate::client::PageOfAccessTokenInfo {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5200,31 +5284,31 @@ impl SseEncode for crate::types::ReadFrom {
 impl SseEncode for crate::types::ReadInput {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <crate::types::ReadStart>::sse_encode(self.start, serializer);
-        <crate::types::ReadStop>::sse_encode(self.stop, serializer);
+        <Option<crate::types::ReadStart>>::sse_encode(self.start, serializer);
+        <Option<crate::types::ReadStop>>::sse_encode(self.stop, serializer);
     }
 }
 
 impl SseEncode for crate::types::ReadLimits {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <Option<usize>>::sse_encode(self.count, serializer);
-        <Option<usize>>::sse_encode(self.bytes, serializer);
+        <Option<u64>>::sse_encode(self.count, serializer);
+        <Option<u64>>::sse_encode(self.bytes, serializer);
     }
 }
 
 impl SseEncode for crate::types::ReadStart {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <crate::types::ReadFrom>::sse_encode(self.from, serializer);
-        <bool>::sse_encode(self.clamp_to_tail, serializer);
+        <Option<crate::types::ReadFrom>>::sse_encode(self.from, serializer);
+        <Option<bool>>::sse_encode(self.clamp_to_tail, serializer);
     }
 }
 
 impl SseEncode for crate::types::ReadStop {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <crate::types::ReadLimits>::sse_encode(self.limits, serializer);
+        <Option<crate::types::ReadLimits>>::sse_encode(self.limits, serializer);
         <Option<u64>>::sse_encode(self.until_timestamp, serializer);
         <Option<u32>>::sse_encode(self.wait_secs, serializer);
     }
@@ -5385,7 +5469,7 @@ impl SseEncode for crate::basin::TimestampingConfig {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <Option<crate::basin::TimestampingMode>>::sse_encode(self.mode, serializer);
-        <bool>::sse_encode(self.uncapped, serializer);
+        <Option<bool>>::sse_encode(self.uncapped, serializer);
     }
 }
 

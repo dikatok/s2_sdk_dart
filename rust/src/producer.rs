@@ -52,9 +52,9 @@ pub struct RecordSubmitTicket {
 }
 
 impl From<s2_sdk::producer::RecordSubmitTicket> for RecordSubmitTicket {
-    fn from(ticket: s2_sdk::producer::RecordSubmitTicket) -> Self {
+    fn from(value: s2_sdk::producer::RecordSubmitTicket) -> Self {
         RecordSubmitTicket {
-            ticket: RustAutoOpaqueNom::new(Some(ticket)),
+            ticket: RustAutoOpaqueNom::new(Some(value)),
         }
     }
 }
@@ -74,10 +74,10 @@ pub struct IndexedAppendAck {
 }
 
 impl From<s2_sdk::producer::IndexedAppendAck> for IndexedAppendAck {
-    fn from(ack: s2_sdk::producer::IndexedAppendAck) -> Self {
+    fn from(value: s2_sdk::producer::IndexedAppendAck) -> Self {
         IndexedAppendAck {
-            seq_num: ack.seq_num,
-            batch: ack.batch.into(),
+            seq_num: value.seq_num,
+            batch: value.batch.into(),
         }
     }
 }

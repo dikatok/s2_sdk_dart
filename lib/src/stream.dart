@@ -1,4 +1,6 @@
-import 'package:s2_sdk_dart/s2_sdk_dart.dart';
+import 'package:s2_sdk_dart/src/append_session.dart';
+import 'package:s2_sdk_dart/src/producer.dart';
+import 'package:s2_sdk_dart/src/rust/types.dart';
 
 import 'rust/stream.dart' as inner;
 
@@ -11,7 +13,7 @@ final class S2Stream {
     return _stream.append(input: input);
   }
 
-  Future<S2AppendSession> appendSession(AppendSessionConfig input) async {
+  Future<S2AppendSession> appendSession(inner.AppendSessionConfig input) async {
     final session = await _stream.appendSession(config: input);
     return S2AppendSession(session);
   }

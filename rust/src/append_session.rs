@@ -47,8 +47,8 @@ impl S2AppendSession {
 }
 
 impl From<s2_sdk::append_session::AppendSession> for S2AppendSession {
-    fn from(session: s2_sdk::append_session::AppendSession) -> Self {
-        S2AppendSession::new(session)
+    fn from(value: s2_sdk::append_session::AppendSession) -> Self {
+        S2AppendSession::new(value)
     }
 }
 
@@ -58,9 +58,9 @@ pub struct BatchSubmitTicket {
 }
 
 impl From<s2_sdk::append_session::BatchSubmitTicket> for BatchSubmitTicket {
-    fn from(ticket: s2_sdk::append_session::BatchSubmitTicket) -> Self {
+    fn from(value: s2_sdk::append_session::BatchSubmitTicket) -> Self {
         BatchSubmitTicket {
-            ticket: RustAutoOpaqueNom::new(Some(ticket)),
+            ticket: RustAutoOpaqueNom::new(Some(value)),
         }
     }
 }

@@ -32,7 +32,7 @@ class AppendAck {
 
 class AppendInput {
   final AppendRecordBatch records;
-  final BigInt? matchSeqNum;
+  final int? matchSeqNum;
   final String? fencingToken;
 
   const AppendInput({
@@ -58,7 +58,7 @@ class AppendInput {
 class AppendRecord {
   final Uint8List body;
   final List<(Uint8List, Uint8List)> headers;
-  final BigInt? timestamp;
+  final int? timestamp;
 
   const AppendRecord({
     required this.body,
@@ -100,8 +100,8 @@ enum AppendRetryPolicy { all, noSideEffects }
 class ClientConfig {
   final String accessToken;
   final String? endpoint;
-  final BigInt? connectionTimeoutMillis;
-  final BigInt? requestTimeoutMillis;
+  final int? connectionTimeoutMillis;
+  final int? requestTimeoutMillis;
   final Compression? compression;
   final RetryConfig? retryConfig;
 
@@ -184,16 +184,16 @@ class ReadBatch {
 sealed class ReadFrom with _$ReadFrom {
   const ReadFrom._();
 
-  const factory ReadFrom.seqNum(BigInt field0) = ReadFrom_SeqNum;
-  const factory ReadFrom.timestamp(BigInt field0) = ReadFrom_Timestamp;
-  const factory ReadFrom.tailOffset(BigInt field0) = ReadFrom_TailOffset;
+  const factory ReadFrom.seqNum(int field0) = ReadFrom_SeqNum;
+  const factory ReadFrom.timestamp(int field0) = ReadFrom_Timestamp;
+  const factory ReadFrom.tailOffset(int field0) = ReadFrom_TailOffset;
 }
 
 class ReadInput {
-  final ReadStart start;
-  final ReadStop stop;
+  final ReadStart? start;
+  final ReadStop? stop;
 
-  const ReadInput({required this.start, required this.stop});
+  const ReadInput({this.start, this.stop});
 
   @override
   int get hashCode => start.hashCode ^ stop.hashCode;
@@ -208,8 +208,8 @@ class ReadInput {
 }
 
 class ReadLimits {
-  final BigInt? count;
-  final BigInt? bytes;
+  final int? count;
+  final int? bytes;
 
   const ReadLimits({this.count, this.bytes});
 
@@ -226,10 +226,10 @@ class ReadLimits {
 }
 
 class ReadStart {
-  final ReadFrom from;
-  final bool clampToTail;
+  final ReadFrom? from;
+  final bool? clampToTail;
 
-  const ReadStart({required this.from, required this.clampToTail});
+  const ReadStart({this.from, this.clampToTail});
 
   @override
   int get hashCode => from.hashCode ^ clampToTail.hashCode;
@@ -244,11 +244,11 @@ class ReadStart {
 }
 
 class ReadStop {
-  final ReadLimits limits;
-  final BigInt? untilTimestamp;
+  final ReadLimits? limits;
+  final int? untilTimestamp;
   final int? waitSecs;
 
-  const ReadStop({required this.limits, this.untilTimestamp, this.waitSecs});
+  const ReadStop({this.limits, this.untilTimestamp, this.waitSecs});
 
   @override
   int get hashCode =>
@@ -275,8 +275,8 @@ sealed class ResourceSet with _$ResourceSet {
 
 class RetryConfig {
   final int? maxAttempts;
-  final BigInt? minBaseDelayMillis;
-  final BigInt? maxBaseDelayMillis;
+  final int? minBaseDelayMillis;
+  final int? maxBaseDelayMillis;
   final AppendRetryPolicy? appendRetryPolicy;
 
   const RetryConfig({
@@ -305,10 +305,10 @@ class RetryConfig {
 }
 
 class SequencedRecord {
-  final BigInt seqNum;
+  final int seqNum;
   final Uint8List body;
   final List<(Uint8List, Uint8List)> headers;
-  final BigInt timestamp;
+  final int timestamp;
 
   const SequencedRecord({
     required this.seqNum,
@@ -333,8 +333,8 @@ class SequencedRecord {
 }
 
 class StreamPosition {
-  final BigInt seqNum;
-  final BigInt timestamp;
+  final int seqNum;
+  final int timestamp;
 
   const StreamPosition({required this.seqNum, required this.timestamp});
 
