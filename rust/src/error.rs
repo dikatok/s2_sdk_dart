@@ -1,5 +1,10 @@
 use std::str::FromStr;
 
+#[flutter_rust_bridge::frb(dart_code = r#"
+    String toString() {
+		return 'S2Error: $message';
+    }
+"#)]
 pub struct S2Error {
     pub message: String,
 }

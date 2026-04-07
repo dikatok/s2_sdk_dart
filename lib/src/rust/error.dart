@@ -14,6 +14,11 @@ class S2Error implements FrbException {
   const S2Error({required this.message});
 
   @override
+  String toString() {
+    return 'S2Error: $message';
+  }
+
+  @override
   int get hashCode => message.hashCode;
 
   @override
