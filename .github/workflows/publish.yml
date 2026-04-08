@@ -12,8 +12,6 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    with:
-      environment: pub.dev
     steps:
       - uses: actions/checkout@v6
       - uses: dart-lang/setup-dart@v1
@@ -26,3 +24,5 @@ jobs:
         run: flutter_rust_bridge_codegen generate
       - name: Publish
         run: dart pub publish --force
+        with:
+          environment: pub.dev
