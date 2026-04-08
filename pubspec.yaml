@@ -1,6 +1,6 @@
 name: s2_sdk_dart
 description: "Dart binding for S2 Stream Store."
-version: 0.0.1
+version: 0.0.1+0.26.0
 
 environment:
   sdk: ^3.11.4
