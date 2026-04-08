@@ -18,19 +18,21 @@ impl S2Basin {
     }
 
     #[flutter_rust_bridge::frb(sync)]
-    pub fn stream(&self, name: String) -> S2Stream {
-        self.basin
+    pub fn stream(&self, name: String) -> Result<S2Stream, S2Error> {
+        let stream = self
+            .basin
             .try_read()
             .unwrap()
-            .stream(s2_sdk::types::StreamName::from_str(name.as_str()).unwrap())
-            .into()
+            .stream(s2_sdk::types::StreamName::from_str(name.as_str())?)
+            .into();
+        Ok(stream)
     }
 
     pub async fn list_streams(&self, input: ListStreamsInput) -> Result<PageOfStreamInfo, S2Error> {
         self.basin
             .try_read()
             .unwrap()
-            .list_streams(input.into())
+            .list_streams(input.try_into()?)
             .await
             .map(|page| PageOfStreamInfo {
                 values: page.values.into_iter().map(|info| info.into()).collect(),
@@ -48,7 +50,7 @@ impl S2Basin {
             .basin
             .try_read()
             .unwrap()
-            .list_all_streams(input.into());
+            .list_all_streams(input.try_into()?);
         while let Some(info) = stream.next().await {
             match info {
                 Ok(info) => {
@@ -66,7 +68,7 @@ impl S2Basin {
         self.basin
             .try_read()
             .unwrap()
-            .create_stream(input.into())
+            .create_stream(input.try_into()?)
             .await
             .map(|info| info.into())
             .map_err(|e| e.into())
@@ -86,7 +88,7 @@ impl S2Basin {
         self.basin
             .try_read()
             .unwrap()
-            .delete_stream(input.into())
+            .delete_stream(input.try_into()?)
             .await
             .map_err(|e| e.into())
     }
@@ -98,7 +100,7 @@ impl S2Basin {
         self.basin
             .try_read()
             .unwrap()
-            .reconfigure_stream(input.into())
+            .reconfigure_stream(input.try_into()?)
             .await
             .map(|config| config.into())
             .map_err(|e| e.into())
@@ -117,21 +119,22 @@ pub struct ListStreamsInput {
     pub limit: Option<u64>,
 }
 
-impl From<ListStreamsInput> for s2_sdk::types::ListStreamsInput {
-    fn from(value: ListStreamsInput) -> Self {
+impl TryFrom<ListStreamsInput> for s2_sdk::types::ListStreamsInput {
+    type Error = S2Error;
+
+    fn try_from(value: ListStreamsInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::ListStreamsInput::default();
         if let Some(prefix) = value.prefix {
-            input = input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&prefix).unwrap());
+            input = input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&prefix)?);
         }
         if let Some(start_after) = value.start_after {
-            input = input.with_start_after(
-                s2_sdk::types::StreamNameStartAfter::from_str(&start_after).unwrap(),
-            );
+            input = input
+                .with_start_after(s2_sdk::types::StreamNameStartAfter::from_str(&start_after)?);
         }
         if let Some(limit) = value.limit {
-            input = input.with_limit(limit.try_into().expect("limit too large for usize"));
+            input = input.with_limit(limit.try_into()?);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -164,21 +167,29 @@ pub struct ListAllStreamsInput {
     pub include_deleted: Option<bool>,
 }
 
-impl From<ListAllStreamsInput> for s2_sdk::types::ListAllStreamsInput {
-    fn from(value: ListAllStreamsInput) -> Self {
+impl TryFrom<ListAllStreamsInput> for s2_sdk::types::ListAllStreamsInput {
+    type Error = S2Error;
+
+    fn try_from(value: ListAllStreamsInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::ListAllStreamsInput::default();
         if let Some(prefix) = value.prefix {
-            input = input.with_prefix(s2_sdk::types::StreamNamePrefix::from_str(&prefix).unwrap());
+            input = input.with_prefix(match s2_sdk::types::StreamNamePrefix::from_str(&prefix) {
+                Ok(p) => p,
+                Err(e) => return Err(e.into()),
+            });
         }
         if let Some(start_after) = value.start_after {
             input = input.with_start_after(
-                s2_sdk::types::StreamNameStartAfter::from_str(&start_after).unwrap(),
+                match s2_sdk::types::StreamNameStartAfter::from_str(&start_after) {
+                    Ok(p) => p,
+                    Err(e) => return Err(e.into()),
+                },
             );
         }
         if let Some(include_deleted) = value.include_deleted {
             input = input.with_include_deleted(include_deleted);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -187,15 +198,17 @@ pub struct CreateStreamInput {
     pub config: Option<StreamConfig>,
 }
 
-impl From<CreateStreamInput> for s2_sdk::types::CreateStreamInput {
-    fn from(value: CreateStreamInput) -> Self {
-        let mut input = s2_sdk::types::CreateStreamInput::new(
-            s2_sdk::types::StreamName::from_str(value.name.as_str()).unwrap(),
-        );
+impl TryFrom<CreateStreamInput> for s2_sdk::types::CreateStreamInput {
+    type Error = S2Error;
+
+    fn try_from(value: CreateStreamInput) -> Result<Self, Self::Error> {
+        let mut input = s2_sdk::types::CreateStreamInput::new(s2_sdk::types::StreamName::from_str(
+            value.name.as_str(),
+        )?);
         if let Some(config) = value.config {
             input = input.with_config(config.into());
         }
-        input
+        Ok(input)
     }
 }
 
@@ -204,15 +217,17 @@ pub struct DeleteStreamInput {
     pub ignore_not_found: Option<bool>,
 }
 
-impl From<DeleteStreamInput> for s2_sdk::types::DeleteStreamInput {
-    fn from(value: DeleteStreamInput) -> Self {
-        let mut input = s2_sdk::types::DeleteStreamInput::new(
-            s2_sdk::types::StreamName::from_str(value.name.as_str()).unwrap(),
-        );
+impl TryFrom<DeleteStreamInput> for s2_sdk::types::DeleteStreamInput {
+    type Error = S2Error;
+
+    fn try_from(value: DeleteStreamInput) -> Result<Self, Self::Error> {
+        let mut input = s2_sdk::types::DeleteStreamInput::new(s2_sdk::types::StreamName::from_str(
+            value.name.as_str(),
+        )?);
         if let Some(ignore_not_found) = value.ignore_not_found {
             input = input.with_ignore_not_found(ignore_not_found);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -366,12 +381,14 @@ pub struct ReconfigureStreamInput {
     pub config: StreamConfig,
 }
 
-impl From<ReconfigureStreamInput> for s2_sdk::types::ReconfigureStreamInput {
-    fn from(value: ReconfigureStreamInput) -> Self {
-        s2_sdk::types::ReconfigureStreamInput::new(
-            s2_sdk::types::StreamName::from_str(value.name.as_str()).unwrap(),
+impl TryFrom<ReconfigureStreamInput> for s2_sdk::types::ReconfigureStreamInput {
+    type Error = S2Error;
+
+    fn try_from(value: ReconfigureStreamInput) -> Result<Self, Self::Error> {
+        Ok(s2_sdk::types::ReconfigureStreamInput::new(
+            s2_sdk::types::StreamName::from_str(value.name.as_str())?,
             value.config.into(),
-        )
+        ))
     }
 }
 

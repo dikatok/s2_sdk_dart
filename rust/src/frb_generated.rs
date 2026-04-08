@@ -602,7 +602,7 @@ fn wire__crate__basin__S2Basin_stream_impl(
             >>::sse_decode(&mut deserializer);
             let api_name = <String>::sse_decode(&mut deserializer);
             deserializer.end();
-            transform_result_sse::<_, ()>((move || {
+            transform_result_sse::<_, crate::error::S2Error>((move || {
                 let mut api_that_guard = None;
                 let decode_indices_ =
                     flutter_rust_bridge::for_generated::lockable_compute_decode_order(vec![
@@ -617,8 +617,7 @@ fn wire__crate__basin__S2Basin_stream_impl(
                     }
                 }
                 let api_that_guard = api_that_guard.unwrap();
-                let output_ok =
-                    Result::<_, ()>::Ok(crate::basin::S2Basin::stream(&*api_that_guard, api_name))?;
+                let output_ok = crate::basin::S2Basin::stream(&*api_that_guard, api_name)?;
                 Ok(output_ok)
             })())
         },
@@ -650,7 +649,7 @@ fn wire__crate__client__S2Client_basin_impl(
             >>::sse_decode(&mut deserializer);
             let api_name = <String>::sse_decode(&mut deserializer);
             deserializer.end();
-            transform_result_sse::<_, ()>((move || {
+            transform_result_sse::<_, crate::error::S2Error>((move || {
                 let mut api_that_guard = None;
                 let decode_indices_ =
                     flutter_rust_bridge::for_generated::lockable_compute_decode_order(vec![
@@ -665,10 +664,7 @@ fn wire__crate__client__S2Client_basin_impl(
                     }
                 }
                 let api_that_guard = api_that_guard.unwrap();
-                let output_ok = Result::<_, ()>::Ok(crate::client::S2Client::basin(
-                    &*api_that_guard,
-                    api_name,
-                ))?;
+                let output_ok = crate::client::S2Client::basin(&*api_that_guard, api_name)?;
                 Ok(output_ok)
             })())
         },
@@ -1182,10 +1178,9 @@ fn wire__crate__client__S2Client_new_impl(
             let api_config = <crate::types::ClientConfig>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| async move {
-                transform_result_sse::<_, ()>(
+                transform_result_sse::<_, crate::error::S2Error>(
                     (move || async move {
-                        let output_ok =
-                            Result::<_, ()>::Ok(crate::client::S2Client::new(api_config).await)?;
+                        let output_ok = crate::client::S2Client::new(api_config).await?;
                         Ok(output_ok)
                     })()
                     .await,

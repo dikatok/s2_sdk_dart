@@ -31,14 +31,26 @@ impl S2Stream {
     }
 
     pub async fn append(&self, input: AppendInput) -> Result<AppendAck, S2Error> {
-        match self.stream.try_read().unwrap().append(input.into()).await {
+        match self
+            .stream
+            .try_read()
+            .unwrap()
+            .append(input.try_into()?)
+            .await
+        {
             Ok(ack) => Ok(ack.into()),
             Err(e) => Err(e.into()),
         }
     }
 
     pub async fn read(&self, input: ReadInput) -> Result<ReadBatch, S2Error> {
-        match self.stream.try_read().unwrap().read(input.into()).await {
+        match self
+            .stream
+            .try_read()
+            .unwrap()
+            .read(input.try_into()?)
+            .await
+        {
             Ok(batch) => Ok(batch.into()),
             Err(e) => Err(e.into()),
         }
@@ -46,14 +58,11 @@ impl S2Stream {
 
     #[flutter_rust_bridge::frb(sync)]
     pub fn append_session(&self, config: AppendSessionConfig) -> Result<S2AppendSession, S2Error> {
-        let session =
-            self.stream
-                .try_read()
-                .unwrap()
-                .append_session(match config.try_into_config() {
-                    Ok(config) => config,
-                    Err(e) => return Err(e.into()),
-                });
+        let session = self
+            .stream
+            .try_read()
+            .unwrap()
+            .append_session(config.try_into()?);
         Ok(session.into())
     }
 
@@ -72,7 +81,7 @@ impl S2Stream {
             .stream
             .try_read()
             .unwrap()
-            .read_session(input.into())
+            .read_session(input.try_into()?)
             .await
         {
             Ok(session) => session,
@@ -112,20 +121,15 @@ pub struct AppendSessionConfig {
     pub max_unacked_batches: Option<u32>,
 }
 
-impl AppendSessionConfig {
-    pub(crate) fn try_into_config(
-        self,
-    ) -> Result<s2_sdk::append_session::AppendSessionConfig, S2Error> {
+impl TryFrom<AppendSessionConfig> for s2_sdk::append_session::AppendSessionConfig {
+    type Error = S2Error;
+
+    fn try_from(value: AppendSessionConfig) -> Result<Self, Self::Error> {
         let mut config = s2_sdk::append_session::AppendSessionConfig::default();
-        if let Some(bytes) = self.max_unacked_bytes {
-            config = match config.with_max_unacked_bytes(bytes) {
-                Ok(config) => config,
-                Err(e) => {
-                    return Err(S2Error::from_str(e.to_string().as_str()).unwrap());
-                }
-            }
+        if let Some(bytes) = value.max_unacked_bytes {
+            config = config.with_max_unacked_bytes(bytes)?;
         }
-        if let Some(batches) = self.max_unacked_batches
+        if let Some(batches) = value.max_unacked_batches
             && batches > 0
         {
             config = config.with_max_unacked_batches(NonZeroU32::new(batches).unwrap());
@@ -147,24 +151,14 @@ impl TryFrom<ProducerConfig> for s2_sdk::producer::ProducerConfig {
     fn try_from(value: ProducerConfig) -> Result<Self, S2Error> {
         let mut config = s2_sdk::producer::ProducerConfig::default();
         if let Some(bytes) = value.max_unacked_bytes {
-            config = match config.with_max_unacked_bytes(bytes) {
-                Ok(config) => config,
-                Err(e) => return Err(e.into()),
-            };
+            config = config.with_max_unacked_bytes(bytes)?;
         }
         if let Some(batching) = value.batching {
-            config = config.with_batching(match batching.try_into() {
-                Ok(batching) => batching,
-                Err(e) => return Err(e.into()),
-            });
+            config = config.with_batching(batching.try_into()?);
         }
         if let Some(fencing_token) = value.fencing_token {
-            config = config.with_fencing_token(
-                match s2_sdk::types::FencingToken::from_str(&fencing_token) {
-                    Ok(token) => token,
-                    Err(e) => return Err(e.into()),
-                },
-            );
+            config =
+                config.with_fencing_token(s2_sdk::types::FencingToken::from_str(&fencing_token)?);
         }
         if let Some(match_seq_num) = value.match_seq_num {
             config = config.with_match_seq_num(match_seq_num);
@@ -188,26 +182,10 @@ impl TryFrom<BatchingConfig> for s2_sdk::batching::BatchingConfig {
             config = config.with_linger(Duration::from_millis(linger_millis));
         }
         if let Some(max_batch_bytes) = value.max_batch_bytes {
-            config = match config.with_max_batch_bytes(match max_batch_bytes.try_into() {
-                Ok(max_batch_bytes) => max_batch_bytes,
-                Err(_) => {
-                    return Err(S2Error::from_str("max_batch_bytes too large for usize").unwrap());
-                }
-            }) {
-                Ok(config) => config,
-                Err(e) => return Err(e.into()),
-            };
+            config = config.with_max_batch_bytes(max_batch_bytes.try_into()?)?;
         }
         if let Some(max_batch_records) = value.max_batch_records {
-            config = match config.with_max_batch_records(match max_batch_records.try_into() {
-                Ok(max_batch_records) => max_batch_records,
-                Err(_) => {
-                    return Err(S2Error::from_str("max_batch_records too large for usize").unwrap());
-                }
-            }) {
-                Ok(config) => config,
-                Err(e) => return Err(e.into()),
-            };
+            config = config.with_max_batch_records(max_batch_records.try_into()?)?;
         }
         Ok(config)
     }

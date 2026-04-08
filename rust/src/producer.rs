@@ -26,7 +26,7 @@ impl S2Producer {
             .unwrap()
             .as_ref()
             .unwrap()
-            .submit(record.into())
+            .submit(record.try_into()?)
             .await
         {
             Ok(ticket) => Ok(ticket.into()),

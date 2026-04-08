@@ -17,33 +17,34 @@ pub struct S2Client {
 }
 
 impl S2Client {
-    pub async fn new(config: ClientConfig) -> S2Client {
+    pub async fn new(config: ClientConfig) -> Result<S2Client, S2Error> {
         let connector = hyper_rustls::HttpsConnectorBuilder::new()
             .with_webpki_roots()
             .https_or_http()
             .enable_http1()
             .build();
-        S2Client {
-            client: RustAutoOpaqueNom::new(
-                s2_sdk::S2::new_with_connector(config.into(), connector).unwrap(),
-            ),
-        }
+        let s2 = s2_sdk::S2::new_with_connector(config.try_into()?, connector)?;
+        Ok(S2Client {
+            client: RustAutoOpaqueNom::new(s2),
+        })
     }
 
     #[frb(sync)]
-    pub fn basin(&self, name: String) -> S2Basin {
-        self.client
+    pub fn basin(&self, name: String) -> Result<S2Basin, S2Error> {
+        let basin = self
+            .client
             .try_read()
             .unwrap()
-            .basin(s2_sdk::types::BasinName::from_str(name.as_str()).unwrap())
-            .into()
+            .basin(s2_sdk::types::BasinName::from_str(name.as_str())?)
+            .into();
+        Ok(basin)
     }
 
     pub async fn list_basins(&self, input: ListBasinsInput) -> Result<PageOfBasinInfo, S2Error> {
         self.client
             .try_read()
             .unwrap()
-            .list_basins(input.into())
+            .list_basins(input.try_into()?)
             .await
             .map(|page| PageOfBasinInfo {
                 values: page.values.into_iter().map(BasinInfo::from).collect(),
@@ -61,7 +62,7 @@ impl S2Client {
             .client
             .try_read()
             .unwrap()
-            .list_all_basins(input.into());
+            .list_all_basins(input.try_into()?);
         while let Some(basin) = stream.next().await {
             match basin {
                 Ok(basin) => {
@@ -79,7 +80,7 @@ impl S2Client {
         self.client
             .try_read()
             .unwrap()
-            .create_basin(input.into())
+            .create_basin(input.try_into()?)
             .await
             .map(|info| info.into())
             .map_err(|e| e.into())
@@ -89,7 +90,7 @@ impl S2Client {
         self.client
             .try_read()
             .unwrap()
-            .get_basin_config(s2_sdk::types::BasinName::from_str(name.as_str()).unwrap())
+            .get_basin_config(s2_sdk::types::BasinName::from_str(name.as_str())?)
             .await
             .map(|config| config.into())
             .map_err(|e| e.into())
@@ -99,7 +100,7 @@ impl S2Client {
         self.client
             .try_read()
             .unwrap()
-            .delete_basin(input.into())
+            .delete_basin(input.try_into()?)
             .await
             .map_err(|e| e.into())
     }
@@ -111,7 +112,7 @@ impl S2Client {
         self.client
             .try_read()
             .unwrap()
-            .reconfigure_basin(input.into())
+            .reconfigure_basin(input.try_into()?)
             .await
             .map(|config| config.into())
             .map_err(|e| e.into())
@@ -124,7 +125,7 @@ impl S2Client {
         self.client
             .try_read()
             .unwrap()
-            .list_access_tokens(input.into())
+            .list_access_tokens(input.try_into()?)
             .await
             .map(|page| PageOfAccessTokenInfo {
                 values: page.values.into_iter().map(AccessTokenInfo::from).collect(),
@@ -142,7 +143,7 @@ impl S2Client {
             .client
             .try_read()
             .unwrap()
-            .list_all_access_tokens(input.into());
+            .list_all_access_tokens(input.try_into()?);
         while let Some(token) = stream.next().await {
             match token {
                 Ok(token) => {
@@ -163,7 +164,7 @@ impl S2Client {
         self.client
             .try_read()
             .unwrap()
-            .issue_access_token(input.into())
+            .issue_access_token(input.try_into()?)
             .await
             .map(|s| s.to_string())
             .map_err(|e| e.into())
@@ -173,7 +174,7 @@ impl S2Client {
         self.client
             .try_read()
             .unwrap()
-            .revoke_access_token(s2_sdk::types::AccessTokenId::from_str(&id).unwrap())
+            .revoke_access_token(s2_sdk::types::AccessTokenId::from_str(&id)?)
             .await
             .map_err(|e| e.into())
     }
@@ -230,21 +231,22 @@ pub struct ListBasinsInput {
     pub limit: Option<u64>,
 }
 
-impl From<ListBasinsInput> for s2_sdk::types::ListBasinsInput {
-    fn from(value: ListBasinsInput) -> Self {
+impl TryFrom<ListBasinsInput> for s2_sdk::types::ListBasinsInput {
+    type Error = S2Error;
+
+    fn try_from(value: ListBasinsInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::ListBasinsInput::new();
         if let Some(prefix) = value.prefix {
-            input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&prefix).unwrap());
+            input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&prefix)?);
         }
         if let Some(start_after) = value.start_after {
-            input = input.with_start_after(
-                s2_sdk::types::BasinNameStartAfter::from_str(&start_after).unwrap(),
-            );
+            input =
+                input.with_start_after(s2_sdk::types::BasinNameStartAfter::from_str(&start_after)?);
         }
         if let Some(limit) = value.limit {
-            input = input.with_limit(limit.try_into().expect("limit too large for usize"));
+            input = input.with_limit(limit.try_into()?);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -254,21 +256,22 @@ pub struct ListAllBasinsInput {
     pub include_deleted: Option<bool>,
 }
 
-impl From<ListAllBasinsInput> for s2_sdk::types::ListAllBasinsInput {
-    fn from(value: ListAllBasinsInput) -> Self {
+impl TryFrom<ListAllBasinsInput> for s2_sdk::types::ListAllBasinsInput {
+    type Error = S2Error;
+
+    fn try_from(value: ListAllBasinsInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::ListAllBasinsInput::default();
         if let Some(prefix) = value.prefix {
-            input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&prefix).unwrap());
+            input = input.with_prefix(s2_sdk::types::BasinNamePrefix::from_str(&prefix)?);
         }
         if let Some(start_after) = value.start_after {
-            input = input.with_start_after(
-                s2_sdk::types::BasinNameStartAfter::from_str(&start_after).unwrap(),
-            );
+            input =
+                input.with_start_after(s2_sdk::types::BasinNameStartAfter::from_str(&start_after)?);
         }
         if let Some(include_deleted) = value.include_deleted {
             input = input.with_include_deleted(include_deleted);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -278,18 +281,19 @@ pub struct CreateBasinInput {
     pub scope: Option<BasinScope>,
 }
 
-impl From<CreateBasinInput> for s2_sdk::types::CreateBasinInput {
-    fn from(value: CreateBasinInput) -> Self {
-        let mut input = s2_sdk::types::CreateBasinInput::new(
-            s2_sdk::types::BasinName::from_str(&value.name).unwrap(),
-        );
+impl TryFrom<CreateBasinInput> for s2_sdk::types::CreateBasinInput {
+    type Error = S2Error;
+
+    fn try_from(value: CreateBasinInput) -> Result<Self, Self::Error> {
+        let mut input =
+            s2_sdk::types::CreateBasinInput::new(s2_sdk::types::BasinName::from_str(&value.name)?);
         if let Some(config) = value.config {
             input = input.with_config(config.into());
         }
         if let Some(scope) = value.scope {
             input = input.with_scope(scope.into());
         }
-        input
+        Ok(input)
     }
 }
 
@@ -327,12 +331,14 @@ pub struct DeleteBasinInput {
     pub ignore_not_found: bool,
 }
 
-impl From<DeleteBasinInput> for s2_sdk::types::DeleteBasinInput {
-    fn from(value: DeleteBasinInput) -> Self {
-        s2_sdk::types::DeleteBasinInput::new(
-            s2_sdk::types::BasinName::from_str(&value.name).unwrap(),
+impl TryFrom<DeleteBasinInput> for s2_sdk::types::DeleteBasinInput {
+    type Error = S2Error;
+
+    fn try_from(value: DeleteBasinInput) -> Result<Self, Self::Error> {
+        Ok(
+            s2_sdk::types::DeleteBasinInput::new(s2_sdk::types::BasinName::from_str(&value.name)?)
+                .with_ignore_not_found(value.ignore_not_found),
         )
-        .with_ignore_not_found(value.ignore_not_found)
     }
 }
 
@@ -341,12 +347,14 @@ pub struct ReconfigureBasinInput {
     pub config: BasinConfig,
 }
 
-impl From<ReconfigureBasinInput> for s2_sdk::types::ReconfigureBasinInput {
-    fn from(value: ReconfigureBasinInput) -> Self {
-        s2_sdk::types::ReconfigureBasinInput::new(
-            s2_sdk::types::BasinName::from_str(&value.name).unwrap(),
+impl TryFrom<ReconfigureBasinInput> for s2_sdk::types::ReconfigureBasinInput {
+    type Error = S2Error;
+
+    fn try_from(value: ReconfigureBasinInput) -> Result<Self, Self::Error> {
+        Ok(s2_sdk::types::ReconfigureBasinInput::new(
+            s2_sdk::types::BasinName::from_str(&value.name)?,
             value.config.into(),
-        )
+        ))
     }
 }
 
@@ -392,22 +400,23 @@ pub struct ListAccessTokensInput {
     pub limit: Option<u64>,
 }
 
-impl From<ListAccessTokensInput> for s2_sdk::types::ListAccessTokensInput {
-    fn from(value: ListAccessTokensInput) -> Self {
+impl TryFrom<ListAccessTokensInput> for s2_sdk::types::ListAccessTokensInput {
+    type Error = S2Error;
+
+    fn try_from(value: ListAccessTokensInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::ListAccessTokensInput::new();
         if let Some(prefix) = value.prefix {
-            input =
-                input.with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&prefix).unwrap());
+            input = input.with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&prefix)?);
         }
         if let Some(start_after) = value.start_after {
-            input = input.with_start_after(
-                s2_sdk::types::AccessTokenIdStartAfter::from_str(&start_after).unwrap(),
-            );
+            input = input.with_start_after(s2_sdk::types::AccessTokenIdStartAfter::from_str(
+                &start_after,
+            )?);
         }
         if let Some(limit) = input.limit {
             input = input.with_limit(limit);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -527,19 +536,20 @@ pub struct ListAllAccessTokensInput {
     pub start_after: Option<String>,
 }
 
-impl From<ListAllAccessTokensInput> for s2_sdk::types::ListAllAccessTokensInput {
-    fn from(value: ListAllAccessTokensInput) -> Self {
+impl TryFrom<ListAllAccessTokensInput> for s2_sdk::types::ListAllAccessTokensInput {
+    type Error = S2Error;
+
+    fn try_from(value: ListAllAccessTokensInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::ListAllAccessTokensInput::new();
         if let Some(prefix) = value.prefix {
-            input =
-                input.with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&prefix).unwrap());
+            input = input.with_prefix(s2_sdk::types::AccessTokenIdPrefix::from_str(&prefix)?);
         }
         if let Some(start_after) = value.start_after {
-            input = input.with_start_after(
-                s2_sdk::types::AccessTokenIdStartAfter::from_str(&start_after).unwrap(),
-            );
+            input = input.with_start_after(s2_sdk::types::AccessTokenIdStartAfter::from_str(
+                &start_after,
+            )?);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -550,22 +560,24 @@ pub struct IssueAccessTokenInput {
     pub scope: AccessTokenScopeInput,
 }
 
-impl From<IssueAccessTokenInput> for s2_sdk::types::IssueAccessTokenInput {
-    fn from(value: IssueAccessTokenInput) -> Self {
+impl TryFrom<IssueAccessTokenInput> for s2_sdk::types::IssueAccessTokenInput {
+    type Error = S2Error;
+
+    fn try_from(value: IssueAccessTokenInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::IssueAccessTokenInput::new(
-            s2_sdk::types::AccessTokenId::from_str(&value.id).unwrap(),
-            value.scope.into(),
+            s2_sdk::types::AccessTokenId::from_str(&value.id)?,
+            value.scope.try_into()?,
         )
         .with_auto_prefix_streams(value.auto_prefix_streams);
         if let Some(expires_at) = value.expires_at {
-            input = input.with_expires_at(
-                s2_sdk::types::S2DateTime::try_from(
-                    OffsetDateTime::from_unix_timestamp(expires_at as i64).unwrap(),
-                )
-                .unwrap(),
-            );
+            input = input.with_expires_at(s2_sdk::types::S2DateTime::try_from(
+                match OffsetDateTime::from_unix_timestamp(expires_at as i64) {
+                    Ok(o) => o,
+                    Err(e) => return Err(S2Error::from_str(e.to_string().as_str()).unwrap()),
+                },
+            )?);
         }
-        input
+        Ok(input)
     }
 }
 
@@ -577,23 +589,25 @@ pub struct AccessTokenScopeInput {
     pub ops: Vec<Operation>,
 }
 
-impl From<AccessTokenScopeInput> for s2_sdk::types::AccessTokenScopeInput {
-    fn from(value: AccessTokenScopeInput) -> Self {
+impl TryFrom<AccessTokenScopeInput> for s2_sdk::types::AccessTokenScopeInput {
+    type Error = S2Error;
+
+    fn try_from(value: AccessTokenScopeInput) -> Result<Self, Self::Error> {
         let mut input = s2_sdk::types::AccessTokenScopeInput::from_ops(
             value.ops.into_iter().map(|op| op.into()),
         );
         if let Some(basins) = value.basins {
-            input = input.with_basins(basins.into());
+            input = input.with_basins(basins.try_into()?);
         }
         if let Some(streams) = value.streams {
-            input = input.with_streams(streams.into());
+            input = input.with_streams(streams.try_into()?);
         }
         if let Some(access_tokens) = value.access_tokens {
-            input = input.with_access_tokens(access_tokens.into());
+            input = input.with_access_tokens(access_tokens.try_into()?);
         }
         if let Some(op_group_permissions) = value.op_group_permissions {
             input = input.with_op_group_perms(op_group_permissions.into());
         }
-        input
+        Ok(input)
     }
 }

@@ -1,49 +1,39 @@
 # s2_sdk_dart
 
-A new Dart FFI package project.
+Dart SDK for S2, a serverless data store for streams, built on top of the Rust official SDK.
+
+S2 is a managed service that provides unlimited, durable streams.
+
+Streams can be appended to, with all new records added to the tail of the stream. You can read from any portion of a stream – indexing by record sequence number, or timestamp – and follow updates live.
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[FFI package](https://flutter.dev/to/ffi-package),
-a specialized package that includes native code directly invoked with Dart FFI.
+* Make sure [Flutter](https://docs.flutter.dev/install) and [rust](https://rust-lang.org/tools/install/) are installed.
+* Add `s2_sdk_dart` to your flutter project's `pubspec.yaml`, or checkout the example folder. 
 
-## Project structure
+## Let's Start Streaming
 
-This template uses the following structure:
+```dart
+final s2 = await S2.create("token");
 
-* `src`: Contains the native source code, and a CmakeFile.txt file for building
-  that source code into a dynamic library.
+await s2.basins.create("test-basin");
+await s2.basin("test-basin").streams.create("counter");
 
-* `lib`: Contains the Dart code that defines the API of the plugin, and which
-  calls into the native code using `dart:ffi`.
+final stream = s2.basin("test-basin").stream("counter");
 
-* `bin`: Contains the `build.dart` that performs the external native builds.
+final readSession = await stream.readSession();
 
-## Building and bundling native code
+final Stream<int> counterStream = readSession.map((record) {
+	return jsonDecode(utf8.decode(record.body))["delta"];
+});
+counterStream.listen((event) {
+	setState(() {
+		_counter += event;
+	});
+});
 
-`build.dart` does the building of native components.
-
-Bundling is done by Flutter based on the output from `build.dart`.
-
-## Binding to native code
-
-To use the native code, bindings in Dart are needed.
-To avoid writing these by hand, they are generated from the header file
-(`src/s2_sdk_dart.h`) by `package:ffigen`.
-Regenerate the bindings by running `dart run ffigen --config ffigen.yaml`.
-
-## Invoking native code
-
-Very short-running native functions can be directly invoked from any isolate.
-For example, see `sum` in `lib/s2_sdk_dart.dart`.
-
-Longer-running functions should be invoked on a helper isolate to avoid
-dropping frames in Flutter applications.
-For example, see `sumAsync` in `lib/s2_sdk_dart.dart`.
-
-## Flutter help
-
-For help getting started with Flutter, view our
-[online documentation](https://docs.flutter.dev), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+// Somewhere else
+await stream.append([
+	S2AppendRecord.fromObject({"delta": 1}),
+]);
+```

@@ -10,8 +10,8 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'producer.dart';
 import 'types.dart';
 
-// These functions are ignored because they are not marked as `pub`: `new`, `try_into_config`
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `try_from`, `try_from`
+// These functions are ignored because they are not marked as `pub`: `new`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `try_from`, `try_from`, `try_from`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Stream>>
 abstract class S2Stream implements RustOpaqueInterface {

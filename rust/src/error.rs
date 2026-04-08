@@ -1,4 +1,4 @@
-use std::str::FromStr;
+use std::{num::TryFromIntError, str::FromStr};
 
 #[flutter_rust_bridge::frb(dart_code = r#"
     String toString() {
@@ -30,5 +30,13 @@ impl FromStr for S2Error {
         Ok(S2Error {
             message: s.to_string(),
         })
+    }
+}
+
+impl From<TryFromIntError> for S2Error {
+    fn from(value: TryFromIntError) -> Self {
+        S2Error {
+            message: value.to_string(),
+        }
     }
 }
