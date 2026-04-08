@@ -1,8 +1,5 @@
 use std::{num::NonZeroU32, str::FromStr, time::Duration};
 
-use flutter_rust_bridge::frb;
-
-
 pub struct StreamPosition {
     pub seq_num: u64,
     pub timestamp: u64,
@@ -16,7 +13,6 @@ impl From<s2_sdk::types::StreamPosition> for StreamPosition {
         }
     }
 }
-
 
 pub struct ClientConfig {
     pub access_token: String,
@@ -70,7 +66,6 @@ impl From<Compression> for s2_sdk::types::Compression {
         }
     }
 }
-
 
 pub struct RetryConfig {
     pub max_attempts: Option<u32>,
@@ -148,7 +143,6 @@ impl From<ReadStart> for s2_sdk::types::ReadStart {
     }
 }
 
-
 pub enum ReadFrom {
     SeqNum(u64),
     Timestamp(u64),
@@ -164,7 +158,6 @@ impl From<ReadFrom> for s2_sdk::types::ReadFrom {
         }
     }
 }
-
 
 pub struct ReadStop {
     pub limits: Option<ReadLimits>,
@@ -220,7 +213,6 @@ impl From<s2_sdk::types::ReadBatch> for ReadBatch {
     }
 }
 
-
 pub struct SequencedRecord {
     pub seq_num: u64,
     pub body: Vec<u8>,
@@ -242,7 +234,6 @@ impl From<s2_sdk::types::SequencedRecord> for SequencedRecord {
         }
     }
 }
-
 
 pub struct AppendInput {
     pub records: AppendRecordBatch,
@@ -274,7 +265,6 @@ impl From<AppendRecordBatch> for s2_sdk::types::AppendRecordBatch {
             .unwrap()
     }
 }
-
 
 pub struct AppendRecord {
     pub body: Vec<u8>,

@@ -17,6 +17,12 @@ impl From<s2_sdk::types::S2Error> for S2Error {
     }
 }
 
+impl From<s2_sdk::types::ValidationError> for S2Error {
+    fn from(value: s2_sdk::types::ValidationError) -> Self {
+        S2Error { message: value.0 }
+    }
+}
+
 impl FromStr for S2Error {
     type Err = std::convert::Infallible;
 

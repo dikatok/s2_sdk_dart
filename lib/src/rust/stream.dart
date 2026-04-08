@@ -11,17 +11,17 @@ import 'producer.dart';
 import 'types.dart';
 
 // These functions are ignored because they are not marked as `pub`: `new`, `try_into_config`
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `from`, `try_from`, `try_from`
 
 // Rust type: RustOpaqueMoi<flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Stream>>
 abstract class S2Stream implements RustOpaqueInterface {
   Future<AppendAck> append({required AppendInput input});
 
-  Future<S2AppendSession> appendSession({required AppendSessionConfig config});
+  S2AppendSession appendSession({required AppendSessionConfig config});
 
   Future<StreamPosition> checkTail();
 
-  Future<S2Producer> producer();
+  S2Producer producer({required ProducerConfig config});
 
   Future<ReadBatch> read({required ReadInput input});
 
@@ -44,4 +44,60 @@ class AppendSessionConfig {
           runtimeType == other.runtimeType &&
           maxUnackedBytes == other.maxUnackedBytes &&
           maxUnackedBatches == other.maxUnackedBatches;
+}
+
+class BatchingConfig {
+  final int? lingerMillis;
+  final int? maxBatchBytes;
+  final int? maxBatchRecords;
+
+  const BatchingConfig({
+    this.lingerMillis,
+    this.maxBatchBytes,
+    this.maxBatchRecords,
+  });
+
+  @override
+  int get hashCode =>
+      lingerMillis.hashCode ^ maxBatchBytes.hashCode ^ maxBatchRecords.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BatchingConfig &&
+          runtimeType == other.runtimeType &&
+          lingerMillis == other.lingerMillis &&
+          maxBatchBytes == other.maxBatchBytes &&
+          maxBatchRecords == other.maxBatchRecords;
+}
+
+class ProducerConfig {
+  final int? maxUnackedBytes;
+  final BatchingConfig? batching;
+  final String? fencingToken;
+  final int? matchSeqNum;
+
+  const ProducerConfig({
+    this.maxUnackedBytes,
+    this.batching,
+    this.fencingToken,
+    this.matchSeqNum,
+  });
+
+  @override
+  int get hashCode =>
+      maxUnackedBytes.hashCode ^
+      batching.hashCode ^
+      fencingToken.hashCode ^
+      matchSeqNum.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProducerConfig &&
+          runtimeType == other.runtimeType &&
+          maxUnackedBytes == other.maxUnackedBytes &&
+          batching == other.batching &&
+          fencingToken == other.fencingToken &&
+          matchSeqNum == other.matchSeqNum;
 }

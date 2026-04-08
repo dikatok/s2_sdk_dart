@@ -46,6 +46,12 @@ impl S2Producer {
     }
 }
 
+impl From<s2_sdk::producer::Producer> for S2Producer {
+    fn from(value: s2_sdk::producer::Producer) -> Self {
+        S2Producer::new(value)
+    }
+}
+
 #[frb(opaque)]
 pub struct RecordSubmitTicket {
     pub(crate) ticket: RustAutoOpaqueNom<Option<s2_sdk::producer::RecordSubmitTicket>>,

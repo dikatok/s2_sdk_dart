@@ -1462,16 +1462,15 @@ fn wire__crate__stream__S2Stream_append_impl(
     )
 }
 fn wire__crate__stream__S2Stream_append_session_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
     rust_vec_len_: i32,
     data_len_: i32,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_async::<flutter_rust_bridge::for_generated::SseCodec, _, _, _>(
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
             debug_name: "S2Stream_append_session",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
         },
         move || {
             let message = unsafe {
@@ -1488,34 +1487,25 @@ fn wire__crate__stream__S2Stream_append_session_impl(
             >>::sse_decode(&mut deserializer);
             let api_config = <crate::stream::AppendSessionConfig>::sse_decode(&mut deserializer);
             deserializer.end();
-            move |context| async move {
-                transform_result_sse::<_, crate::error::S2Error>(
-                    (move || async move {
-                        let mut api_that_guard = None;
-                        let decode_indices_ =
-                            flutter_rust_bridge::for_generated::lockable_compute_decode_order(
-                                vec![flutter_rust_bridge::for_generated::LockableOrderInfo::new(
-                                    &api_that, 0, false,
-                                )],
-                            );
-                        for i in decode_indices_ {
-                            match i {
-                                0 => {
-                                    api_that_guard =
-                                        Some(api_that.lockable_decode_async_ref().await)
-                                }
-                                _ => unreachable!(),
-                            }
-                        }
-                        let api_that_guard = api_that_guard.unwrap();
-                        let output_ok =
-                            crate::stream::S2Stream::append_session(&*api_that_guard, api_config)
-                                .await?;
-                        Ok(output_ok)
-                    })()
-                    .await,
-                )
-            }
+            transform_result_sse::<_, crate::error::S2Error>((move || {
+                let mut api_that_guard = None;
+                let decode_indices_ =
+                    flutter_rust_bridge::for_generated::lockable_compute_decode_order(vec![
+                        flutter_rust_bridge::for_generated::LockableOrderInfo::new(
+                            &api_that, 0, false,
+                        ),
+                    ]);
+                for i in decode_indices_ {
+                    match i {
+                        0 => api_that_guard = Some(api_that.lockable_decode_sync_ref()),
+                        _ => unreachable!(),
+                    }
+                }
+                let api_that_guard = api_that_guard.unwrap();
+                let output_ok =
+                    crate::stream::S2Stream::append_session(&*api_that_guard, api_config)?;
+                Ok(output_ok)
+            })())
         },
     )
 }
@@ -1576,16 +1566,15 @@ fn wire__crate__stream__S2Stream_check_tail_impl(
     )
 }
 fn wire__crate__stream__S2Stream_producer_impl(
-    port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
     rust_vec_len_: i32,
     data_len_: i32,
-) {
-    FLUTTER_RUST_BRIDGE_HANDLER.wrap_async::<flutter_rust_bridge::for_generated::SseCodec, _, _, _>(
+) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
             debug_name: "S2Stream_producer",
-            port: Some(port_),
-            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+            port: None,
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
         },
         move || {
             let message = unsafe {
@@ -1600,33 +1589,26 @@ fn wire__crate__stream__S2Stream_producer_impl(
             let api_that = <RustOpaqueMoi<
                 flutter_rust_bridge::for_generated::RustAutoOpaqueInner<S2Stream>,
             >>::sse_decode(&mut deserializer);
+            let api_config = <crate::stream::ProducerConfig>::sse_decode(&mut deserializer);
             deserializer.end();
-            move |context| async move {
-                transform_result_sse::<_, crate::error::S2Error>(
-                    (move || async move {
-                        let mut api_that_guard = None;
-                        let decode_indices_ =
-                            flutter_rust_bridge::for_generated::lockable_compute_decode_order(
-                                vec![flutter_rust_bridge::for_generated::LockableOrderInfo::new(
-                                    &api_that, 0, false,
-                                )],
-                            );
-                        for i in decode_indices_ {
-                            match i {
-                                0 => {
-                                    api_that_guard =
-                                        Some(api_that.lockable_decode_async_ref().await)
-                                }
-                                _ => unreachable!(),
-                            }
-                        }
-                        let api_that_guard = api_that_guard.unwrap();
-                        let output_ok = crate::stream::S2Stream::producer(&*api_that_guard).await?;
-                        Ok(output_ok)
-                    })()
-                    .await,
-                )
-            }
+            transform_result_sse::<_, crate::error::S2Error>((move || {
+                let mut api_that_guard = None;
+                let decode_indices_ =
+                    flutter_rust_bridge::for_generated::lockable_compute_decode_order(vec![
+                        flutter_rust_bridge::for_generated::LockableOrderInfo::new(
+                            &api_that, 0, false,
+                        ),
+                    ]);
+                for i in decode_indices_ {
+                    match i {
+                        0 => api_that_guard = Some(api_that.lockable_decode_sync_ref()),
+                        _ => unreachable!(),
+                    }
+                }
+                let api_that_guard = api_that_guard.unwrap();
+                let output_ok = crate::stream::S2Stream::producer(&*api_that_guard, api_config)?;
+                Ok(output_ok)
+            })())
         },
     )
 }
@@ -2182,6 +2164,20 @@ impl SseDecode for crate::client::BasinScope {
     }
 }
 
+impl SseDecode for crate::stream::BatchingConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_lingerMillis = <Option<u64>>::sse_decode(deserializer);
+        let mut var_maxBatchBytes = <Option<u64>>::sse_decode(deserializer);
+        let mut var_maxBatchRecords = <Option<u64>>::sse_decode(deserializer);
+        return crate::stream::BatchingConfig {
+            linger_millis: var_lingerMillis,
+            max_batch_bytes: var_maxBatchBytes,
+            max_batch_records: var_maxBatchRecords,
+        };
+    }
+}
+
 impl SseDecode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2597,6 +2593,17 @@ impl SseDecode for Option<crate::client::BasinScope> {
     }
 }
 
+impl SseDecode for Option<crate::stream::BatchingConfig> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        if (<bool>::sse_decode(deserializer)) {
+            return Some(<crate::stream::BatchingConfig>::sse_decode(deserializer));
+        } else {
+            return None;
+        }
+    }
+}
+
 impl SseDecode for Option<bool> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2833,6 +2840,22 @@ impl SseDecode for crate::basin::PageOfStreamInfo {
         return crate::basin::PageOfStreamInfo {
             values: var_values,
             has_more: var_hasMore,
+        };
+    }
+}
+
+impl SseDecode for crate::stream::ProducerConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_maxUnackedBytes = <Option<u32>>::sse_decode(deserializer);
+        let mut var_batching = <Option<crate::stream::BatchingConfig>>::sse_decode(deserializer);
+        let mut var_fencingToken = <Option<String>>::sse_decode(deserializer);
+        let mut var_matchSeqNum = <Option<u64>>::sse_decode(deserializer);
+        return crate::stream::ProducerConfig {
+            max_unacked_bytes: var_maxUnackedBytes,
+            batching: var_batching,
+            fencing_token: var_fencingToken,
+            match_seq_num: var_matchSeqNum,
         };
     }
 }
@@ -3237,9 +3260,7 @@ fn pde_ffi_dispatcher_primary_impl(
         24 => wire__crate__producer__S2Producer_close_impl(port, ptr, rust_vec_len, data_len),
         25 => wire__crate__producer__S2Producer_submit_impl(port, ptr, rust_vec_len, data_len),
         26 => wire__crate__stream__S2Stream_append_impl(port, ptr, rust_vec_len, data_len),
-        27 => wire__crate__stream__S2Stream_append_session_impl(port, ptr, rust_vec_len, data_len),
         28 => wire__crate__stream__S2Stream_check_tail_impl(port, ptr, rust_vec_len, data_len),
-        29 => wire__crate__stream__S2Stream_producer_impl(port, ptr, rust_vec_len, data_len),
         30 => wire__crate__stream__S2Stream_read_impl(port, ptr, rust_vec_len, data_len),
         31 => wire__crate__stream__S2Stream_read_session_impl(port, ptr, rust_vec_len, data_len),
         32 => wire__crate__init_app_impl(port, ptr, rust_vec_len, data_len),
@@ -3257,6 +3278,8 @@ fn pde_ffi_dispatcher_sync_impl(
     match func_id {
         11 => wire__crate__basin__S2Basin_stream_impl(ptr, rust_vec_len, data_len),
         12 => wire__crate__client__S2Client_basin_impl(ptr, rust_vec_len, data_len),
+        27 => wire__crate__stream__S2Stream_append_session_impl(ptr, rust_vec_len, data_len),
+        29 => wire__crate__stream__S2Stream_producer_impl(ptr, rust_vec_len, data_len),
         _ => unreachable!(),
     }
 }
@@ -3599,6 +3622,25 @@ impl flutter_rust_bridge::IntoDart for crate::client::BasinScope {
 impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::client::BasinScope {}
 impl flutter_rust_bridge::IntoIntoDart<crate::client::BasinScope> for crate::client::BasinScope {
     fn into_into_dart(self) -> crate::client::BasinScope {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::stream::BatchingConfig {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.linger_millis.into_into_dart().into_dart(),
+            self.max_batch_bytes.into_into_dart().into_dart(),
+            self.max_batch_records.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::stream::BatchingConfig {}
+impl flutter_rust_bridge::IntoIntoDart<crate::stream::BatchingConfig>
+    for crate::stream::BatchingConfig
+{
+    fn into_into_dart(self) -> crate::stream::BatchingConfig {
         self
     }
 }
@@ -4033,6 +4075,26 @@ impl flutter_rust_bridge::IntoIntoDart<crate::basin::PageOfStreamInfo>
     for crate::basin::PageOfStreamInfo
 {
     fn into_into_dart(self) -> crate::basin::PageOfStreamInfo {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::stream::ProducerConfig {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.max_unacked_bytes.into_into_dart().into_dart(),
+            self.batching.into_into_dart().into_dart(),
+            self.fencing_token.into_into_dart().into_dart(),
+            self.match_seq_num.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive for crate::stream::ProducerConfig {}
+impl flutter_rust_bridge::IntoIntoDart<crate::stream::ProducerConfig>
+    for crate::stream::ProducerConfig
+{
+    fn into_into_dart(self) -> crate::stream::ProducerConfig {
         self
     }
 }
@@ -4718,6 +4780,15 @@ impl SseEncode for crate::client::BasinScope {
     }
 }
 
+impl SseEncode for crate::stream::BatchingConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Option<u64>>::sse_encode(self.linger_millis, serializer);
+        <Option<u64>>::sse_encode(self.max_batch_bytes, serializer);
+        <Option<u64>>::sse_encode(self.max_batch_records, serializer);
+    }
+}
+
 impl SseEncode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5046,6 +5117,16 @@ impl SseEncode for Option<crate::client::BasinScope> {
     }
 }
 
+impl SseEncode for Option<crate::stream::BatchingConfig> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.is_some(), serializer);
+        if let Some(value) = self {
+            <crate::stream::BatchingConfig>::sse_encode(value, serializer);
+        }
+    }
+}
+
 impl SseEncode for Option<bool> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -5247,6 +5328,16 @@ impl SseEncode for crate::basin::PageOfStreamInfo {
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <Vec<crate::basin::StreamInfo>>::sse_encode(self.values, serializer);
         <bool>::sse_encode(self.has_more, serializer);
+    }
+}
+
+impl SseEncode for crate::stream::ProducerConfig {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <Option<u32>>::sse_encode(self.max_unacked_bytes, serializer);
+        <Option<crate::stream::BatchingConfig>>::sse_encode(self.batching, serializer);
+        <Option<String>>::sse_encode(self.fencing_token, serializer);
+        <Option<u64>>::sse_encode(self.match_seq_num, serializer);
     }
 }
 

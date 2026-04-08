@@ -205,14 +205,17 @@ abstract class RustLibApi extends BaseApi {
     required AppendInput input,
   });
 
-  Future<S2AppendSession> crateStreamS2StreamAppendSession({
+  S2AppendSession crateStreamS2StreamAppendSession({
     required S2Stream that,
     required AppendSessionConfig config,
   });
 
   Future<StreamPosition> crateStreamS2StreamCheckTail({required S2Stream that});
 
-  Future<S2Producer> crateStreamS2StreamProducer({required S2Stream that});
+  S2Producer crateStreamS2StreamProducer({
+    required S2Stream that,
+    required ProducerConfig config,
+  });
 
   Future<ReadBatch> crateStreamS2StreamRead({
     required S2Stream that,
@@ -1262,25 +1265,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   );
 
   @override
-  Future<S2AppendSession> crateStreamS2StreamAppendSession({
+  S2AppendSession crateStreamS2StreamAppendSession({
     required S2Stream that,
     required AppendSessionConfig config,
   }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Stream(
             that,
             serializer,
           );
           sse_encode_box_autoadd_append_session_config(config, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 27,
-            port: port_,
-          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 27)!;
         },
         codec: SseCodec(
           decodeSuccessData:
@@ -1334,21 +1332,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       const TaskConstMeta(debugName: "S2Stream_check_tail", argNames: ["that"]);
 
   @override
-  Future<S2Producer> crateStreamS2StreamProducer({required S2Stream that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+  S2Producer crateStreamS2StreamProducer({
+    required S2Stream that,
+    required ProducerConfig config,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Stream(
             that,
             serializer,
           );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 29,
-            port: port_,
-          );
+          sse_encode_box_autoadd_producer_config(config, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 29)!;
         },
         codec: SseCodec(
           decodeSuccessData:
@@ -1356,14 +1353,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           decodeErrorData: sse_decode_s_2_error,
         ),
         constMeta: kCrateStreamS2StreamProducerConstMeta,
-        argValues: [that],
+        argValues: [that, config],
         apiImpl: this,
       ),
     );
   }
 
   TaskConstMeta get kCrateStreamS2StreamProducerConstMeta =>
-      const TaskConstMeta(debugName: "S2Stream_producer", argNames: ["that"]);
+      const TaskConstMeta(
+        debugName: "S2Stream_producer",
+        argNames: ["that", "config"],
+      );
 
   @override
   Future<ReadBatch> crateStreamS2StreamRead({
@@ -1895,6 +1895,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BatchingConfig dco_decode_batching_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return BatchingConfig(
+      lingerMillis: dco_decode_opt_CastedPrimitive_u_64(arr[0]),
+      maxBatchBytes: dco_decode_opt_CastedPrimitive_u_64(arr[1]),
+      maxBatchRecords: dco_decode_opt_CastedPrimitive_u_64(arr[2]),
+    );
+  }
+
+  @protected
   bool dco_decode_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as bool;
@@ -1936,6 +1949,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   BasinScope dco_decode_box_autoadd_basin_scope(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_basin_scope(raw);
+  }
+
+  @protected
+  BatchingConfig dco_decode_box_autoadd_batching_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_batching_config(raw);
   }
 
   @protected
@@ -2044,6 +2063,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return dco_decode_operation_group_permissions(raw);
+  }
+
+  @protected
+  ProducerConfig dco_decode_box_autoadd_producer_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_producer_config(raw);
   }
 
   @protected
@@ -2454,6 +2479,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BatchingConfig? dco_decode_opt_box_autoadd_batching_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_box_autoadd_batching_config(raw);
+  }
+
+  @protected
   bool? dco_decode_opt_box_autoadd_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_box_autoadd_bool(raw);
@@ -2607,6 +2638,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     return PageOfStreamInfo(
       values: dco_decode_list_stream_info(arr[0]),
       hasMore: dco_decode_bool(arr[1]),
+    );
+  }
+
+  @protected
+  ProducerConfig dco_decode_producer_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 4)
+      throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
+    return ProducerConfig(
+      maxUnackedBytes: dco_decode_opt_box_autoadd_u_32(arr[0]),
+      batching: dco_decode_opt_box_autoadd_batching_config(arr[1]),
+      fencingToken: dco_decode_opt_String(arr[2]),
+      matchSeqNum: dco_decode_opt_CastedPrimitive_u_64(arr[3]),
     );
   }
 
@@ -3333,6 +3378,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BatchingConfig sse_decode_batching_config(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_lingerMillis = sse_decode_opt_CastedPrimitive_u_64(deserializer);
+    var var_maxBatchBytes = sse_decode_opt_CastedPrimitive_u_64(deserializer);
+    var var_maxBatchRecords = sse_decode_opt_CastedPrimitive_u_64(deserializer);
+    return BatchingConfig(
+      lingerMillis: var_lingerMillis,
+      maxBatchBytes: var_maxBatchBytes,
+      maxBatchRecords: var_maxBatchRecords,
+    );
+  }
+
+  @protected
   bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8() != 0;
@@ -3382,6 +3440,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   BasinScope sse_decode_box_autoadd_basin_scope(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_basin_scope(deserializer));
+  }
+
+  @protected
+  BatchingConfig sse_decode_box_autoadd_batching_config(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_batching_config(deserializer));
   }
 
   @protected
@@ -3506,6 +3572,14 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return (sse_decode_operation_group_permissions(deserializer));
+  }
+
+  @protected
+  ProducerConfig sse_decode_box_autoadd_producer_config(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return (sse_decode_producer_config(deserializer));
   }
 
   @protected
@@ -4024,6 +4098,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BatchingConfig? sse_decode_opt_box_autoadd_batching_config(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_box_autoadd_batching_config(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
   bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
@@ -4276,6 +4363,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_values = sse_decode_list_stream_info(deserializer);
     var var_hasMore = sse_decode_bool(deserializer);
     return PageOfStreamInfo(values: var_values, hasMore: var_hasMore);
+  }
+
+  @protected
+  ProducerConfig sse_decode_producer_config(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_maxUnackedBytes = sse_decode_opt_box_autoadd_u_32(deserializer);
+    var var_batching = sse_decode_opt_box_autoadd_batching_config(deserializer);
+    var var_fencingToken = sse_decode_opt_String(deserializer);
+    var var_matchSeqNum = sse_decode_opt_CastedPrimitive_u_64(deserializer);
+    return ProducerConfig(
+      maxUnackedBytes: var_maxUnackedBytes,
+      batching: var_batching,
+      fencingToken: var_fencingToken,
+      matchSeqNum: var_matchSeqNum,
+    );
   }
 
   @protected
@@ -5023,6 +5125,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_batching_config(
+    BatchingConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_opt_CastedPrimitive_u_64(self.lingerMillis, serializer);
+    sse_encode_opt_CastedPrimitive_u_64(self.maxBatchBytes, serializer);
+    sse_encode_opt_CastedPrimitive_u_64(self.maxBatchRecords, serializer);
+  }
+
+  @protected
   void sse_encode_bool(bool self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self ? 1 : 0);
@@ -5080,6 +5193,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_basin_scope(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_batching_config(
+    BatchingConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_batching_config(self, serializer);
   }
 
   @protected
@@ -5221,6 +5343,15 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_operation_group_permissions(self, serializer);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_producer_config(
+    ProducerConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_producer_config(self, serializer);
   }
 
   @protected
@@ -5713,6 +5844,19 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_opt_box_autoadd_batching_config(
+    BatchingConfig? self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_box_autoadd_batching_config(self, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
@@ -5968,6 +6112,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_stream_info(self.values, serializer);
     sse_encode_bool(self.hasMore, serializer);
+  }
+
+  @protected
+  void sse_encode_producer_config(
+    ProducerConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_opt_box_autoadd_u_32(self.maxUnackedBytes, serializer);
+    sse_encode_opt_box_autoadd_batching_config(self.batching, serializer);
+    sse_encode_opt_String(self.fencingToken, serializer);
+    sse_encode_opt_CastedPrimitive_u_64(self.matchSeqNum, serializer);
   }
 
   @protected
@@ -6486,18 +6642,17 @@ class S2StreamImpl extends RustOpaque implements S2Stream {
   Future<AppendAck> append({required AppendInput input}) =>
       RustLib.instance.api.crateStreamS2StreamAppend(that: this, input: input);
 
-  Future<S2AppendSession> appendSession({
-    required AppendSessionConfig config,
-  }) => RustLib.instance.api.crateStreamS2StreamAppendSession(
-    that: this,
-    config: config,
-  );
+  S2AppendSession appendSession({required AppendSessionConfig config}) =>
+      RustLib.instance.api.crateStreamS2StreamAppendSession(
+        that: this,
+        config: config,
+      );
 
   Future<StreamPosition> checkTail() =>
       RustLib.instance.api.crateStreamS2StreamCheckTail(that: this);
 
-  Future<S2Producer> producer() =>
-      RustLib.instance.api.crateStreamS2StreamProducer(that: this);
+  S2Producer producer({required ProducerConfig config}) => RustLib.instance.api
+      .crateStreamS2StreamProducer(that: this, config: config);
 
   Future<ReadBatch> read({required ReadInput input}) =>
       RustLib.instance.api.crateStreamS2StreamRead(that: this, input: input);

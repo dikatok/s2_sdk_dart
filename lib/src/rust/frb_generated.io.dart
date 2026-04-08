@@ -228,6 +228,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   BasinScope dco_decode_basin_scope(dynamic raw);
 
   @protected
+  BatchingConfig dco_decode_batching_config(dynamic raw);
+
+  @protected
   bool dco_decode_bool(dynamic raw);
 
   @protected
@@ -247,6 +250,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   BasinScope dco_decode_box_autoadd_basin_scope(dynamic raw);
+
+  @protected
+  BatchingConfig dco_decode_box_autoadd_batching_config(dynamic raw);
 
   @protected
   bool dco_decode_box_autoadd_bool(dynamic raw);
@@ -307,6 +313,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   OperationGroupPermissions dco_decode_box_autoadd_operation_group_permissions(
     dynamic raw,
   );
+
+  @protected
+  ProducerConfig dco_decode_box_autoadd_producer_config(dynamic raw);
 
   @protected
   ReadFrom dco_decode_box_autoadd_read_from(dynamic raw);
@@ -462,6 +471,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   BasinScope? dco_decode_opt_box_autoadd_basin_scope(dynamic raw);
 
   @protected
+  BatchingConfig? dco_decode_opt_box_autoadd_batching_config(dynamic raw);
+
+  @protected
   bool? dco_decode_opt_box_autoadd_bool(dynamic raw);
 
   @protected
@@ -530,6 +542,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   PageOfStreamInfo dco_decode_page_of_stream_info(dynamic raw);
+
+  @protected
+  ProducerConfig dco_decode_producer_config(dynamic raw);
 
   @protected
   ReadBatch dco_decode_read_batch(dynamic raw);
@@ -798,6 +813,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   BasinScope sse_decode_basin_scope(SseDeserializer deserializer);
 
   @protected
+  BatchingConfig sse_decode_batching_config(SseDeserializer deserializer);
+
+  @protected
   bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
@@ -823,6 +841,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   BasinScope sse_decode_box_autoadd_basin_scope(SseDeserializer deserializer);
+
+  @protected
+  BatchingConfig sse_decode_box_autoadd_batching_config(
+    SseDeserializer deserializer,
+  );
 
   @protected
   bool sse_decode_box_autoadd_bool(SseDeserializer deserializer);
@@ -897,6 +920,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   OperationGroupPermissions sse_decode_box_autoadd_operation_group_permissions(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  ProducerConfig sse_decode_box_autoadd_producer_config(
     SseDeserializer deserializer,
   );
 
@@ -1096,6 +1124,11 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  BatchingConfig? sse_decode_opt_box_autoadd_batching_config(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer);
 
   @protected
@@ -1188,6 +1221,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   PageOfStreamInfo sse_decode_page_of_stream_info(SseDeserializer deserializer);
+
+  @protected
+  ProducerConfig sse_decode_producer_config(SseDeserializer deserializer);
 
   @protected
   ReadBatch sse_decode_read_batch(SseDeserializer deserializer);
@@ -1502,6 +1538,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_basin_scope(BasinScope self, SseSerializer serializer);
 
   @protected
+  void sse_encode_batching_config(
+    BatchingConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_bool(bool self, SseSerializer serializer);
 
   @protected
@@ -1537,6 +1579,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_box_autoadd_basin_scope(
     BasinScope self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_batching_config(
+    BatchingConfig self,
     SseSerializer serializer,
   );
 
@@ -1630,6 +1678,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_box_autoadd_operation_group_permissions(
     OperationGroupPermissions self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_box_autoadd_producer_config(
+    ProducerConfig self,
     SseSerializer serializer,
   );
 
@@ -1901,6 +1955,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_opt_box_autoadd_batching_config(
+    BatchingConfig? self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer);
 
   @protected
@@ -2017,6 +2077,12 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_page_of_stream_info(
     PageOfStreamInfo self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_producer_config(
+    ProducerConfig self,
     SseSerializer serializer,
   );
 

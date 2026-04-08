@@ -1,4 +1,4 @@
-use std::{num::NonZeroU32, str::FromStr};
+use std::{num::NonZeroU32, str::FromStr, time::Duration};
 
 use flutter_rust_bridge::{RustAutoOpaqueNom, frb};
 use tokio_stream::StreamExt;
@@ -44,10 +44,8 @@ impl S2Stream {
         }
     }
 
-    pub async fn append_session(
-        &self,
-        config: AppendSessionConfig,
-    ) -> Result<S2AppendSession, S2Error> {
+    #[flutter_rust_bridge::frb(sync)]
+    pub fn append_session(&self, config: AppendSessionConfig) -> Result<S2AppendSession, S2Error> {
         let session =
             self.stream
                 .try_read()
@@ -59,13 +57,10 @@ impl S2Stream {
         Ok(session.into())
     }
 
-    pub async fn producer(&self) -> Result<S2Producer, S2Error> {
-        let producer = self
-            .stream
-            .try_read()
-            .unwrap()
-            .producer(s2_sdk::producer::ProducerConfig::default());
-        Ok(S2Producer::new(producer))
+    #[flutter_rust_bridge::frb(sync)]
+    pub fn producer(&self, config: ProducerConfig) -> Result<S2Producer, S2Error> {
+        let producer = self.stream.try_read().unwrap().producer(config.try_into()?);
+        Ok(producer.into())
     }
 
     #[frb(stream_dart_await)]
@@ -128,6 +123,85 @@ impl AppendSessionConfig {
             && batches > 0
         {
             config = config.with_max_unacked_batches(NonZeroU32::new(batches).unwrap());
+        }
+        Ok(config)
+    }
+}
+
+pub struct ProducerConfig {
+    pub max_unacked_bytes: Option<u32>,
+    pub batching: Option<BatchingConfig>,
+    pub fencing_token: Option<String>,
+    pub match_seq_num: Option<u64>,
+}
+
+impl TryFrom<ProducerConfig> for s2_sdk::producer::ProducerConfig {
+    type Error = S2Error;
+
+    fn try_from(value: ProducerConfig) -> Result<Self, S2Error> {
+        let mut config = s2_sdk::producer::ProducerConfig::default();
+        if let Some(bytes) = value.max_unacked_bytes {
+            config = match config.with_max_unacked_bytes(bytes) {
+                Ok(config) => config,
+                Err(e) => return Err(e.into()),
+            };
+        }
+        if let Some(batching) = value.batching {
+            config = config.with_batching(match batching.try_into() {
+                Ok(batching) => batching,
+                Err(e) => return Err(e.into()),
+            });
+        }
+        if let Some(fencing_token) = value.fencing_token {
+            config = config.with_fencing_token(
+                match s2_sdk::types::FencingToken::from_str(&fencing_token) {
+                    Ok(token) => token,
+                    Err(e) => return Err(e.into()),
+                },
+            );
+        }
+        if let Some(match_seq_num) = value.match_seq_num {
+            config = config.with_match_seq_num(match_seq_num);
+        }
+        Ok(config)
+    }
+}
+
+pub struct BatchingConfig {
+    pub linger_millis: Option<u64>,
+    pub max_batch_bytes: Option<u64>,
+    pub max_batch_records: Option<u64>,
+}
+
+impl TryFrom<BatchingConfig> for s2_sdk::batching::BatchingConfig {
+    type Error = S2Error;
+
+    fn try_from(value: BatchingConfig) -> Result<Self, S2Error> {
+        let mut config = s2_sdk::batching::BatchingConfig::new();
+        if let Some(linger_millis) = value.linger_millis {
+            config = config.with_linger(Duration::from_millis(linger_millis));
+        }
+        if let Some(max_batch_bytes) = value.max_batch_bytes {
+            config = match config.with_max_batch_bytes(match max_batch_bytes.try_into() {
+                Ok(max_batch_bytes) => max_batch_bytes,
+                Err(_) => {
+                    return Err(S2Error::from_str("max_batch_bytes too large for usize").unwrap());
+                }
+            }) {
+                Ok(config) => config,
+                Err(e) => return Err(e.into()),
+            };
+        }
+        if let Some(max_batch_records) = value.max_batch_records {
+            config = match config.with_max_batch_records(match max_batch_records.try_into() {
+                Ok(max_batch_records) => max_batch_records,
+                Err(_) => {
+                    return Err(S2Error::from_str("max_batch_records too large for usize").unwrap());
+                }
+            }) {
+                Ok(config) => config,
+                Err(e) => return Err(e.into()),
+            };
         }
         Ok(config)
     }

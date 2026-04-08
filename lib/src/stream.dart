@@ -5,6 +5,7 @@ import 'package:s2_sdk_dart/src/rust/types.dart';
 
 import 'rust/stream.dart' as inner;
 
+export 'rust/stream.dart' show BatchingConfig;
 export 'rust/types.dart' show ReadStart, ReadStop, ReadFrom, ReadLimits;
 
 final class S2Stream {
@@ -36,11 +37,11 @@ final class S2Stream {
     );
   }
 
-  Future<S2AppendSession> appendSession({
+  S2AppendSession appendSession({
     int? maxUnackedBytes,
     int? maxUnackedBatches,
-  }) async {
-    final session = await _stream.appendSession(
+  }) {
+    final session = _stream.appendSession(
       config: inner.AppendSessionConfig(
         maxUnackedBytes: maxUnackedBytes,
         maxUnackedBatches: maxUnackedBatches,
@@ -53,8 +54,20 @@ final class S2Stream {
     return _stream.checkTail();
   }
 
-  Future<S2Producer> producer() async {
-    final producer = await _stream.producer();
+  S2Producer producer({
+    int? maxUnackedBytes,
+    inner.BatchingConfig? batching,
+    String? fencingToken,
+    int? matchSeqNum,
+  }) {
+    final producer = _stream.producer(
+      config: inner.ProducerConfig(
+        maxUnackedBytes: maxUnackedBytes,
+        batching: batching,
+        fencingToken: fencingToken,
+        matchSeqNum: matchSeqNum,
+      ),
+    );
     return S2Producer(producer);
   }
 
