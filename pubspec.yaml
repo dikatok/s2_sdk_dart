@@ -1,6 +1,8 @@
 name: s2_sdk_dart
-description: "Dart binding for S2 Stream Store."
+description: "Dart SDK for S2 Stream Store."
 version: 0.0.2+0.26.0
+repository: https://github.com/dikatok/s2_sdk_dart
+issue_tracker: https://github.com/dikatok/s2_sdk_dart/issues
 
 environment:
   sdk: ^3.11.4
