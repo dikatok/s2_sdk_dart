@@ -24,5 +24,3 @@ jobs:
         run: flutter_rust_bridge_codegen generate
       - name: Publish
         run: dart pub publish --force
-        with:
-          environment: pub.dev
