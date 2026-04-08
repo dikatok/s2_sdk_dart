@@ -4,6 +4,7 @@ export "basin.dart";
 export 'basins.dart';
 export "client.dart";
 export 'producer.dart';
+export 'record.dart';
 export "rust/error.dart";
 export "stream.dart";
 export 'streams.dart';

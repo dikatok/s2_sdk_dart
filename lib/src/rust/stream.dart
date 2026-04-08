@@ -25,7 +25,7 @@ abstract class S2Stream implements RustOpaqueInterface {
 
   Future<ReadBatch> read({required ReadInput input});
 
-  Future<Stream<SequencedRecord>> readSession({required ReadInput input});
+  Stream<SequencedRecord> readSession({required ReadInput input});
 }
 
 class AppendSessionConfig {

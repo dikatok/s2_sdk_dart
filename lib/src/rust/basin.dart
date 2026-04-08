@@ -21,9 +21,7 @@ abstract class S2Basin implements RustOpaqueInterface {
 
   Future<StreamConfig> getStreamConfig({required String name});
 
-  Future<Stream<StreamInfo>> listAllStreams({
-    required ListAllStreamsInput input,
-  });
+  Stream<StreamInfo> listAllStreams({required ListAllStreamsInput input});
 
   Future<PageOfStreamInfo> listStreams({required ListStreamsInput input});
 

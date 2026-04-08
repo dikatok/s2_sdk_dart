@@ -25,7 +25,7 @@ final class S2Streams {
     String? prefix,
     String? startAfter,
     bool? includeDeleted,
-  }) {
+  }) async {
     return _basin.listAllStreams(
       input: ListAllStreamsInput(
         prefix: prefix,

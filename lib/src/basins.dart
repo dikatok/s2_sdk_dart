@@ -50,7 +50,7 @@ final class S2Basins {
     String? prefix,
     String? startAfter,
     bool? includeDeleted,
-  }) {
+  }) async {
     return _client.listAllBasins(
       input: ListAllBasinsInput(
         prefix: prefix,

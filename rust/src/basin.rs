@@ -39,7 +39,6 @@ impl S2Basin {
             .map_err(|e| e.into())
     }
 
-    #[frb(stream_dart_await)]
     pub async fn list_all_streams(
         &self,
         sink: StreamSink<StreamInfo>,

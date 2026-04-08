@@ -80,7 +80,7 @@ final class S2Stream {
   Future<Stream<SequencedRecord>> readSession({
     ReadStart? start,
     ReadStop? stop,
-  }) {
+  }) async {
     return _stream.readSession(
       input: ReadInput(start: start, stop: stop),
     );

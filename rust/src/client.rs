@@ -52,7 +52,6 @@ impl S2Client {
             .map_err(|e| e.into())
     }
 
-    #[frb(stream_dart_await)]
     pub async fn list_all_basins(
         &self,
         sink: StreamSink<BasinInfo>,
@@ -133,8 +132,6 @@ impl S2Client {
             })
             .map_err(|e| e.into())
     }
-
-    #[frb(stream_dart_await)]
 
     pub async fn list_all_access_tokens(
         &self,

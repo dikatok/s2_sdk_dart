@@ -116,7 +116,7 @@ abstract class RustLibApi extends BaseApi {
     required String name,
   });
 
-  Future<Stream<StreamInfo>> crateBasinS2BasinListAllStreams({
+  Stream<StreamInfo> crateBasinS2BasinListAllStreams({
     required S2Basin that,
     required ListAllStreamsInput input,
   });
@@ -166,12 +166,12 @@ abstract class RustLibApi extends BaseApi {
     required ListAccessTokensInput input,
   });
 
-  Future<Stream<AccessTokenInfo>> crateClientS2ClientListAllAccessTokens({
+  Stream<AccessTokenInfo> crateClientS2ClientListAllAccessTokens({
     required S2Client that,
     required ListAllAccessTokensInput input,
   });
 
-  Future<Stream<BasinInfo>> crateClientS2ClientListAllBasins({
+  Stream<BasinInfo> crateClientS2ClientListAllBasins({
     required S2Client that,
     required ListAllBasinsInput input,
   });
@@ -222,7 +222,7 @@ abstract class RustLibApi extends BaseApi {
     required ReadInput input,
   });
 
-  Future<Stream<SequencedRecord>> crateStreamS2StreamReadSession({
+  Stream<SequencedRecord> crateStreamS2StreamReadSession({
     required S2Stream that,
     required ReadInput input,
   });
@@ -557,35 +557,37 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<Stream<StreamInfo>> crateBasinS2BasinListAllStreams({
+  Stream<StreamInfo> crateBasinS2BasinListAllStreams({
     required S2Basin that,
     required ListAllStreamsInput input,
-  }) async {
+  }) {
     final sink = RustStreamSink<StreamInfo>();
-    await handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Basin(
-            that,
-            serializer,
-          );
-          sse_encode_StreamSink_stream_info_Sse(sink, serializer);
-          sse_encode_box_autoadd_list_all_streams_input(input, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 8,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: sse_decode_s_2_error,
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Basin(
+              that,
+              serializer,
+            );
+            sse_encode_StreamSink_stream_info_Sse(sink, serializer);
+            sse_encode_box_autoadd_list_all_streams_input(input, serializer);
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 8,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: sse_decode_s_2_error,
+          ),
+          constMeta: kCrateBasinS2BasinListAllStreamsConstMeta,
+          argValues: [that, sink, input],
+          apiImpl: this,
         ),
-        constMeta: kCrateBasinS2BasinListAllStreamsConstMeta,
-        argValues: [that, sink, input],
-        apiImpl: this,
       ),
     );
     return sink.stream;
@@ -930,38 +932,40 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<Stream<AccessTokenInfo>> crateClientS2ClientListAllAccessTokens({
+  Stream<AccessTokenInfo> crateClientS2ClientListAllAccessTokens({
     required S2Client that,
     required ListAllAccessTokensInput input,
-  }) async {
+  }) {
     final sink = RustStreamSink<AccessTokenInfo>();
-    await handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          sse_encode_StreamSink_access_token_info_Sse(sink, serializer);
-          sse_encode_box_autoadd_list_all_access_tokens_input(
-            input,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 18,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: sse_decode_s_2_error,
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+              that,
+              serializer,
+            );
+            sse_encode_StreamSink_access_token_info_Sse(sink, serializer);
+            sse_encode_box_autoadd_list_all_access_tokens_input(
+              input,
+              serializer,
+            );
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 18,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: sse_decode_s_2_error,
+          ),
+          constMeta: kCrateClientS2ClientListAllAccessTokensConstMeta,
+          argValues: [that, sink, input],
+          apiImpl: this,
         ),
-        constMeta: kCrateClientS2ClientListAllAccessTokensConstMeta,
-        argValues: [that, sink, input],
-        apiImpl: this,
       ),
     );
     return sink.stream;
@@ -974,35 +978,37 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<Stream<BasinInfo>> crateClientS2ClientListAllBasins({
+  Stream<BasinInfo> crateClientS2ClientListAllBasins({
     required S2Client that,
     required ListAllBasinsInput input,
-  }) async {
+  }) {
     final sink = RustStreamSink<BasinInfo>();
-    await handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
-            that,
-            serializer,
-          );
-          sse_encode_StreamSink_basin_info_Sse(sink, serializer);
-          sse_encode_box_autoadd_list_all_basins_input(input, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 19,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: sse_decode_s_2_error,
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Client(
+              that,
+              serializer,
+            );
+            sse_encode_StreamSink_basin_info_Sse(sink, serializer);
+            sse_encode_box_autoadd_list_all_basins_input(input, serializer);
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 19,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: sse_decode_s_2_error,
+          ),
+          constMeta: kCrateClientS2ClientListAllBasinsConstMeta,
+          argValues: [that, sink, input],
+          apiImpl: this,
         ),
-        constMeta: kCrateClientS2ClientListAllBasinsConstMeta,
-        argValues: [that, sink, input],
-        apiImpl: this,
       ),
     );
     return sink.stream;
@@ -1403,35 +1409,37 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   );
 
   @override
-  Future<Stream<SequencedRecord>> crateStreamS2StreamReadSession({
+  Stream<SequencedRecord> crateStreamS2StreamReadSession({
     required S2Stream that,
     required ReadInput input,
-  }) async {
+  }) {
     final sink = RustStreamSink<SequencedRecord>();
-    await handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Stream(
-            that,
-            serializer,
-          );
-          sse_encode_StreamSink_sequenced_record_Sse(sink, serializer);
-          sse_encode_box_autoadd_read_input(input, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 31,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
-          decodeErrorData: sse_decode_s_2_error,
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerS2Stream(
+              that,
+              serializer,
+            );
+            sse_encode_StreamSink_sequenced_record_Sse(sink, serializer);
+            sse_encode_box_autoadd_read_input(input, serializer);
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 31,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: sse_decode_s_2_error,
+          ),
+          constMeta: kCrateStreamS2StreamReadSessionConstMeta,
+          argValues: [that, sink, input],
+          apiImpl: this,
         ),
-        constMeta: kCrateStreamS2StreamReadSessionConstMeta,
-        argValues: [that, sink, input],
-        apiImpl: this,
       ),
     );
     return sink.stream;
@@ -6487,12 +6495,11 @@ class S2BasinImpl extends RustOpaque implements S2Basin {
       .api
       .crateBasinS2BasinGetStreamConfig(that: this, name: name);
 
-  Future<Stream<StreamInfo>> listAllStreams({
-    required ListAllStreamsInput input,
-  }) => RustLib.instance.api.crateBasinS2BasinListAllStreams(
-    that: this,
-    input: input,
-  );
+  Stream<StreamInfo> listAllStreams({required ListAllStreamsInput input}) =>
+      RustLib.instance.api.crateBasinS2BasinListAllStreams(
+        that: this,
+        input: input,
+      );
 
   Future<PageOfStreamInfo> listStreams({required ListStreamsInput input}) =>
       RustLib.instance.api.crateBasinS2BasinListStreams(
@@ -6561,19 +6568,18 @@ class S2ClientImpl extends RustOpaque implements S2Client {
     input: input,
   );
 
-  Future<Stream<AccessTokenInfo>> listAllAccessTokens({
+  Stream<AccessTokenInfo> listAllAccessTokens({
     required ListAllAccessTokensInput input,
   }) => RustLib.instance.api.crateClientS2ClientListAllAccessTokens(
     that: this,
     input: input,
   );
 
-  Future<Stream<BasinInfo>> listAllBasins({
-    required ListAllBasinsInput input,
-  }) => RustLib.instance.api.crateClientS2ClientListAllBasins(
-    that: this,
-    input: input,
-  );
+  Stream<BasinInfo> listAllBasins({required ListAllBasinsInput input}) =>
+      RustLib.instance.api.crateClientS2ClientListAllBasins(
+        that: this,
+        input: input,
+      );
 
   Future<PageOfBasinInfo> listBasins({required ListBasinsInput input}) =>
       RustLib.instance.api.crateClientS2ClientListBasins(
@@ -6657,9 +6663,8 @@ class S2StreamImpl extends RustOpaque implements S2Stream {
   Future<ReadBatch> read({required ReadInput input}) =>
       RustLib.instance.api.crateStreamS2StreamRead(that: this, input: input);
 
-  Future<Stream<SequencedRecord>> readSession({required ReadInput input}) =>
-      RustLib.instance.api.crateStreamS2StreamReadSession(
-        that: this,
-        input: input,
-      );
+  Stream<SequencedRecord> readSession({required ReadInput input}) => RustLib
+      .instance
+      .api
+      .crateStreamS2StreamReadSession(that: this, input: input);
 }

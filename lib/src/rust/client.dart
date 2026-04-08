@@ -27,11 +27,11 @@ abstract class S2Client implements RustOpaqueInterface {
     required ListAccessTokensInput input,
   });
 
-  Future<Stream<AccessTokenInfo>> listAllAccessTokens({
+  Stream<AccessTokenInfo> listAllAccessTokens({
     required ListAllAccessTokensInput input,
   });
 
-  Future<Stream<BasinInfo>> listAllBasins({required ListAllBasinsInput input});
+  Stream<BasinInfo> listAllBasins({required ListAllBasinsInput input});
 
   Future<PageOfBasinInfo> listBasins({required ListBasinsInput input});
 

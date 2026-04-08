@@ -42,7 +42,7 @@ final class S2AccessTokens {
   Future<Stream<AccessTokenInfo>> listAll({
     String? prefix,
     String? startAfter,
-  }) {
+  }) async {
     return _client.listAllAccessTokens(
       input: ListAllAccessTokensInput(prefix: prefix, startAfter: startAfter),
     );
