@@ -92,16 +92,13 @@ impl S2Stream {
         };
         println!("got session");
         while let Some(batch) = session.next().await {
-            println!("got batch");
             match batch {
                 Ok(batch) => {
-                    println!("got ok batch");
                     for record in batch.records {
                         let _ = sink.add(record.into());
                     }
                 }
                 Err(err) => {
-                    println!("got error");
                     let _ = sink.add_error(anyhow::anyhow!(err.to_string()));
                 }
             };
