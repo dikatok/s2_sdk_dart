@@ -86,11 +86,10 @@ impl S2Stream {
         {
             Ok(session) => session,
             Err(e) => {
-                println!("got error");
                 return Err(e.into());
             }
         };
-        println!("got session");
+
         while let Some(batch) = session.next().await {
             match batch {
                 Ok(batch) => {
