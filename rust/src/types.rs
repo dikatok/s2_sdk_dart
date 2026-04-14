@@ -277,12 +277,8 @@ impl TryFrom<AppendRecordBatch> for s2_sdk::types::AppendRecordBatch {
         let records: Vec<s2_sdk::types::AppendRecord> = value
             .records
             .into_iter()
-            .map(|r| match s2_sdk::types::AppendRecord::try_from(r) {
-                Ok(record) => Ok(record),
-                Err(e) => return Err(e),
-            })
-            .filter_map(Result::ok)
-            .collect();
+            .map(s2_sdk::types::AppendRecord::try_from)
+            .collect::<Result<Vec<_>, _>>()?;
         Ok(s2_sdk::types::AppendRecordBatch::try_from_iter(records)?)
     }
 }
