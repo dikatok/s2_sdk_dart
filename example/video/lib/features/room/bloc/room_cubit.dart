@@ -42,8 +42,6 @@ class RoomCubit extends Cubit<RoomState>
         participants,
       ) {
         if (state is! RoomJoined) return;
-        print("received participants");
-        print(participants);
 
         for (final p in participants) {
           if (p == user) continue;

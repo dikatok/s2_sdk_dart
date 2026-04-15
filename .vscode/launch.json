@@ -1,0 +1,53 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "s2_sdk_dart",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "counter",
+            "cwd": "example/counter",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "counter (profile mode)",
+            "cwd": "example/counter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "counter (release mode)",
+            "cwd": "example/counter",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "video",
+            "cwd": "example/video",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "video (profile mode)",
+            "cwd": "example/video",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "video (release mode)",
+            "cwd": "example/video",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

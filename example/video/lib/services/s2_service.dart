@@ -27,7 +27,6 @@ class S2Service {
 
   // Returns list of participants
   Future<List<String>> join(String room, String user) async {
-    print("joining");
     await _getMetadataStream(room).append([
       S2AppendRecord.fromObject({'type': 'join', 'user': user}),
     ]);
@@ -36,11 +35,9 @@ class S2Service {
       start: ReadStart(from: ReadFrom.tailOffset(1)),
       stop: ReadStop(waitSecs: 1),
     );
-    print(batch.records.length);
     final data = batch.records.isEmpty
         ? {'participants': []}
         : jsonDecode(utf8.decode(batch.records.last.body));
-    print(data);
     final participants = List<String>.from(data['participants']);
     if (!participants.contains(user)) {
       participants.add(user);
