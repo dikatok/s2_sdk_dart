@@ -12,7 +12,7 @@ final class S2Producer {
     return _appendSession.submit(
       record: AppendRecord(
         body: record.body,
-        headers: record.headers ?? [],
+        headers: record.getHeaderInBytes(),
         timestamp: record.timestamp,
       ),
     );

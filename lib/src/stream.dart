@@ -25,7 +25,7 @@ final class S2Stream {
               .map(
                 (e) => AppendRecord(
                   body: e.body,
-                  headers: e.headers ?? [],
+                  headers: e.getHeaderInBytes(),
                   timestamp: e.timestamp,
                 ),
               )
