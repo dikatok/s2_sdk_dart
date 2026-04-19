@@ -23,13 +23,16 @@ dependencies:
   s2_sdk_dart:
     path: ../../
   bloc_presentation: ^1.1.2+3
-  flutter_sound: 9.25.4 # locked, because of, issues
+  audio_io: ^0.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+
+dependency_overrides:
+  web: ^1.1.1
 
 flutter:
   uses-material-design: true

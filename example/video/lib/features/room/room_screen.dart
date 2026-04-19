@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:audio_io/audio_io.dart';
 import 'package:bloc_presentation/bloc_presentation.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sound/flutter_sound.dart';
 import 'package:video/features/app/bloc/app_cubit.dart';
 import 'package:video/features/room/bloc/room_cubit.dart';
 import 'package:video/features/room/bloc/room_event.dart';
@@ -27,10 +27,6 @@ class _RoomScreenState extends State<RoomScreen> {
   CameraController? _controller;
   final Map<String, Uint8List> _remoteFrames = {};
 
-  final _audioRecorder = FlutterSoundRecorder();
-  final _audioPlayer = FlutterSoundPlayer();
-  final _audioStreamController = StreamController<Uint8List>();
-
   @override
   void initState() {
     super.initState();
@@ -38,24 +34,8 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   void _init() async {
-    try {
-      await _initVideoRecording();
-    } catch (e, s) {
-      debugPrint('Error initializing video recording: $e\n$s');
-      debugPrintStack(stackTrace: s);
-    }
-    try {
-      await _initAudioRecording();
-    } catch (e, s) {
-      debugPrint('Error initializing audio recording: $e\n$s');
-      debugPrintStack(stackTrace: s);
-    }
-    try {
-      await _initAudioPlayer();
-    } catch (e, s) {
-      debugPrint('Error initializing audio player: $e\n$s');
-      debugPrintStack(stackTrace: s);
-    }
+    await _initVideoRecording();
+    await _initAudio();
     if (!mounted) return;
     context.read<RoomCubit>().joinRoom(widget.room, widget.user);
   }
@@ -93,37 +73,19 @@ class _RoomScreenState extends State<RoomScreen> {
     }
   }
 
-  Future<void> _initAudioRecording() async {
-    await _audioRecorder.openRecorder();
-
-    _audioStreamController.stream.listen((data) {
+  Future<void> _initAudio() async {
+    await AudioIo.instance.start();
+    AudioIo.instance.input.listen((data) {
       if (!mounted) return;
-      context.read<RoomCubit>().sendAudioFrame(data);
+      context.read<RoomCubit>().sendAudioFrame(
+        Uint8List.fromList(data.map((e) => e.toInt()).toList()),
+      );
     });
-
-    await _audioRecorder.startRecorder(
-      codec: Codec.pcm16,
-      sampleRate: 16000,
-      numChannels: 1,
-      toStream: _audioStreamController.sink,
-    );
-  }
-
-  Future<void> _initAudioPlayer() async {
-    await _audioPlayer.openPlayer();
-
-    await _audioPlayer.startPlayer(
-      codec: Codec.pcm16,
-      numChannels: 1,
-      sampleRate: 16000,
-    );
   }
 
   @override
   void dispose() {
-    _audioRecorder.closeRecorder();
-    _audioPlayer.closePlayer();
-    _audioStreamController.close();
+    AudioIo.instance.stop();
     _controller?.stopImageStream();
     _controller?.dispose();
     super.dispose();
@@ -163,7 +125,9 @@ class _RoomScreenState extends State<RoomScreen> {
                       _remoteFrames[user] = media;
                     });
                   } else if (type == MediaType.audio) {
-                    _audioPlayer.feedUint8FromStream(media);
+                    AudioIo.instance.output.add(
+                      media.map((e) => e.toDouble()).toList(),
+                    );
                   }
               }
             },
