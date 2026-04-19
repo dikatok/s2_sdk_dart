@@ -23,6 +23,7 @@ dependencies:
   s2_sdk_dart:
     path: ../../
   bloc_presentation: ^1.1.2+3
+  flutter_sound: 9.25.4 # locked, because of, issues
 
 dev_dependencies:
   flutter_test:

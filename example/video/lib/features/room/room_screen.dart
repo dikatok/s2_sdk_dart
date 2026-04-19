@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:video/features/app/bloc/app_cubit.dart';
 import 'package:video/features/room/bloc/room_cubit.dart';
 import 'package:video/features/room/bloc/room_event.dart';
@@ -26,14 +27,40 @@ class _RoomScreenState extends State<RoomScreen> {
   CameraController? _controller;
   final Map<String, Uint8List> _remoteFrames = {};
 
+  final _audioRecorder = FlutterSoundRecorder();
+  final _audioPlayer = FlutterSoundPlayer();
+  final _audioStreamController = StreamController<Uint8List>();
+
   @override
   void initState() {
     super.initState();
-    _initCamera();
+    _init();
+  }
+
+  void _init() async {
+    try {
+      await _initVideoRecording();
+    } catch (e, s) {
+      debugPrint('Error initializing video recording: $e\n$s');
+      debugPrintStack(stackTrace: s);
+    }
+    try {
+      await _initAudioRecording();
+    } catch (e, s) {
+      debugPrint('Error initializing audio recording: $e\n$s');
+      debugPrintStack(stackTrace: s);
+    }
+    try {
+      await _initAudioPlayer();
+    } catch (e, s) {
+      debugPrint('Error initializing audio player: $e\n$s');
+      debugPrintStack(stackTrace: s);
+    }
+    if (!mounted) return;
     context.read<RoomCubit>().joinRoom(widget.room, widget.user);
   }
 
-  Future<void> _initCamera() async {
+  Future<void> _initVideoRecording() async {
     final cameras = await availableCameras();
     if (cameras.isEmpty) return;
 
@@ -50,14 +77,8 @@ class _RoomScreenState extends State<RoomScreen> {
       imageFormatGroup: ImageFormatGroup.bgra8888,
     );
 
-    try {
-      await _controller!.initialize();
-      await _controller!.startImageStream(_handleImageStream);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-
-    setState(() {});
+    await _controller!.initialize();
+    await _controller!.startImageStream(_handleImageStream);
   }
 
   void _handleImageStream(CameraImage image) async {
@@ -72,8 +93,37 @@ class _RoomScreenState extends State<RoomScreen> {
     }
   }
 
+  Future<void> _initAudioRecording() async {
+    await _audioRecorder.openRecorder();
+
+    _audioStreamController.stream.listen((data) {
+      if (!mounted) return;
+      context.read<RoomCubit>().sendAudioFrame(data);
+    });
+
+    await _audioRecorder.startRecorder(
+      codec: Codec.pcm16,
+      sampleRate: 16000,
+      numChannels: 1,
+      toStream: _audioStreamController.sink,
+    );
+  }
+
+  Future<void> _initAudioPlayer() async {
+    await _audioPlayer.openPlayer();
+
+    await _audioPlayer.startPlayer(
+      codec: Codec.pcm16,
+      numChannels: 1,
+      sampleRate: 16000,
+    );
+  }
+
   @override
   void dispose() {
+    _audioRecorder.closeRecorder();
+    _audioPlayer.closePlayer();
+    _audioStreamController.close();
     _controller?.stopImageStream();
     _controller?.dispose();
     super.dispose();
@@ -112,13 +162,15 @@ class _RoomScreenState extends State<RoomScreen> {
                     setState(() {
                       _remoteFrames[user] = media;
                     });
+                  } else if (type == MediaType.audio) {
+                    _audioPlayer.feedUint8FromStream(media);
                   }
               }
             },
             child: BlocConsumer<RoomCubit, RoomState>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state is RoomLeft) {
-                  context.read<AppCubit>().leaveRoom();
+                  return context.read<AppCubit>().leaveRoom();
                 }
               },
               builder: (context, state) {

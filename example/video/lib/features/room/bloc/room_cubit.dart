@@ -74,6 +74,12 @@ class RoomCubit extends Cubit<RoomState>
     _s2.sendUserMedia(s.room, s.user, MediaType.video, frame);
   }
 
+  void sendAudioFrame(Uint8List frame) {
+    if (state is! RoomJoined) return;
+    final s = state as RoomJoined;
+    _s2.sendUserMedia(s.room, s.user, MediaType.audio, frame);
+  }
+
   void leaveRoom() {
     if (state is RoomJoined) {
       final s = state as RoomJoined;
