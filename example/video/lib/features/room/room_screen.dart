@@ -78,7 +78,7 @@ class _RoomScreenState extends State<RoomScreen> {
     AudioIo.instance.input.listen((data) {
       if (!mounted) return;
       context.read<RoomCubit>().sendAudioFrame(
-        Uint8List.fromList(data.map((e) => e.toInt()).toList()),
+        Float64List.fromList(data).buffer.asUint8List(),
       );
     });
   }
@@ -126,7 +126,7 @@ class _RoomScreenState extends State<RoomScreen> {
                     });
                   } else if (type == MediaType.audio) {
                     AudioIo.instance.output.add(
-                      media.map((e) => e.toDouble()).toList(),
+                      media.buffer.asFloat64List().toList(),
                     );
                   }
               }
